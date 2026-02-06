@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import LandingPage from "@/pages/LandingPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
+import OnboardingPage from "@/pages/OnboardingPage";
 import DashboardPage from "@/pages/DashboardPage";
 import CalendarPage from "@/pages/CalendarPage";
 import JournalPage from "@/pages/JournalPage";
@@ -78,10 +79,11 @@ const AuthProvider = ({ children }) => {
       });
       const { access_token, user: userData } = response.data;
       localStorage.setItem("token", access_token);
+      localStorage.setItem("isNewUser", "true");
       setToken(access_token);
       setUser(userData);
       toast.success("Account created successfully!");
-      return { success: true };
+      return { success: true, isNewUser: true };
     } catch (error) {
       const message = error.response?.data?.detail || "Registration failed";
       toast.error(message);
@@ -160,6 +162,7 @@ function App() {
           <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
           
           {/* Protected Routes */}
+          <Route path="/onboarding" element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
           <Route path="/journal" element={<ProtectedRoute><JournalPage /></ProtectedRoute>} />
