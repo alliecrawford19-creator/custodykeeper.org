@@ -5,7 +5,7 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Scale, ExternalLink, Search, MapPin, BookOpen, Users, Heart } from "lucide-react";
+import { Scale, ExternalLink, Search, MapPin, BookOpen, Users, Heart, Globe } from "lucide-react";
 
 export default function StateLawsPage() {
   const { user, token } = useAuth();
