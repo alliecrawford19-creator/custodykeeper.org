@@ -217,7 +217,7 @@ export default function DocumentsPage() {
                 <Upload className="w-4 h-4 mr-2" /> Upload Document
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-lg">
+            <DialogContent className="sm:max-w-md max-h-[85vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="font-['Merriweather']">Upload Document</DialogTitle>
               </DialogHeader>
@@ -225,7 +225,7 @@ export default function DocumentsPage() {
                 <div className="space-y-2">
                   <Label>File</Label>
                   <div
-                    className="border-2 border-dashed border-[#E2E8F0] rounded-xl p-8 text-center hover:border-[#2C3E50]/50 transition-colors cursor-pointer"
+                    className="border-2 border-dashed border-[#E2E8F0] rounded-xl p-6 text-center hover:border-[#2C3E50]/50 transition-colors cursor-pointer"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <input
