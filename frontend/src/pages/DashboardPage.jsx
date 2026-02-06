@@ -56,6 +56,29 @@ export default function DashboardPage() {
     }
   };
 
+  // Get next court date from upcoming events
+  const getNextCourtDate = () => {
+    if (!stats?.upcoming_events) return null;
+    const courtEvent = stats.upcoming_events.find(e => e.event_type === "court_date");
+    return courtEvent || null;
+  };
+
+  const getCountdown = (dateStr) => {
+    try {
+      const eventDate = parseISO(dateStr);
+      const now = new Date();
+      const days = differenceInDays(eventDate, now);
+      const hours = differenceInHours(eventDate, now) % 24;
+      
+      if (days < 0) return { days: 0, hours: 0, isPast: true };
+      return { days, hours, isPast: false };
+    } catch {
+      return { days: 0, hours: 0, isPast: true };
+    }
+  };
+
+  const nextCourtDate = getNextCourtDate();
+
   if (loading) {
     return (
       <Layout>
