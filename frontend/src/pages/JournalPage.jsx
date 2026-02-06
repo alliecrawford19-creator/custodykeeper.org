@@ -16,8 +16,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, BookOpen, Search, Trash2, Edit2, Download, Send, Clock, MapPin } from "lucide-react";
+import { Plus, BookOpen, Search, Trash2, Edit2, Download, Send, Clock, MapPin, Mail } from "lucide-react";
 import { format, parseISO } from "date-fns";
+import { EmailShareDialog } from "@/components/EmailShareDialog";
 
 const MOOD_OPTIONS = [
   { value: "happy", label: "Happy", color: "mood-happy" },
@@ -34,6 +35,7 @@ export default function JournalPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingJournal, setEditingJournal] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -172,6 +174,14 @@ export default function JournalPage() {
             <p className="text-[#718096] mt-1">Document your time with your children</p>
           </div>
           <div className="flex gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setEmailDialogOpen(true)}
+              className="border-[#E2E8F0] text-[#2C3E50]"
+              data-testid="email-journals-btn"
+            >
+              <Mail className="w-4 h-4 mr-2" /> Email
+            </Button>
             <Button
               variant="outline"
               onClick={handleExport}
@@ -382,6 +392,16 @@ export default function JournalPage() {
             </CardContent>
           </Card>
         )}
+
+        {/* Email Share Dialog */}
+        <EmailShareDialog
+          open={emailDialogOpen}
+          onOpenChange={setEmailDialogOpen}
+          contentType="journals"
+          contentIds={journals.map(j => j.journal_id)}
+          token={token}
+          defaultSubject="CustodyKeeper Journal Export"
+        />
       </div>
     </Layout>
   );
