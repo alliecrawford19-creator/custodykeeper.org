@@ -56,10 +56,14 @@ export default function DashboardPage() {
     }
   };
 
-  // Get next court date from upcoming events
+  // Get next court date from upcoming events (family court or child support court)
   const getNextCourtDate = () => {
     if (!stats?.upcoming_events) return null;
-    const courtEvent = stats.upcoming_events.find(e => e.event_type === "court_date");
+    const courtEvent = stats.upcoming_events.find(e => 
+      e.event_type === "family_court" || 
+      e.event_type === "child_support_court" ||
+      e.event_type === "court_date"
+    );
     return courtEvent || null;
   };
 
