@@ -606,213 +606,267 @@ async def delete_calendar_event(event_id: str, current_user: dict = Depends(get_
 
 # ============== STATE LAWS ROUTES ==============
 
-# Direct links to state family law statutes
+# Direct links to official state government family law statutes
 STATE_FAMILY_LAW_LINKS = {
     "Alabama": {
-        "statutes": "https://law.justia.com/codes/alabama/title-30/",
-        "name": "Title 30 - Marital and Domestic Relations"
+        "statutes": "https://alisondb.legislature.state.al.us/alison/CodeOfAlabama/1975/Coatoc.htm",
+        "name": "Code of Alabama - Title 30: Marital and Domestic Relations"
     },
     "Alaska": {
-        "statutes": "https://law.justia.com/codes/alaska/title-25/",
-        "name": "Title 25 - Marital and Domestic Relations"
+        "statutes": "https://www.akleg.gov/basis/statutes.asp#25",
+        "name": "Alaska Statutes - Title 25: Marital and Domestic Relations"
     },
     "Arizona": {
-        "statutes": "https://law.justia.com/codes/arizona/title-25/",
-        "name": "Title 25 - Marital and Domestic Relations"
+        "statutes": "https://www.azleg.gov/arsDetail/?title=25",
+        "name": "Arizona Revised Statutes - Title 25: Marital and Domestic Relations"
     },
     "Arkansas": {
-        "statutes": "https://law.justia.com/codes/arkansas/title-9/",
-        "name": "Title 9 - Family Law"
+        "statutes": "https://www.lexisnexis.com/hottopics/arcode/Default.asp",
+        "name": "Arkansas Code - Title 9: Family Law"
     },
     "California": {
-        "statutes": "https://law.justia.com/codes/california/code-fam/",
+        "statutes": "https://leginfo.legislature.ca.gov/faces/codesTOCSelected.xhtml?tocCode=FAM",
         "name": "California Family Code"
     },
     "Colorado": {
-        "statutes": "https://law.justia.com/codes/colorado/title-14/",
-        "name": "Title 14 - Domestic Matters"
+        "statutes": "https://leg.colorado.gov/colorado-revised-statutes",
+        "name": "Colorado Revised Statutes - Title 14: Domestic Matters"
     },
     "Connecticut": {
-        "statutes": "https://law.justia.com/codes/connecticut/title-46b/",
-        "name": "Title 46b - Family Law"
+        "statutes": "https://www.cga.ct.gov/current/pub/titles.htm",
+        "name": "Connecticut General Statutes - Title 46b: Family Law"
     },
     "Delaware": {
-        "statutes": "https://law.justia.com/codes/delaware/title-13/",
-        "name": "Title 13 - Domestic Relations"
+        "statutes": "https://delcode.delaware.gov/title13/index.html",
+        "name": "Delaware Code - Title 13: Domestic Relations"
     },
     "Florida": {
-        "statutes": "https://law.justia.com/codes/florida/title-vi/",
-        "name": "Title VI - Civil Practice and Procedure (Chapter 61 - Dissolution of Marriage)"
+        "statutes": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0061/0061ContentsIndex.html",
+        "name": "Florida Statutes - Chapter 61: Dissolution of Marriage"
     },
     "Georgia": {
         "statutes": "https://law.justia.com/codes/georgia/title-19/",
-        "name": "Title 19 - Domestic Relations"
+        "name": "Official Code of Georgia - Title 19: Domestic Relations"
     },
     "Hawaii": {
-        "statutes": "https://law.justia.com/codes/hawaii/division-3/",
-        "name": "Division 3 - Property; Family"
+        "statutes": "https://www.capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/",
+        "name": "Hawaii Revised Statutes - Division 3: Property, Family"
     },
     "Idaho": {
-        "statutes": "https://law.justia.com/codes/idaho/title-32/",
-        "name": "Title 32 - Domestic Relations"
+        "statutes": "https://legislature.idaho.gov/statutesrules/idstat/Title32/",
+        "name": "Idaho Statutes - Title 32: Domestic Relations"
     },
     "Illinois": {
-        "statutes": "https://law.justia.com/codes/illinois/chapter-750/",
-        "name": "Chapter 750 - Families"
+        "statutes": "https://www.ilga.gov/legislation/ilcs/ilcs2.asp?ChapterID=59",
+        "name": "Illinois Compiled Statutes - Chapter 750: Families"
     },
     "Indiana": {
-        "statutes": "https://law.justia.com/codes/indiana/title-31/",
-        "name": "Title 31 - Family Law and Juvenile Law"
+        "statutes": "https://iga.in.gov/laws/2023/ic/titles/31",
+        "name": "Indiana Code - Title 31: Family Law and Juvenile Law"
     },
     "Iowa": {
-        "statutes": "https://law.justia.com/codes/iowa/title-xv/",
-        "name": "Title XV - Judicial Branch and Judicial Procedures"
+        "statutes": "https://www.legis.iowa.gov/law/iowaCode/sections?codeChapter=598",
+        "name": "Iowa Code - Chapter 598: Dissolution of Marriage"
     },
     "Kansas": {
-        "statutes": "https://law.justia.com/codes/kansas/chapter-23/",
-        "name": "Chapter 23 - Domestic Relations"
+        "statutes": "https://www.ksrevisor.org/statutes/chapters/ch23/",
+        "name": "Kansas Statutes - Chapter 23: Domestic Relations"
     },
     "Kentucky": {
-        "statutes": "https://law.justia.com/codes/kentucky/chapter-403/",
-        "name": "Chapter 403 - Dissolution of Marriage"
+        "statutes": "https://apps.legislature.ky.gov/law/statutes/chapter.aspx?id=39208",
+        "name": "Kentucky Revised Statutes - Chapter 403: Dissolution of Marriage"
     },
     "Louisiana": {
-        "statutes": "https://law.justia.com/codes/louisiana/code-civil-code/code-book-i/",
-        "name": "Civil Code Book I - Of Persons"
+        "statutes": "https://www.legis.la.gov/legis/Laws_Toc.aspx?folder=67",
+        "name": "Louisiana Civil Code - Book I: Of Persons"
     },
     "Maine": {
-        "statutes": "https://law.justia.com/codes/maine/title-19-a/",
-        "name": "Title 19-A - Domestic Relations"
+        "statutes": "https://legislature.maine.gov/statutes/19-A/title19-Ach0.pdf",
+        "name": "Maine Revised Statutes - Title 19-A: Domestic Relations"
     },
     "Maryland": {
-        "statutes": "https://law.justia.com/codes/maryland/family-law/",
-        "name": "Family Law Article"
+        "statutes": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl",
+        "name": "Maryland Code - Family Law Article"
     },
     "Massachusetts": {
-        "statutes": "https://law.justia.com/codes/massachusetts/part-ii/title-iii/chapter-208/",
-        "name": "Chapter 208 - Divorce"
+        "statutes": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleIII/Chapter208",
+        "name": "Massachusetts General Laws - Chapter 208: Divorce"
     },
     "Michigan": {
-        "statutes": "https://law.justia.com/codes/michigan/chapter-722/",
-        "name": "Chapter 722 - Children"
+        "statutes": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-Act-259-of-1846",
+        "name": "Michigan Compiled Laws - Chapter 552: Divorce"
     },
     "Minnesota": {
-        "statutes": "https://law.justia.com/codes/minnesota/chapters-517-519/",
-        "name": "Chapters 517-519 - Marriage and Divorce"
+        "statutes": "https://www.revisor.mn.gov/statutes/cite/518",
+        "name": "Minnesota Statutes - Chapter 518: Marriage Dissolution"
     },
     "Mississippi": {
         "statutes": "https://law.justia.com/codes/mississippi/title-93/",
-        "name": "Title 93 - Domestic Relations"
+        "name": "Mississippi Code - Title 93: Domestic Relations"
     },
     "Missouri": {
-        "statutes": "https://law.justia.com/codes/missouri/title-xxx/",
-        "name": "Title XXX - Domestic Relations"
+        "statutes": "https://revisor.mo.gov/main/OneChapter.aspx?chapter=452",
+        "name": "Missouri Revised Statutes - Chapter 452: Dissolution of Marriage"
     },
     "Montana": {
-        "statutes": "https://law.justia.com/codes/montana/title-40/",
-        "name": "Title 40 - Family Law"
+        "statutes": "https://leg.mt.gov/bills/mca/title_0400/chapters_index.html",
+        "name": "Montana Code - Title 40: Family Law"
     },
     "Nebraska": {
-        "statutes": "https://law.justia.com/codes/nebraska/chapter-42/",
-        "name": "Chapter 42 - Domestic Relations"
+        "statutes": "https://nebraskalegislature.gov/laws/browse-chapters.php?chapter=42",
+        "name": "Nebraska Revised Statutes - Chapter 42: Domestic Relations"
     },
     "Nevada": {
-        "statutes": "https://law.justia.com/codes/nevada/title-11/",
-        "name": "Title 11 - Domestic Relations"
+        "statutes": "https://www.leg.state.nv.us/nrs/NRS-125.html",
+        "name": "Nevada Revised Statutes - Chapter 125: Dissolution of Marriage"
     },
     "New Hampshire": {
-        "statutes": "https://law.justia.com/codes/new-hampshire/title-xliii/",
-        "name": "Title XLIII - Domestic Relations"
+        "statutes": "https://www.gencourt.state.nh.us/rsa/html/XLIII/458/458-mrg.htm",
+        "name": "New Hampshire Revised Statutes - Chapter 458: Divorce"
     },
     "New Jersey": {
-        "statutes": "https://law.justia.com/codes/new-jersey/title-9/",
-        "name": "Title 9 - Children and Domestic Relations"
+        "statutes": "https://lis.njleg.state.nj.us/nxt/gateway.dll?f=templates&fn=default.htm&vid=Publish:10.1048/Enu",
+        "name": "New Jersey Statutes - Title 9: Children and Domestic Relations"
     },
     "New Mexico": {
-        "statutes": "https://law.justia.com/codes/new-mexico/chapter-40/",
-        "name": "Chapter 40 - Domestic Affairs"
+        "statutes": "https://nmonesource.com/nmos/nmsa/en/nav.do",
+        "name": "New Mexico Statutes - Chapter 40: Domestic Affairs"
     },
     "New York": {
-        "statutes": "https://law.justia.com/codes/new-york/domestic-relations/",
-        "name": "Domestic Relations Law"
+        "statutes": "https://www.nysenate.gov/legislation/laws/DOM",
+        "name": "New York Domestic Relations Law"
     },
     "North Carolina": {
-        "statutes": "https://law.justia.com/codes/north-carolina/chapter-50/",
-        "name": "Chapter 50 - Divorce and Alimony"
+        "statutes": "https://www.ncleg.gov/Laws/GeneralStatutesTOC/Chapter/50",
+        "name": "North Carolina General Statutes - Chapter 50: Divorce and Alimony"
     },
     "North Dakota": {
-        "statutes": "https://law.justia.com/codes/north-dakota/title-14/",
-        "name": "Title 14 - Domestic Relations and Persons"
+        "statutes": "https://www.ndlegis.gov/cencode/t14.html",
+        "name": "North Dakota Century Code - Title 14: Domestic Relations"
     },
     "Ohio": {
-        "statutes": "https://law.justia.com/codes/ohio/title-31/",
-        "name": "Title 31 - Domestic Relations"
+        "statutes": "https://codes.ohio.gov/ohio-revised-code/title-31",
+        "name": "Ohio Revised Code - Title 31: Domestic Relations"
     },
     "Oklahoma": {
-        "statutes": "https://law.justia.com/codes/oklahoma/title-43/",
-        "name": "Title 43 - Marriage and Family"
+        "statutes": "https://oksenate.gov/sites/default/files/2019-12/os43.pdf",
+        "name": "Oklahoma Statutes - Title 43: Marriage and Family"
     },
     "Oregon": {
-        "statutes": "https://law.justia.com/codes/oregon/title-11/",
-        "name": "Title 11 - Domestic Relations"
+        "statutes": "https://www.oregonlegislature.gov/bills_laws/ors/ors107.html",
+        "name": "Oregon Revised Statutes - Chapter 107: Dissolution of Marriage"
     },
     "Pennsylvania": {
-        "statutes": "https://law.justia.com/codes/pennsylvania/title-23/",
-        "name": "Title 23 - Domestic Relations"
+        "statutes": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=23",
+        "name": "Pennsylvania Consolidated Statutes - Title 23: Domestic Relations"
     },
     "Rhode Island": {
-        "statutes": "https://law.justia.com/codes/rhode-island/title-15/",
-        "name": "Title 15 - Domestic Relations"
+        "statutes": "http://webserver.rilin.state.ri.us/Statutes/TITLE15/INDEX.HTM",
+        "name": "Rhode Island General Laws - Title 15: Domestic Relations"
     },
     "South Carolina": {
-        "statutes": "https://law.justia.com/codes/south-carolina/title-63/",
-        "name": "Title 63 - South Carolina Children's Code"
+        "statutes": "https://www.scstatehouse.gov/code/title20.php",
+        "name": "South Carolina Code - Title 20: Domestic Relations"
     },
     "South Dakota": {
-        "statutes": "https://law.justia.com/codes/south-dakota/title-25/",
-        "name": "Title 25 - Domestic Relations"
+        "statutes": "https://sdlegislature.gov/Statutes/Codified_Laws/2078844",
+        "name": "South Dakota Codified Laws - Title 25: Domestic Relations"
     },
     "Tennessee": {
-        "statutes": "https://law.justia.com/codes/tennessee/title-36/",
-        "name": "Title 36 - Domestic Relations"
+        "statutes": "https://www.capitol.tn.gov/Bills/Comp/Pub/TitleListing/TITLE0036.htm",
+        "name": "Tennessee Code - Title 36: Domestic Relations"
     },
     "Texas": {
-        "statutes": "https://law.justia.com/codes/texas/family-code/",
+        "statutes": "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.1.htm",
         "name": "Texas Family Code"
     },
     "Utah": {
-        "statutes": "https://law.justia.com/codes/utah/title-30/",
-        "name": "Title 30 - Husband and Wife"
+        "statutes": "https://le.utah.gov/xcode/Title30/30.html",
+        "name": "Utah Code - Title 30: Husband and Wife"
     },
     "Vermont": {
-        "statutes": "https://law.justia.com/codes/vermont/title-15/",
-        "name": "Title 15 - Domestic Relations"
+        "statutes": "https://legislature.vermont.gov/statutes/title/15",
+        "name": "Vermont Statutes - Title 15: Domestic Relations"
     },
     "Virginia": {
-        "statutes": "https://law.justia.com/codes/virginia/title-20/",
-        "name": "Title 20 - Domestic Relations"
+        "statutes": "https://law.lis.virginia.gov/vacode/title20/",
+        "name": "Code of Virginia - Title 20: Domestic Relations"
     },
     "Washington": {
-        "statutes": "https://law.justia.com/codes/washington/title-26/",
-        "name": "Title 26 - Domestic Relations"
+        "statutes": "https://app.leg.wa.gov/rcw/default.aspx?cite=26",
+        "name": "Revised Code of Washington - Title 26: Domestic Relations"
     },
     "West Virginia": {
-        "statutes": "https://law.justia.com/codes/west-virginia/chapter-48/",
-        "name": "Chapter 48 - Domestic Relations"
+        "statutes": "https://www.wvlegislature.gov/wvcode/code.cfm?chap=48&art=1",
+        "name": "West Virginia Code - Chapter 48: Domestic Relations"
     },
     "Wisconsin": {
-        "statutes": "https://law.justia.com/codes/wisconsin/chapter-767/",
-        "name": "Chapter 767 - Actions Affecting the Family"
+        "statutes": "https://docs.legis.wisconsin.gov/statutes/statutes/767",
+        "name": "Wisconsin Statutes - Chapter 767: Actions Affecting the Family"
     },
     "Wyoming": {
-        "statutes": "https://law.justia.com/codes/wyoming/title-20/",
-        "name": "Title 20 - Domestic Relations"
+        "statutes": "https://wyoleg.gov/NXT/gateway.dll?f=templates&fn=default.htm",
+        "name": "Wyoming Statutes - Title 20: Domestic Relations"
     },
     "District of Columbia": {
-        "statutes": "https://law.justia.com/codes/district-of-columbia/division-ii/",
-        "name": "Division II - Family Relations"
+        "statutes": "https://code.dccouncil.gov/us/dc/council/code/titles/16/chapters/9",
+        "name": "DC Code - Title 16, Chapter 9: Divorce, Annulment, Separation"
     }
 }
+
+# Parental Alienation Resources and Advocacy Groups
+PARENTAL_ALIENATION_RESOURCES = [
+    {
+        "name": "The Dadvocate",
+        "url": "https://www.thedadvocate.com/",
+        "description": "Advocacy and support for fathers navigating custody and co-parenting challenges"
+    },
+    {
+        "name": "Parents Against Parental Alienation (PAPA)",
+        "url": "https://www.parentsagainstparentalalienation.com/",
+        "description": "Support group for parents experiencing parental alienation"
+    },
+    {
+        "name": "Parental Alienation Awareness Organization",
+        "url": "https://www.paawareness.org/",
+        "description": "Education and awareness about parental alienation syndrome"
+    },
+    {
+        "name": "National Parents Organization",
+        "url": "https://nationalparentsorganization.org/",
+        "description": "Advocates for shared parenting and family court reform nationwide"
+    },
+    {
+        "name": "Fathers' Rights Movement",
+        "url": "https://fathersrights.org/",
+        "description": "Legal resources and advocacy for fathers seeking equal custody"
+    },
+    {
+        "name": "Moms for Shared Parenting",
+        "url": "https://momsforsharedparenting.org/",
+        "description": "Mothers advocating for 50/50 shared parenting arrangements"
+    },
+    {
+        "name": "Children's Rights Council",
+        "url": "https://www.crckids.org/",
+        "description": "Non-profit focused on ensuring children have meaningful relationships with both parents"
+    },
+    {
+        "name": "Parental Alienation Study Group",
+        "url": "https://pasg.info/",
+        "description": "International organization of professionals studying parental alienation"
+    },
+    {
+        "name": "Leading Women for Shared Parenting",
+        "url": "https://www.leadingwomen4sharedparenting.com/",
+        "description": "Women leaders advocating for equal shared parenting legislation"
+    },
+    {
+        "name": "Family Access - Fighting for Children's Rights",
+        "url": "https://www.familyaccess.org/",
+        "description": "Grassroots organization supporting family court reform and parental rights"
+    }
+]
 
 @api_router.get("/state-laws")
 async def get_state_laws():
@@ -823,6 +877,10 @@ async def get_state_law(state: str):
     if state not in STATE_FAMILY_LAW_LINKS:
         raise HTTPException(status_code=404, detail="State not found")
     return {"state": state, "data": STATE_FAMILY_LAW_LINKS[state]}
+
+@api_router.get("/resources/parental-alienation")
+async def get_parental_alienation_resources():
+    return {"resources": PARENTAL_ALIENATION_RESOURCES}
 
 # ============== EMAIL ROUTES ==============
 
