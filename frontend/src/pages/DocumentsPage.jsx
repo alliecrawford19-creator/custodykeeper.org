@@ -173,6 +173,119 @@ export default function DocumentsPage() {
     }
   };
 
+  const handlePreview = async (doc) => {
+    setPreviewDoc(doc);
+    setPreviewOpen(true);
+    setPreviewLoading(true);
+    
+    try {
+      const response = await axios.get(`${API}/documents/${doc.document_id}/download`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      const { filename, file_type, file_data } = response.data;
+      const byteCharacters = atob(file_data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: file_type });
+      const url = URL.createObjectURL(blob);
+      
+      setPreviewData({
+        url,
+        filename,
+        file_type,
+        blob
+      });
+    } catch (error) {
+      toast.error("Failed to load document preview");
+      setPreviewOpen(false);
+    } finally {
+      setPreviewLoading(false);
+    }
+  };
+
+  const closePreview = () => {
+    if (previewData?.url) {
+      URL.revokeObjectURL(previewData.url);
+    }
+    setPreviewOpen(false);
+    setPreviewDoc(null);
+    setPreviewData(null);
+  };
+
+  const renderPreviewContent = () => {
+    if (previewLoading) {
+      return (
+        <div className="flex items-center justify-center h-96">
+          <div className="spinner"></div>
+        </div>
+      );
+    }
+
+    if (!previewData) return null;
+
+    const { url, file_type, filename } = previewData;
+
+    // PDF Preview
+    if (file_type.includes("pdf")) {
+      return (
+        <iframe
+          src={url}
+          className="w-full h-[70vh] rounded-lg border border-[#E2E8F0]"
+          title={filename}
+        />
+      );
+    }
+
+    // Image Preview
+    if (file_type.includes("image")) {
+      return (
+        <div className="flex items-center justify-center bg-[#F9FAFB] rounded-lg p-4">
+          <img
+            src={url}
+            alt={filename}
+            className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-lg"
+          />
+        </div>
+      );
+    }
+
+    // Word Documents - Show download option since browsers can't render them directly
+    if (file_type.includes("word") || file_type.includes("document") || file_type.includes("msword")) {
+      return (
+        <div className="flex flex-col items-center justify-center h-64 bg-[#F9FAFB] rounded-lg">
+          <FileType className="w-16 h-16 text-blue-700 mb-4" />
+          <p className="text-[#1A202C] font-medium mb-2">{filename}</p>
+          <p className="text-[#718096] text-sm mb-4">Word documents cannot be previewed in browser</p>
+          <Button
+            onClick={() => handleDownload(previewDoc)}
+            className="bg-[#2C3E50] hover:bg-[#34495E] text-white"
+          >
+            <Download className="w-4 h-4 mr-2" /> Download to View
+          </Button>
+        </div>
+      );
+    }
+
+    // Default - offer download
+    return (
+      <div className="flex flex-col items-center justify-center h-64 bg-[#F9FAFB] rounded-lg">
+        <File className="w-16 h-16 text-gray-500 mb-4" />
+        <p className="text-[#1A202C] font-medium mb-2">{filename}</p>
+        <p className="text-[#718096] text-sm mb-4">This file type cannot be previewed</p>
+        <Button
+          onClick={() => handleDownload(previewDoc)}
+          className="bg-[#2C3E50] hover:bg-[#34495E] text-white"
+        >
+          <Download className="w-4 h-4 mr-2" /> Download to View
+        </Button>
+      </div>
+    );
+  };
+
   const resetForm = () => {
     setSelectedFile(null);
     setFormData({
