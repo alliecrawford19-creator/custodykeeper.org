@@ -476,8 +476,9 @@ async def upload_document(
     
     # Max file size: 50MB for videos/audio, 10MB for others
     max_size = 50 * 1024 * 1024 if file.content_type.startswith(("video/", "audio/")) else 10 * 1024 * 1024
+    max_size_mb = 50 if file.content_type.startswith(("video/", "audio/")) else 10
     if file_size > max_size:
-        raise HTTPException(status_code=400, detail="File too large (max 10MB)")
+        raise HTTPException(status_code=400, detail=f"File too large (max {max_size_mb}MB)")
     
     document_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
