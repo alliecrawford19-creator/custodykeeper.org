@@ -54,7 +54,7 @@ export default function RegisterPage() {
     const result = await register(email, password, fullName, state);
     
     if (result.success) {
-      navigate("/dashboard");
+      navigate("/onboarding");
     }
     
     setLoading(false);
