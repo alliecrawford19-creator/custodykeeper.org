@@ -13,9 +13,10 @@ import {
   Users,
   Plus,
   ArrowRight,
-  Clock
+  Clock,
+  Gavel
 } from "lucide-react";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, differenceInDays, differenceInHours } from "date-fns";
 
 export default function DashboardPage() {
   const { user, token } = useAuth();
