@@ -1,54 +1,180 @@
-import { useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+
+// Pages
+import LandingPage from "@/pages/LandingPage";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import DashboardPage from "@/pages/DashboardPage";
+import CalendarPage from "@/pages/CalendarPage";
+import JournalPage from "@/pages/JournalPage";
+import ViolationsPage from "@/pages/ViolationsPage";
+import DocumentsPage from "@/pages/DocumentsPage";
+import StateLawsPage from "@/pages/StateLawsPage";
+import SettingsPage from "@/pages/SettingsPage";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
-  const helloWorldApi = async () => {
+// Create Auth Context
+const AuthContext = createContext(null);
+
+export const useAuth = () => useContext(AuthContext);
+
+// Auth Provider Component
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const initAuth = async () => {
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        try {
+          const response = await axios.get(`${API}/auth/me`, {
+            headers: { Authorization: `Bearer ${storedToken}` }
+          });
+          setUser(response.data);
+          setToken(storedToken);
+        } catch (error) {
+          localStorage.removeItem("token");
+          setToken(null);
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    };
+    initAuth();
+  }, []);
+
+  const login = async (email, password) => {
     try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+      const response = await axios.post(`${API}/auth/login`, { email, password });
+      const { access_token, user: userData } = response.data;
+      localStorage.setItem("token", access_token);
+      setToken(access_token);
+      setUser(userData);
+      toast.success("Welcome back!");
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.detail || "Login failed";
+      toast.error(message);
+      return { success: false, error: message };
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+  const register = async (email, password, fullName, state) => {
+    try {
+      const response = await axios.post(`${API}/auth/register`, {
+        email,
+        password,
+        full_name: fullName,
+        state
+      });
+      const { access_token, user: userData } = response.data;
+      localStorage.setItem("token", access_token);
+      setToken(access_token);
+      setUser(userData);
+      toast.success("Account created successfully!");
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.detail || "Registration failed";
+      toast.error(message);
+      return { success: false, error: message };
+    }
+  };
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    setUser(null);
+    toast.success("Logged out successfully");
+  };
+
+  const value = {
+    user,
+    token,
+    loading,
+    login,
+    register,
+    logout,
+    isAuthenticated: !!token
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FDFBF7]">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
+
+// Public Route (redirect to dashboard if authenticated)
+const PublicRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FDFBF7]">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
 };
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
+        <Toaster position="top-right" richColors />
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+          
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+          <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
+          <Route path="/journal" element={<ProtectedRoute><JournalPage /></ProtectedRoute>} />
+          <Route path="/violations" element={<ProtectedRoute><ViolationsPage /></ProtectedRoute>} />
+          <Route path="/documents" element={<ProtectedRoute><DocumentsPage /></ProtectedRoute>} />
+          <Route path="/state-laws" element={<ProtectedRoute><StateLawsPage /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+          
+          {/* Catch all */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
 export default App;
+export { API };
