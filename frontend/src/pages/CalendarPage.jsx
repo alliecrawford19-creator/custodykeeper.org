@@ -22,8 +22,9 @@ import { format, parseISO, isSameDay, startOfMonth, endOfMonth, eachDayOfInterva
 
 const EVENT_TYPES = [
   { value: "parenting_time", label: "Parenting Time", color: "bg-[#E8F6F3] text-[#2C3E50]" },
-  { value: "court_date", label: "Court Date", color: "bg-[#FEE2E2] text-[#991B1B]" },
-  { value: "visitation", label: "Visitation", color: "bg-[#DBEAFE] text-[#1E40AF]" },
+  { value: "family_court", label: "Family Court", color: "bg-[#FEE2E2] text-[#991B1B]" },
+  { value: "child_support_court", label: "Child Support Court", color: "bg-[#FED7AA] text-[#9A3412]" },
+  { value: "attorney", label: "Attorney Meeting", color: "bg-[#DBEAFE] text-[#1E40AF]" },
   { value: "exchange", label: "Child Exchange", color: "bg-[#FEF3C7] text-[#92400E]" },
   { value: "other", label: "Other", color: "bg-[#F3F4F6] text-[#374151]" },
 ];
