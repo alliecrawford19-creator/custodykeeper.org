@@ -540,6 +540,38 @@ export default function DocumentsPage() {
             </CardContent>
           </Card>
         )}
+
+        {/* Document Preview Dialog */}
+        <Dialog open={previewOpen} onOpenChange={(open) => { if (!open) closePreview(); }}>
+          <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-hidden">
+            <DialogHeader className="flex flex-row items-center justify-between">
+              <DialogTitle className="font-['Merriweather'] flex items-center gap-2">
+                {previewDoc && getFileIcon(previewDoc.file_type)}
+                <span className="truncate max-w-md">{previewDoc?.filename}</span>
+              </DialogTitle>
+            </DialogHeader>
+            <div className="mt-4 overflow-auto">
+              {renderPreviewContent()}
+            </div>
+            {previewData && !previewLoading && (
+              <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-[#E2E8F0]">
+                <Button
+                  variant="outline"
+                  onClick={() => handleDownload(previewDoc)}
+                  className="border-[#E2E8F0] text-[#2C3E50]"
+                >
+                  <Download className="w-4 h-4 mr-2" /> Download
+                </Button>
+                <Button
+                  onClick={closePreview}
+                  className="bg-[#2C3E50] hover:bg-[#34495E] text-white"
+                >
+                  Close
+                </Button>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
