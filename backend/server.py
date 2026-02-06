@@ -453,21 +453,30 @@ async def upload_document(
 ):
     # Validate file type
     allowed_types = [
+        # Documents
         "application/pdf",
-        "image/jpeg", "image/jpg", "image/png",
         "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        # Images
+        "image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp",
+        # Videos
+        "video/mp4", "video/mpeg", "video/quicktime", "video/x-msvideo", 
+        "video/webm", "video/x-ms-wmv", "video/3gpp",
+        # Audio
+        "audio/mpeg", "audio/mp3", "audio/wav", "audio/ogg", "audio/aac",
+        "audio/x-m4a", "audio/mp4", "audio/webm"
     ]
     
     if file.content_type not in allowed_types:
-        raise HTTPException(status_code=400, detail="File type not allowed")
+        raise HTTPException(status_code=400, detail=f"File type not allowed. Supported: PDF, Images, Word docs, Videos, Audio")
     
     # Read file content
     file_content = await file.read()
     file_size = len(file_content)
     
-    # Max file size: 10MB
-    if file_size > 10 * 1024 * 1024:
+    # Max file size: 50MB for videos/audio, 10MB for others
+    max_size = 50 * 1024 * 1024 if file.content_type.startswith(("video/", "audio/")) else 10 * 1024 * 1024
+    if file_size > max_size:
         raise HTTPException(status_code=400, detail="File too large (max 10MB)")
     
     document_id = str(uuid.uuid4())
