@@ -182,7 +182,6 @@ export default function ViolationsPage() {
             >
               <Download className="w-4 h-4 mr-2" /> Export
             </Button>
-            </Button>
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
                 <Button
