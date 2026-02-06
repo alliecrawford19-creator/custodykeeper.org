@@ -21,15 +21,25 @@ import { format, parseISO } from "date-fns";
 import { EmailShareDialog } from "@/components/EmailShareDialog";
 
 const VIOLATION_TYPES = [
-  { value: "custody_interference", label: "Custody Interference" },
   { value: "parenting_time_denial", label: "Parenting Time Denial" },
-  { value: "communication_blocking", label: "Communication Blocking" },
+  { value: "custody_interference", label: "Custody Interference" },
   { value: "parental_alienation", label: "Parental Alienation" },
-  { value: "schedule_violation", label: "Schedule Violation" },
+  { value: "communication_blocking", label: "Blocking Communication with Child" },
+  { value: "false_allegations", label: "False Allegations" },
+  { value: "schedule_violation", label: "Schedule/Order Violation" },
+  { value: "late_pickup_dropoff", label: "Late Pickup/Drop-off" },
+  { value: "no_show", label: "No Show for Exchange" },
+  { value: "child_support_nonpayment", label: "Child Support Non-Payment" },
+  { value: "child_support_late", label: "Child Support Late Payment" },
+  { value: "medical_decision_violation", label: "Medical Decision Violation" },
+  { value: "education_decision_violation", label: "Education Decision Violation" },
+  { value: "relocation_violation", label: "Unauthorized Relocation" },
+  { value: "third_party_interference", label: "Third Party Interference" },
   { value: "verbal_abuse", label: "Verbal Abuse/Harassment" },
-  { value: "financial_violation", label: "Financial Violation" },
-  { value: "relocation_violation", label: "Relocation Violation" },
-  { value: "other", label: "Other" },
+  { value: "threats", label: "Threats/Intimidation" },
+  { value: "badmouthing", label: "Badmouthing Parent to Child" },
+  { value: "withholding_information", label: "Withholding Information" },
+  { value: "other", label: "Other Violation" },
 ];
 
 const SEVERITY_LEVELS = [
