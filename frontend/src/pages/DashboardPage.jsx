@@ -77,8 +77,6 @@ export default function DashboardPage() {
     }
   };
 
-  const nextCourtDate = getNextCourtDate();
-
   if (loading) {
     return (
       <Layout>
@@ -88,6 +86,8 @@ export default function DashboardPage() {
       </Layout>
     );
   }
+
+  const nextCourtDate = getNextCourtDate();
 
   return (
     <Layout>
