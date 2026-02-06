@@ -255,6 +255,40 @@ export default function DocumentsPage() {
       );
     }
 
+    // Video Preview
+    if (file_type.includes("video")) {
+      return (
+        <div className="flex items-center justify-center bg-[#1A202C] rounded-lg p-4">
+          <video
+            src={url}
+            controls
+            className="max-w-full max-h-[70vh] rounded-lg"
+            controlsList="nodownload"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      );
+    }
+
+    // Audio Preview
+    if (file_type.includes("audio")) {
+      return (
+        <div className="flex flex-col items-center justify-center h-64 bg-[#F9FAFB] rounded-lg p-8">
+          <Music className="w-20 h-20 text-green-500 mb-6" />
+          <p className="text-[#1A202C] font-medium mb-4">{filename}</p>
+          <audio
+            src={url}
+            controls
+            className="w-full max-w-md"
+            controlsList="nodownload"
+          >
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      );
+    }
+
     // Word Documents - Show download option since browsers can't render them directly
     if (file_type.includes("word") || file_type.includes("document") || file_type.includes("msword")) {
       return (
