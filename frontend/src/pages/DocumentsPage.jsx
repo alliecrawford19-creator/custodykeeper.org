@@ -385,7 +385,7 @@ export default function DocumentsPage() {
                       ref={fileInputRef}
                       type="file"
                       onChange={handleFileSelect}
-                      accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                      accept=".pdf,.jpg,.jpeg,.png,.gif,.webp,.doc,.docx,.mp4,.mov,.avi,.webm,.wmv,.3gp,.mp3,.wav,.ogg,.aac,.m4a"
                       className="hidden"
                       data-testid="file-input"
                     />
