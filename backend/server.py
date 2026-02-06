@@ -824,57 +824,67 @@ STATE_FAMILY_LAW_LINKS = {
     }
 }
 
-# Parental Alienation Resources and Advocacy Groups
+# Parental Alienation Resources and Advocacy Groups - Social Media Links
 PARENTAL_ALIENATION_RESOURCES = [
     {
         "name": "The Dadvocate",
-        "url": "https://www.thedadvocate.com/",
+        "url": "https://www.facebook.com/TheDadvocate",
+        "platform": "Facebook",
         "description": "Advocacy and support for fathers navigating custody and co-parenting challenges"
     },
     {
-        "name": "Parents Against Parental Alienation (PAPA)",
-        "url": "https://www.parentsagainstparentalalienation.com/",
-        "description": "Support group for parents experiencing parental alienation"
+        "name": "Robert Garza - Dad Doin Good",
+        "url": "https://www.tiktok.com/@daddoingood",
+        "platform": "TikTok",
+        "description": "Father's rights advocate sharing advice and support for dads in custody battles"
     },
     {
-        "name": "Parental Alienation Awareness Organization",
-        "url": "https://www.paawareness.org/",
-        "description": "Education and awareness about parental alienation syndrome"
+        "name": "Mark Ludwig",
+        "url": "https://www.tiktok.com/@markludwig_esq",
+        "platform": "TikTok",
+        "description": "Family law attorney providing education on custody and parental rights"
+    },
+    {
+        "name": "Parents Against Parental Alienation",
+        "url": "https://www.facebook.com/groups/ParentsAgainstParentalAlienation",
+        "platform": "Facebook",
+        "description": "Support community for parents experiencing parental alienation"
     },
     {
         "name": "National Parents Organization",
-        "url": "https://nationalparentsorganization.org/",
+        "url": "https://www.facebook.com/NationalParentsOrganization",
+        "platform": "Facebook",
         "description": "Advocates for shared parenting and family court reform nationwide"
     },
     {
         "name": "Fathers' Rights Movement",
-        "url": "https://fathersrights.org/",
-        "description": "Legal resources and advocacy for fathers seeking equal custody"
+        "url": "https://www.facebook.com/FathersRightsMovement",
+        "platform": "Facebook",
+        "description": "Community supporting fathers fighting for equal custody rights"
     },
     {
         "name": "Moms for Shared Parenting",
-        "url": "https://momsforsharedparenting.org/",
+        "url": "https://www.facebook.com/MomsForSharedParenting",
+        "platform": "Facebook",
         "description": "Mothers advocating for 50/50 shared parenting arrangements"
     },
     {
+        "name": "Parental Alienation Awareness",
+        "url": "https://www.instagram.com/parentalalienationawareness",
+        "platform": "Instagram",
+        "description": "Raising awareness about parental alienation and its effects on children"
+    },
+    {
+        "name": "Equal Shared Parenting",
+        "url": "https://www.facebook.com/groups/equalsharedparenting",
+        "platform": "Facebook",
+        "description": "Community advocating for equal time with both parents"
+    },
+    {
         "name": "Children's Rights Council",
-        "url": "https://www.crckids.org/",
+        "url": "https://www.facebook.com/ChildrensRightsCouncil",
+        "platform": "Facebook",
         "description": "Non-profit focused on ensuring children have meaningful relationships with both parents"
-    },
-    {
-        "name": "Parental Alienation Study Group",
-        "url": "https://pasg.info/",
-        "description": "International organization of professionals studying parental alienation"
-    },
-    {
-        "name": "Leading Women for Shared Parenting",
-        "url": "https://www.leadingwomen4sharedparenting.com/",
-        "description": "Women leaders advocating for equal shared parenting legislation"
-    },
-    {
-        "name": "Family Access - Fighting for Children's Rights",
-        "url": "https://www.familyaccess.org/",
-        "description": "Grassroots organization supporting family court reform and parental rights"
     }
 ]
 
