@@ -16,8 +16,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, AlertTriangle, Search, Trash2, Download, Clock, FileWarning } from "lucide-react";
+import { Plus, AlertTriangle, Search, Trash2, Download, Clock, FileWarning, Mail } from "lucide-react";
 import { format, parseISO } from "date-fns";
+import { EmailShareDialog } from "@/components/EmailShareDialog";
 
 const VIOLATION_TYPES = [
   { value: "custody_interference", label: "Custody Interference" },
@@ -44,6 +45,7 @@ export default function ViolationsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterSeverity, setFilterSeverity] = useState("all");
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -166,11 +168,20 @@ export default function ViolationsPage() {
           <div className="flex gap-3">
             <Button
               variant="outline"
+              onClick={() => setEmailDialogOpen(true)}
+              className="border-[#E2E8F0] text-[#2C3E50]"
+              data-testid="email-violations-btn"
+            >
+              <Mail className="w-4 h-4 mr-2" /> Email
+            </Button>
+            <Button
+              variant="outline"
               onClick={handleExport}
               className="border-[#E2E8F0] text-[#2C3E50]"
               data-testid="export-violations-btn"
             >
               <Download className="w-4 h-4 mr-2" /> Export
+            </Button>
             </Button>
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
@@ -433,6 +444,16 @@ export default function ViolationsPage() {
             </CardContent>
           </Card>
         )}
+
+        {/* Email Share Dialog */}
+        <EmailShareDialog
+          open={emailDialogOpen}
+          onOpenChange={setEmailDialogOpen}
+          contentType="violations"
+          contentIds={violations.map(v => v.violation_id)}
+          token={token}
+          defaultSubject="CustodyKeeper Violations Report"
+        />
       </div>
     </Layout>
   );
