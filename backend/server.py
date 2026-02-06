@@ -828,63 +828,79 @@ STATE_FAMILY_LAW_LINKS = {
 PARENTAL_ALIENATION_RESOURCES = [
     {
         "name": "The Dadvocate",
-        "url": "https://www.facebook.com/TheDadvocate",
-        "platform": "Facebook",
-        "description": "Advocacy and support for fathers navigating custody and co-parenting challenges"
+        "description": "Advocacy and support for fathers navigating custody and co-parenting challenges",
+        "links": [
+            {"platform": "TikTok", "url": "https://www.tiktok.com/@the_dadvocate"},
+            {"platform": "Facebook", "url": "https://www.facebook.com/share/1AUyUK28xM/"},
+            {"platform": "Website", "url": "https://dadvocate.net"}
+        ]
     },
     {
-        "name": "Robert Garza - Dad Doin Good",
-        "url": "https://www.tiktok.com/@daddoingood",
-        "platform": "TikTok",
-        "description": "Father's rights advocate sharing advice and support for dads in custody battles"
+        "name": "Robert Garza",
+        "description": "Father's rights advocate sharing advice and support for dads in custody battles",
+        "links": [
+            {"platform": "Website", "url": "https://robertgarza.us"},
+            {"platform": "Facebook", "url": "https://www.facebook.com/share/1732fKF1Lg/"}
+        ]
     },
     {
         "name": "Mark Ludwig",
-        "url": "https://www.tiktok.com/@markludwig_esq",
-        "platform": "TikTok",
-        "description": "Family law attorney providing education on custody and parental rights"
+        "description": "Family law attorney providing education on custody and parental rights",
+        "links": [
+            {"platform": "Website", "url": "https://stlmarkludwig.com"},
+            {"platform": "Facebook", "url": "https://www.facebook.com/share/17wXww23Gj/"}
+        ]
     },
     {
-        "name": "Parents Against Parental Alienation",
-        "url": "https://www.facebook.com/groups/ParentsAgainstParentalAlienation",
-        "platform": "Facebook",
-        "description": "Support community for parents experiencing parental alienation"
+        "name": "P.A.P.A (Parents Against Parental Alienation)",
+        "description": "Support community for parents experiencing parental alienation",
+        "links": [
+            {"platform": "TikTok", "url": "https://www.tiktok.com/@papa.support"},
+            {"platform": "Facebook", "url": "https://www.facebook.com/groups/167881353601718/?ref=share&mibextid=NSMWBT"}
+        ]
     },
     {
         "name": "National Parents Organization",
-        "url": "https://www.facebook.com/NationalParentsOrganization",
-        "platform": "Facebook",
-        "description": "Advocates for shared parenting and family court reform nationwide"
+        "description": "Advocates for shared parenting and family court reform nationwide",
+        "links": [
+            {"platform": "Facebook", "url": "https://www.facebook.com/share/187qQZBmFB/"}
+        ]
     },
     {
-        "name": "Fathers' Rights Movement",
-        "url": "https://www.facebook.com/FathersRightsMovement",
-        "platform": "Facebook",
-        "description": "Community supporting fathers fighting for equal custody rights"
+        "name": "Father's Rights Movement",
+        "description": "Community supporting fathers fighting for equal custody rights",
+        "links": [
+            {"platform": "TikTok", "url": "https://www.tiktok.com/@thefathersrightsmovement"},
+            {"platform": "Facebook", "url": "https://www.facebook.com/share/1DpQmLqE2a/"}
+        ]
     },
     {
         "name": "Moms for Shared Parenting",
-        "url": "https://www.facebook.com/MomsForSharedParenting",
-        "platform": "Facebook",
-        "description": "Mothers advocating for 50/50 shared parenting arrangements"
+        "description": "Mothers advocating for 50/50 shared parenting arrangements",
+        "links": [
+            {"platform": "Facebook", "url": "https://www.facebook.com/MomsForSharedParenting"}
+        ]
     },
     {
         "name": "Parental Alienation Awareness",
-        "url": "https://www.instagram.com/parentalalienationawareness",
-        "platform": "Instagram",
-        "description": "Raising awareness about parental alienation and its effects on children"
+        "description": "Raising awareness about parental alienation and its effects on children",
+        "links": [
+            {"platform": "Instagram", "url": "https://www.instagram.com/parentalalienationawareness"}
+        ]
     },
     {
         "name": "Equal Shared Parenting",
-        "url": "https://www.facebook.com/groups/equalsharedparenting",
-        "platform": "Facebook",
-        "description": "Community advocating for equal time with both parents"
+        "description": "Community advocating for equal time with both parents",
+        "links": [
+            {"platform": "Facebook", "url": "https://www.facebook.com/groups/equalsharedparenting"}
+        ]
     },
     {
         "name": "Children's Rights Council",
-        "url": "https://www.facebook.com/ChildrensRightsCouncil",
-        "platform": "Facebook",
-        "description": "Non-profit focused on ensuring children have meaningful relationships with both parents"
+        "description": "Non-profit focused on ensuring children have meaningful relationships with both parents",
+        "links": [
+            {"platform": "Facebook", "url": "https://www.facebook.com/ChildrensRightsCouncil"}
+        ]
     }
 ]
 
