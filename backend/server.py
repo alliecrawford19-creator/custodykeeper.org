@@ -74,6 +74,7 @@ class ChildCreate(BaseModel):
     name: str
     date_of_birth: str
     notes: Optional[str] = ""
+    color: Optional[str] = "#3B82F6"
 
 class ChildResponse(BaseModel):
     child_id: str
@@ -81,6 +82,7 @@ class ChildResponse(BaseModel):
     name: str
     date_of_birth: str
     notes: str
+    color: str
     created_at: str
 
 # Journal Models
