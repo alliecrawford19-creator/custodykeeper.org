@@ -22,9 +22,19 @@ import { EmailShareDialog } from "@/components/EmailShareDialog";
 
 const MOOD_OPTIONS = [
   { value: "happy", label: "Happy", color: "mood-happy" },
+  { value: "excited", label: "Excited", color: "mood-happy" },
+  { value: "calm", label: "Calm", color: "mood-neutral" },
+  { value: "content", label: "Content", color: "mood-neutral" },
   { value: "neutral", label: "Neutral", color: "mood-neutral" },
+  { value: "tired", label: "Tired", color: "mood-neutral" },
+  { value: "anxious", label: "Anxious", color: "mood-concerned" },
+  { value: "upset", label: "Upset", color: "mood-concerned" },
   { value: "sad", label: "Sad", color: "mood-sad" },
-  { value: "concerned", label: "Concerned", color: "mood-concerned" },
+  { value: "withdrawn", label: "Withdrawn", color: "mood-sad" },
+  { value: "angry", label: "Angry", color: "mood-concerned" },
+  { value: "fearful", label: "Fearful", color: "mood-concerned" },
+  { value: "confused", label: "Confused", color: "mood-concerned" },
+  { value: "resistant", label: "Resistant to Visit", color: "mood-concerned" },
 ];
 
 export default function JournalPage() {
