@@ -599,69 +599,223 @@ async def delete_calendar_event(event_id: str, current_user: dict = Depends(get_
 
 # ============== STATE LAWS ROUTES ==============
 
-STATE_COURT_LINKS = {
-    "Alabama": "https://judicial.alabama.gov/",
-    "Alaska": "https://courts.alaska.gov/",
-    "Arizona": "https://www.azcourts.gov/",
-    "Arkansas": "https://www.arcourts.gov/",
-    "California": "https://www.courts.ca.gov/",
-    "Colorado": "https://www.courts.state.co.us/",
-    "Connecticut": "https://www.jud.ct.gov/",
-    "Delaware": "https://courts.delaware.gov/",
-    "Florida": "https://www.flcourts.org/",
-    "Georgia": "https://georgiacourts.gov/",
-    "Hawaii": "https://www.courts.state.hi.us/",
-    "Idaho": "https://isc.idaho.gov/",
-    "Illinois": "https://www.illinoiscourts.gov/",
-    "Indiana": "https://www.in.gov/courts/",
-    "Iowa": "https://www.iowacourts.gov/",
-    "Kansas": "https://www.kscourts.org/",
-    "Kentucky": "https://courts.ky.gov/",
-    "Louisiana": "https://www.lasc.org/",
-    "Maine": "https://www.courts.maine.gov/",
-    "Maryland": "https://www.mdcourts.gov/",
-    "Massachusetts": "https://www.mass.gov/orgs/massachusetts-court-system",
-    "Michigan": "https://courts.michigan.gov/",
-    "Minnesota": "https://www.mncourts.gov/",
-    "Mississippi": "https://courts.ms.gov/",
-    "Missouri": "https://www.courts.mo.gov/",
-    "Montana": "https://courts.mt.gov/",
-    "Nebraska": "https://supremecourt.nebraska.gov/",
-    "Nevada": "https://nvcourts.gov/",
-    "New Hampshire": "https://www.courts.nh.gov/",
-    "New Jersey": "https://www.njcourts.gov/",
-    "New Mexico": "https://www.nmcourts.gov/",
-    "New York": "https://www.nycourts.gov/",
-    "North Carolina": "https://www.nccourts.gov/",
-    "North Dakota": "https://www.ndcourts.gov/",
-    "Ohio": "https://www.supremecourt.ohio.gov/",
-    "Oklahoma": "https://www.oscn.net/",
-    "Oregon": "https://www.courts.oregon.gov/",
-    "Pennsylvania": "https://www.pacourts.us/",
-    "Rhode Island": "https://www.courts.ri.gov/",
-    "South Carolina": "https://www.sccourts.org/",
-    "South Dakota": "https://ujs.sd.gov/",
-    "Tennessee": "https://www.tncourts.gov/",
-    "Texas": "https://www.txcourts.gov/",
-    "Utah": "https://www.utcourts.gov/",
-    "Vermont": "https://www.vermontjudiciary.org/",
-    "Virginia": "https://www.vacourts.gov/",
-    "Washington": "https://www.courts.wa.gov/",
-    "West Virginia": "https://www.courtswv.gov/",
-    "Wisconsin": "https://www.wicourts.gov/",
-    "Wyoming": "https://www.courts.state.wy.us/",
-    "District of Columbia": "https://www.dccourts.gov/"
+# Direct links to state family law statutes
+STATE_FAMILY_LAW_LINKS = {
+    "Alabama": {
+        "statutes": "https://law.justia.com/codes/alabama/title-30/",
+        "name": "Title 30 - Marital and Domestic Relations"
+    },
+    "Alaska": {
+        "statutes": "https://law.justia.com/codes/alaska/title-25/",
+        "name": "Title 25 - Marital and Domestic Relations"
+    },
+    "Arizona": {
+        "statutes": "https://law.justia.com/codes/arizona/title-25/",
+        "name": "Title 25 - Marital and Domestic Relations"
+    },
+    "Arkansas": {
+        "statutes": "https://law.justia.com/codes/arkansas/title-9/",
+        "name": "Title 9 - Family Law"
+    },
+    "California": {
+        "statutes": "https://law.justia.com/codes/california/code-fam/",
+        "name": "California Family Code"
+    },
+    "Colorado": {
+        "statutes": "https://law.justia.com/codes/colorado/title-14/",
+        "name": "Title 14 - Domestic Matters"
+    },
+    "Connecticut": {
+        "statutes": "https://law.justia.com/codes/connecticut/title-46b/",
+        "name": "Title 46b - Family Law"
+    },
+    "Delaware": {
+        "statutes": "https://law.justia.com/codes/delaware/title-13/",
+        "name": "Title 13 - Domestic Relations"
+    },
+    "Florida": {
+        "statutes": "https://law.justia.com/codes/florida/title-vi/",
+        "name": "Title VI - Civil Practice and Procedure (Chapter 61 - Dissolution of Marriage)"
+    },
+    "Georgia": {
+        "statutes": "https://law.justia.com/codes/georgia/title-19/",
+        "name": "Title 19 - Domestic Relations"
+    },
+    "Hawaii": {
+        "statutes": "https://law.justia.com/codes/hawaii/division-3/",
+        "name": "Division 3 - Property; Family"
+    },
+    "Idaho": {
+        "statutes": "https://law.justia.com/codes/idaho/title-32/",
+        "name": "Title 32 - Domestic Relations"
+    },
+    "Illinois": {
+        "statutes": "https://law.justia.com/codes/illinois/chapter-750/",
+        "name": "Chapter 750 - Families"
+    },
+    "Indiana": {
+        "statutes": "https://law.justia.com/codes/indiana/title-31/",
+        "name": "Title 31 - Family Law and Juvenile Law"
+    },
+    "Iowa": {
+        "statutes": "https://law.justia.com/codes/iowa/title-xv/",
+        "name": "Title XV - Judicial Branch and Judicial Procedures"
+    },
+    "Kansas": {
+        "statutes": "https://law.justia.com/codes/kansas/chapter-23/",
+        "name": "Chapter 23 - Domestic Relations"
+    },
+    "Kentucky": {
+        "statutes": "https://law.justia.com/codes/kentucky/chapter-403/",
+        "name": "Chapter 403 - Dissolution of Marriage"
+    },
+    "Louisiana": {
+        "statutes": "https://law.justia.com/codes/louisiana/code-civil-code/code-book-i/",
+        "name": "Civil Code Book I - Of Persons"
+    },
+    "Maine": {
+        "statutes": "https://law.justia.com/codes/maine/title-19-a/",
+        "name": "Title 19-A - Domestic Relations"
+    },
+    "Maryland": {
+        "statutes": "https://law.justia.com/codes/maryland/family-law/",
+        "name": "Family Law Article"
+    },
+    "Massachusetts": {
+        "statutes": "https://law.justia.com/codes/massachusetts/part-ii/title-iii/chapter-208/",
+        "name": "Chapter 208 - Divorce"
+    },
+    "Michigan": {
+        "statutes": "https://law.justia.com/codes/michigan/chapter-722/",
+        "name": "Chapter 722 - Children"
+    },
+    "Minnesota": {
+        "statutes": "https://law.justia.com/codes/minnesota/chapters-517-519/",
+        "name": "Chapters 517-519 - Marriage and Divorce"
+    },
+    "Mississippi": {
+        "statutes": "https://law.justia.com/codes/mississippi/title-93/",
+        "name": "Title 93 - Domestic Relations"
+    },
+    "Missouri": {
+        "statutes": "https://law.justia.com/codes/missouri/title-xxx/",
+        "name": "Title XXX - Domestic Relations"
+    },
+    "Montana": {
+        "statutes": "https://law.justia.com/codes/montana/title-40/",
+        "name": "Title 40 - Family Law"
+    },
+    "Nebraska": {
+        "statutes": "https://law.justia.com/codes/nebraska/chapter-42/",
+        "name": "Chapter 42 - Domestic Relations"
+    },
+    "Nevada": {
+        "statutes": "https://law.justia.com/codes/nevada/title-11/",
+        "name": "Title 11 - Domestic Relations"
+    },
+    "New Hampshire": {
+        "statutes": "https://law.justia.com/codes/new-hampshire/title-xliii/",
+        "name": "Title XLIII - Domestic Relations"
+    },
+    "New Jersey": {
+        "statutes": "https://law.justia.com/codes/new-jersey/title-9/",
+        "name": "Title 9 - Children and Domestic Relations"
+    },
+    "New Mexico": {
+        "statutes": "https://law.justia.com/codes/new-mexico/chapter-40/",
+        "name": "Chapter 40 - Domestic Affairs"
+    },
+    "New York": {
+        "statutes": "https://law.justia.com/codes/new-york/domestic-relations/",
+        "name": "Domestic Relations Law"
+    },
+    "North Carolina": {
+        "statutes": "https://law.justia.com/codes/north-carolina/chapter-50/",
+        "name": "Chapter 50 - Divorce and Alimony"
+    },
+    "North Dakota": {
+        "statutes": "https://law.justia.com/codes/north-dakota/title-14/",
+        "name": "Title 14 - Domestic Relations and Persons"
+    },
+    "Ohio": {
+        "statutes": "https://law.justia.com/codes/ohio/title-31/",
+        "name": "Title 31 - Domestic Relations"
+    },
+    "Oklahoma": {
+        "statutes": "https://law.justia.com/codes/oklahoma/title-43/",
+        "name": "Title 43 - Marriage and Family"
+    },
+    "Oregon": {
+        "statutes": "https://law.justia.com/codes/oregon/title-11/",
+        "name": "Title 11 - Domestic Relations"
+    },
+    "Pennsylvania": {
+        "statutes": "https://law.justia.com/codes/pennsylvania/title-23/",
+        "name": "Title 23 - Domestic Relations"
+    },
+    "Rhode Island": {
+        "statutes": "https://law.justia.com/codes/rhode-island/title-15/",
+        "name": "Title 15 - Domestic Relations"
+    },
+    "South Carolina": {
+        "statutes": "https://law.justia.com/codes/south-carolina/title-63/",
+        "name": "Title 63 - South Carolina Children's Code"
+    },
+    "South Dakota": {
+        "statutes": "https://law.justia.com/codes/south-dakota/title-25/",
+        "name": "Title 25 - Domestic Relations"
+    },
+    "Tennessee": {
+        "statutes": "https://law.justia.com/codes/tennessee/title-36/",
+        "name": "Title 36 - Domestic Relations"
+    },
+    "Texas": {
+        "statutes": "https://law.justia.com/codes/texas/family-code/",
+        "name": "Texas Family Code"
+    },
+    "Utah": {
+        "statutes": "https://law.justia.com/codes/utah/title-30/",
+        "name": "Title 30 - Husband and Wife"
+    },
+    "Vermont": {
+        "statutes": "https://law.justia.com/codes/vermont/title-15/",
+        "name": "Title 15 - Domestic Relations"
+    },
+    "Virginia": {
+        "statutes": "https://law.justia.com/codes/virginia/title-20/",
+        "name": "Title 20 - Domestic Relations"
+    },
+    "Washington": {
+        "statutes": "https://law.justia.com/codes/washington/title-26/",
+        "name": "Title 26 - Domestic Relations"
+    },
+    "West Virginia": {
+        "statutes": "https://law.justia.com/codes/west-virginia/chapter-48/",
+        "name": "Chapter 48 - Domestic Relations"
+    },
+    "Wisconsin": {
+        "statutes": "https://law.justia.com/codes/wisconsin/chapter-767/",
+        "name": "Chapter 767 - Actions Affecting the Family"
+    },
+    "Wyoming": {
+        "statutes": "https://law.justia.com/codes/wyoming/title-20/",
+        "name": "Title 20 - Domestic Relations"
+    },
+    "District of Columbia": {
+        "statutes": "https://law.justia.com/codes/district-of-columbia/division-ii/",
+        "name": "Division II - Family Relations"
+    }
 }
 
 @api_router.get("/state-laws")
 async def get_state_laws():
-    return {"states": STATE_COURT_LINKS}
+    return {"states": STATE_FAMILY_LAW_LINKS}
 
 @api_router.get("/state-laws/{state}")
 async def get_state_law(state: str):
-    if state not in STATE_COURT_LINKS:
+    if state not in STATE_FAMILY_LAW_LINKS:
         raise HTTPException(status_code=404, detail="State not found")
-    return {"state": state, "url": STATE_COURT_LINKS[state]}
+    return {"state": state, "data": STATE_FAMILY_LAW_LINKS[state]}
 
 # ============== EMAIL ROUTES ==============
 
