@@ -280,6 +280,7 @@ async def create_child(child_data: ChildCreate, current_user: dict = Depends(get
         "name": child_data.name,
         "date_of_birth": child_data.date_of_birth,
         "notes": child_data.notes or "",
+        "color": child_data.color or "#3B82F6",
         "created_at": now
     }
     
@@ -293,6 +294,10 @@ async def get_children(current_user: dict = Depends(get_current_user)):
         {"user_id": current_user["user_id"]}, 
         {"_id": 0}
     ).to_list(100)
+    # Add default color if not present
+    for child in children:
+        if "color" not in child:
+            child["color"] = "#3B82F6"
     return [ChildResponse(**child) for child in children]
 
 @api_router.delete("/children/{child_id}")
