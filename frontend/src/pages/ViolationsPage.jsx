@@ -22,7 +22,7 @@ import { EmailShareDialog } from "@/components/EmailShareDialog";
 
 const VIOLATION_TYPES = [
   { value: "custody_interference", label: "Custody Interference" },
-  { value: "visitation_denial", label: "Visitation Denial" },
+  { value: "parenting_time_denial", label: "Parenting Time Denial" },
   { value: "communication_blocking", label: "Communication Blocking" },
   { value: "parental_alienation", label: "Parental Alienation" },
   { value: "schedule_violation", label: "Schedule Violation" },
@@ -204,7 +204,7 @@ export default function ViolationsPage() {
                     <Input
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      placeholder="e.g., Denied weekend visitation"
+                      placeholder="e.g., Denied weekend parenting time"
                       required
                       className="border-[#E2E8F0]"
                       data-testid="violation-title-input"

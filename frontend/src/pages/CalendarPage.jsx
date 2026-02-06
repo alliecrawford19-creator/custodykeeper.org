@@ -153,7 +153,7 @@ export default function CalendarPage() {
             <h1 className="font-['Merriweather'] text-2xl sm:text-3xl font-bold text-[#1A202C]">
               Parenting Calendar
             </h1>
-            <p className="text-[#718096] mt-1">Track parenting time, court dates, and visitations</p>
+            <p className="text-[#718096] mt-1">Track parenting time, court dates, and attorney meetings</p>
           </div>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>

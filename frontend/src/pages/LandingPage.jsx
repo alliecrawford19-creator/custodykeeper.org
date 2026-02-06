@@ -12,7 +12,7 @@ export default function LandingPage() {
     {
       icon: <Calendar className="w-8 h-8" />,
       title: "Schedule Tracking",
-      description: "Keep track of parenting time, visitations, and important court dates in one calendar."
+      description: "Keep track of parenting time and important court dates in one organized calendar."
     },
     {
       icon: <Shield className="w-8 h-8" />,
@@ -203,7 +203,7 @@ export default function LandingPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  Track parenting time and visitations
+                  Track parenting time and court dates
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-6 h-6 rounded-full bg-[#E8F6F3] flex items-center justify-center">
