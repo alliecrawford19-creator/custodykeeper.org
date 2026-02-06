@@ -20,14 +20,26 @@ import { Plus, FileText, Upload, Trash2, Download, Search, File, FileImage, File
 import { format, parseISO } from "date-fns";
 
 const DOCUMENT_CATEGORIES = [
+  { value: "custody_agreement", label: "Custody Agreement/Parenting Plan" },
   { value: "court_order", label: "Court Order" },
-  { value: "custody_agreement", label: "Custody Agreement" },
-  { value: "evidence", label: "Evidence" },
-  { value: "communication", label: "Communication Records" },
-  { value: "financial", label: "Financial Documents" },
-  { value: "medical", label: "Medical Records" },
-  { value: "school", label: "School Records" },
-  { value: "other", label: "Other" },
+  { value: "child_support_order", label: "Child Support Order" },
+  { value: "motion_filing", label: "Motion/Filing" },
+  { value: "attorney_correspondence", label: "Attorney Correspondence" },
+  { value: "text_messages", label: "Text Messages/Screenshots" },
+  { value: "email_communication", label: "Email Communication" },
+  { value: "photos_evidence", label: "Photos/Evidence" },
+  { value: "video_evidence", label: "Video Evidence" },
+  { value: "audio_recording", label: "Audio Recording" },
+  { value: "witness_statement", label: "Witness Statement" },
+  { value: "police_report", label: "Police Report" },
+  { value: "medical_records", label: "Medical Records" },
+  { value: "therapy_records", label: "Therapy/Counseling Records" },
+  { value: "school_records", label: "School Records" },
+  { value: "financial_records", label: "Financial Records" },
+  { value: "income_verification", label: "Income Verification" },
+  { value: "expense_receipts", label: "Expense Receipts" },
+  { value: "calendar_proof", label: "Calendar/Schedule Proof" },
+  { value: "other", label: "Other Document" },
 ];
 
 const getFileIcon = (fileType) => {
