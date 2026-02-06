@@ -485,6 +485,15 @@ export default function DocumentsPage() {
                     <Button
                       variant="outline"
                       size="sm"
+                      onClick={() => handlePreview(doc)}
+                      className="border-[#E2E8F0] text-[#2C3E50]"
+                      data-testid={`view-doc-${doc.document_id}`}
+                    >
+                      <Eye className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => handleDownload(doc)}
                       className="border-[#E2E8F0] text-[#2C3E50]"
                       data-testid={`download-doc-${doc.document_id}`}
