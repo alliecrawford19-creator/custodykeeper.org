@@ -61,18 +61,21 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 ### Phase 1 - MVP Complete ✅
 - [x] User authentication (register/login/logout)
 - [x] Dashboard with stats, quick actions, upcoming events
+- [x] **Court Date Countdown Widget** - Shows days/hours until next court date
 - [x] Parenting Journal with CRUD, search, export, email
 - [x] Violation Log with type, severity, witnesses, export, email
 - [x] Document upload (PDF, Images, Word) with categories
 - [x] Calendar for parenting time, court dates, visitations
 - [x] State Laws page with all 50 states + DC links
 - [x] Settings page with children management
-- [x] Email sharing dialog (requires Resend API key)
+- [x] Email sharing via Resend API (configured and working)
 - [x] Warm professional design with Merriweather/Lato fonts
+- [x] Mobile responsive design
 
 ### Testing Results
 - Backend: 100% pass rate (30/30 API tests)
-- Frontend: 95% pass rate (minor modal overlay fixed)
+- Frontend: 95% pass rate
+- Email: Working (Resend test mode - verify domain for production)
 
 ## Prioritized Backlog
 
