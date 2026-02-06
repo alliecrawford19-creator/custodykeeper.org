@@ -45,6 +45,8 @@ const DOCUMENT_CATEGORIES = [
 const getFileIcon = (fileType) => {
   if (fileType.includes("pdf")) return <FileText className="w-8 h-8 text-red-500" />;
   if (fileType.includes("image")) return <FileImage className="w-8 h-8 text-blue-500" />;
+  if (fileType.includes("video")) return <Video className="w-8 h-8 text-purple-500" />;
+  if (fileType.includes("audio")) return <Music className="w-8 h-8 text-green-500" />;
   if (fileType.includes("word") || fileType.includes("document")) return <FileType className="w-8 h-8 text-blue-700" />;
   return <File className="w-8 h-8 text-gray-500" />;
 };
