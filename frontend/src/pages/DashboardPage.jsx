@@ -102,6 +102,56 @@ export default function DashboardPage() {
           </p>
         </div>
 
+        {/* Court Date Countdown */}
+        {nextCourtDate && (
+          <Card className="bg-[#2C3E50] border-none overflow-hidden" data-testid="court-countdown-card">
+            <CardContent className="p-0">
+              <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className="flex items-center gap-6 p-6">
+                  <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center">
+                    <Gavel className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white/70 text-sm font-medium uppercase tracking-wider">Next Court Date</p>
+                    <h2 className="font-['Merriweather'] text-2xl font-bold text-white mt-1">
+                      {nextCourtDate.title}
+                    </h2>
+                    <p className="text-white/70 mt-1">
+                      {formatDate(nextCourtDate.start_date)}
+                      {nextCourtDate.location && ` • ${nextCourtDate.location}`}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 p-6 bg-white/5">
+                  {(() => {
+                    const countdown = getCountdown(nextCourtDate.start_date);
+                    if (countdown.isPast) {
+                      return (
+                        <div className="text-center px-6">
+                          <p className="text-white/70 text-sm">This event has passed</p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <>
+                        <div className="text-center px-4">
+                          <p className="text-4xl font-bold text-white">{countdown.days}</p>
+                          <p className="text-white/70 text-sm">Days</p>
+                        </div>
+                        <div className="text-4xl text-white/30 font-light">:</div>
+                        <div className="text-center px-4">
+                          <p className="text-4xl font-bold text-white">{countdown.hours}</p>
+                          <p className="text-white/70 text-sm">Hours</p>
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <Card className="bg-white border-[#E2E8F0] card-hover" data-testid="stat-children">
