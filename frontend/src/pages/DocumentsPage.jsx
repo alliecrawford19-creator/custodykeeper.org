@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, FileText, Upload, Trash2, Download, Search, File, FileImage, FileType } from "lucide-react";
+import { Plus, FileText, Upload, Trash2, Download, Search, File, FileImage, FileType, Eye, X } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
 const DOCUMENT_CATEGORIES = [
