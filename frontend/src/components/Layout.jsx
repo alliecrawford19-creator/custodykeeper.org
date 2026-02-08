@@ -22,7 +22,8 @@ import {
   Menu,
   X,
   User,
-  ChevronDown
+  ChevronDown,
+  UserPlus
 } from "lucide-react";
 
 const navItems = [
@@ -31,6 +32,7 @@ const navItems = [
   { path: "/journal", label: "Journal", icon: BookOpen },
   { path: "/violations", label: "Violations", icon: AlertTriangle },
   { path: "/documents", label: "Documents", icon: FileText },
+  { path: "/contacts", label: "Contacts", icon: UserPlus },
   { path: "/state-laws", label: "State Laws", icon: Gavel },
 ];
 
