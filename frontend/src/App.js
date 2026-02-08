@@ -169,6 +169,7 @@ function App() {
           <Route path="/journal" element={<ProtectedRoute><JournalPage /></ProtectedRoute>} />
           <Route path="/violations" element={<ProtectedRoute><ViolationsPage /></ProtectedRoute>} />
           <Route path="/documents" element={<ProtectedRoute><DocumentsPage /></ProtectedRoute>} />
+          <Route path="/contacts" element={<ProtectedRoute><ContactsPage /></ProtectedRoute>} />
           <Route path="/state-laws" element={<ProtectedRoute><StateLawsPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
           
