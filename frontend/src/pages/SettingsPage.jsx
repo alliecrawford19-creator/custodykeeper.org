@@ -138,8 +138,11 @@ export default function SettingsPage() {
     setFormData({
       name: "",
       date_of_birth: "",
-      notes: ""
+      notes: "",
+      photo: "",
+      color: "#3B82F6"
     });
+    setEditingChild(null);
   };
 
   const calculateAge = (dateOfBirth) => {
