@@ -309,6 +309,7 @@ async def create_child(child_data: ChildCreate, current_user: dict = Depends(get
         "date_of_birth": child_data.date_of_birth,
         "notes": child_data.notes or "",
         "color": child_data.color or "#3B82F6",
+        "photo": child_data.photo or "",
         "created_at": now
     }
     
@@ -322,11 +323,41 @@ async def get_children(current_user: dict = Depends(get_current_user)):
         {"user_id": current_user["user_id"]}, 
         {"_id": 0}
     ).to_list(100)
-    # Add default color if not present
+    # Add default values if not present
     for child in children:
         if "color" not in child:
             child["color"] = "#3B82F6"
+        if "photo" not in child:
+            child["photo"] = ""
     return [ChildResponse(**child) for child in children]
+
+@api_router.put("/children/{child_id}", response_model=ChildResponse)
+async def update_child(child_id: str, child_data: ChildCreate, current_user: dict = Depends(get_current_user)):
+    # Find existing child
+    existing_child = await db.children.find_one({
+        "child_id": child_id,
+        "user_id": current_user["user_id"]
+    }, {"_id": 0})
+    
+    if not existing_child:
+        raise HTTPException(status_code=404, detail="Child not found")
+    
+    # Update fields
+    update_data = {
+        "name": child_data.name,
+        "date_of_birth": child_data.date_of_birth,
+        "notes": child_data.notes or "",
+        "color": child_data.color or "#3B82F6",
+        "photo": child_data.photo or ""
+    }
+    
+    await db.children.update_one(
+        {"child_id": child_id, "user_id": current_user["user_id"]},
+        {"$set": update_data}
+    )
+    
+    existing_child.update(update_data)
+    return ChildResponse(**existing_child)
 
 @api_router.delete("/children/{child_id}")
 async def delete_child(child_id: str, current_user: dict = Depends(get_current_user)):
@@ -337,6 +368,101 @@ async def delete_child(child_id: str, current_user: dict = Depends(get_current_u
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Child not found")
     return {"message": "Child deleted successfully"}
+
+# ============== CONTACT ROUTES ==============
+
+@api_router.post("/contacts", response_model=ContactResponse)
+async def create_contact(contact_data: ContactCreate, current_user: dict = Depends(get_current_user)):
+    contact_id = str(uuid.uuid4())
+    now = datetime.now(timezone.utc).isoformat()
+    
+    contact_doc = {
+        "contact_id": contact_id,
+        "user_id": current_user["user_id"],
+        "name": contact_data.name,
+        "address": contact_data.address or "",
+        "phones": [phone.dict() for phone in contact_data.phones],
+        "email": contact_data.email or "",
+        "notes": contact_data.notes or "",
+        "photo": contact_data.photo or "",
+        "created_at": now,
+        "updated_at": now
+    }
+    
+    await db.contacts.insert_one(contact_doc)
+    
+    return ContactResponse(**contact_doc)
+
+@api_router.get("/contacts", response_model=List[ContactResponse])
+async def get_contacts(current_user: dict = Depends(get_current_user)):
+    contacts = await db.contacts.find(
+        {"user_id": current_user["user_id"]}, 
+        {"_id": 0}
+    ).to_list(1000)
+    # Add default values if not present
+    for contact in contacts:
+        if "photo" not in contact:
+            contact["photo"] = ""
+        if "phones" not in contact:
+            contact["phones"] = []
+    return [ContactResponse(**contact) for contact in contacts]
+
+@api_router.get("/contacts/{contact_id}", response_model=ContactResponse)
+async def get_contact(contact_id: str, current_user: dict = Depends(get_current_user)):
+    contact = await db.contacts.find_one({
+        "contact_id": contact_id,
+        "user_id": current_user["user_id"]
+    }, {"_id": 0})
+    
+    if not contact:
+        raise HTTPException(status_code=404, detail="Contact not found")
+    
+    if "photo" not in contact:
+        contact["photo"] = ""
+    if "phones" not in contact:
+        contact["phones"] = []
+    
+    return ContactResponse(**contact)
+
+@api_router.put("/contacts/{contact_id}", response_model=ContactResponse)
+async def update_contact(contact_id: str, contact_data: ContactCreate, current_user: dict = Depends(get_current_user)):
+    existing_contact = await db.contacts.find_one({
+        "contact_id": contact_id,
+        "user_id": current_user["user_id"]
+    }, {"_id": 0})
+    
+    if not existing_contact:
+        raise HTTPException(status_code=404, detail="Contact not found")
+    
+    now = datetime.now(timezone.utc).isoformat()
+    
+    update_data = {
+        "name": contact_data.name,
+        "address": contact_data.address or "",
+        "phones": [phone.dict() for phone in contact_data.phones],
+        "email": contact_data.email or "",
+        "notes": contact_data.notes or "",
+        "photo": contact_data.photo or "",
+        "updated_at": now
+    }
+    
+    await db.contacts.update_one(
+        {"contact_id": contact_id, "user_id": current_user["user_id"]},
+        {"$set": update_data}
+    )
+    
+    existing_contact.update(update_data)
+    return ContactResponse(**existing_contact)
+
+@api_router.delete("/contacts/{contact_id}")
+async def delete_contact(contact_id: str, current_user: dict = Depends(get_current_user)):
+    result = await db.contacts.delete_one({
+        "contact_id": contact_id, 
+        "user_id": current_user["user_id"]
+    })
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Contact not found")
+    return {"message": "Contact deleted successfully"}
 
 # ============== JOURNAL ROUTES ==============
 
