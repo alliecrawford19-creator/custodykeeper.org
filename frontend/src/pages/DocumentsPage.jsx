@@ -662,6 +662,13 @@ export default function DocumentsPage() {
               <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-[#E2E8F0]">
                 <Button
                   variant="outline"
+                  onClick={() => handleShare(previewDoc)}
+                  className="border-[#E2E8F0] text-[#2C3E50]"
+                >
+                  <Share2 className="w-4 h-4 mr-2" /> Share
+                </Button>
+                <Button
+                  variant="outline"
                   onClick={() => handleDownload(previewDoc)}
                   className="border-[#E2E8F0] text-[#2C3E50]"
                 >
