@@ -63,10 +63,10 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 gradient-hero">
+      <section className="pt-32 pb-24 px-4 gradient-hero">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
+            <div className="animate-fade-in pb-8">
               <h1 className="font-['Merriweather'] text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1A202C] leading-tight mb-6">
                 Your Family Court<br />
                 <span className="text-[#2C3E50]">Documentation Partner</span>
@@ -74,7 +74,7 @@ export default function LandingPage() {
               <p className="text-lg text-[#718096] mb-8 max-w-lg">
                 Keep comprehensive records of parenting time, document violations, and organize court materials—all in one secure place designed for family court litigation.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pb-4">
+              <div className="flex flex-col sm:flex-row gap-4 pb-6">
                 <Link to="/register" className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full px-8 py-6 text-lg font-bold shadow-lg btn-hover" data-testid="hero-get-started-btn">
                     Start Documenting Free
