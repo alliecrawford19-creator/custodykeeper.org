@@ -18,14 +18,19 @@ import { User, Plus, Trash2, Users, Calendar, Camera, Edit2, X } from "lucide-re
 import { format, parseISO, differenceInYears } from "date-fns";
 
 export default function SettingsPage() {
-  const { user, token } = useAuth();
+  const { user, token, setUser } = useAuth();
   const [children, setChildren] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingChild, setEditingChild] = useState(null);
+  const [profilePhotoDialogOpen, setProfilePhotoDialogOpen] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(user?.photo || "");
   const [formData, setFormData] = useState({
     name: "",
     date_of_birth: "",
-    notes: ""
+    notes: "",
+    photo: "",
+    color: "#3B82F6"
   });
 
   useEffect(() => {
