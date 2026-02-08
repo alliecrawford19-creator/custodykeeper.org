@@ -402,9 +402,17 @@ export default function SettingsPage() {
                     data-testid={`child-item-${child.child_id}`}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                        <User className="w-6 h-6 text-[#2C3E50]" />
-                      </div>
+                      {child.photo ? (
+                        <img 
+                          src={child.photo} 
+                          alt={child.name}
+                          className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-[#E8F6F3] flex items-center justify-center flex-shrink-0">
+                          <User className="w-6 h-6 text-[#2C3E50]" />
+                        </div>
+                      )}
                       <div>
                         <p className="font-semibold text-[#1A202C]">{child.name}</p>
                         <p className="text-sm text-[#718096] flex items-center gap-2">
@@ -419,15 +427,26 @@ export default function SettingsPage() {
                         )}
                       </div>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(child.child_id)}
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                      data-testid={`delete-child-${child.child_id}`}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(child)}
+                        className="text-[#2C3E50] hover:text-[#34495E] hover:bg-[#E8F6F3]"
+                        data-testid={`edit-child-${child.child_id}`}
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(child.child_id)}
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        data-testid={`delete-child-${child.child_id}`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
