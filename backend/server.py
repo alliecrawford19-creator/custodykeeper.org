@@ -75,6 +75,7 @@ class ChildCreate(BaseModel):
     date_of_birth: str
     notes: Optional[str] = ""
     color: Optional[str] = "#3B82F6"
+    photo: Optional[str] = ""
 
 class ChildResponse(BaseModel):
     child_id: str
@@ -83,7 +84,33 @@ class ChildResponse(BaseModel):
     date_of_birth: str
     notes: str
     color: str
+    photo: str
     created_at: str
+
+# Contact Models
+class PhoneNumber(BaseModel):
+    phone: str
+    label: Optional[str] = "mobile"
+
+class ContactCreate(BaseModel):
+    name: str
+    address: Optional[str] = ""
+    phones: List[PhoneNumber] = []
+    email: Optional[str] = ""
+    notes: Optional[str] = ""
+    photo: Optional[str] = ""
+
+class ContactResponse(BaseModel):
+    contact_id: str
+    user_id: str
+    name: str
+    address: str
+    phones: List[PhoneNumber]
+    email: str
+    notes: str
+    photo: str
+    created_at: str
+    updated_at: str
 
 # Journal Models
 class JournalCreate(BaseModel):
