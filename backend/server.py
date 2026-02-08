@@ -299,15 +299,14 @@ async def get_me(current_user: dict = Depends(get_current_user)):
 
 @api_router.put("/auth/profile")
 async def update_profile(
-    full_name: Optional[str] = None,
-    photo: Optional[str] = None,
+    profile_data: dict,
     current_user: dict = Depends(get_current_user)
 ):
     update_data = {}
-    if full_name is not None:
-        update_data["full_name"] = full_name
-    if photo is not None:
-        update_data["photo"] = photo
+    if "full_name" in profile_data and profile_data["full_name"] is not None:
+        update_data["full_name"] = profile_data["full_name"]
+    if "photo" in profile_data and profile_data["photo"] is not None:
+        update_data["photo"] = profile_data["photo"]
     
     if update_data:
         await db.users.update_one(
