@@ -71,19 +71,34 @@ export default function SettingsPage() {
 
   const handleProfilePhotoSave = async () => {
     try {
-      await axios.put(`${API}/auth/profile`, 
+      if (!profilePhoto) {
+        toast.error("Please select a photo first");
+        return;
+      }
+      
+      const response = await axios.put(`${API}/auth/profile`, 
         { photo: profilePhoto },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { 
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          } 
+        }
       );
+      
       toast.success("Profile photo updated successfully");
       setProfilePhotoDialogOpen(false);
-      // Update user context
-      if (setUser) {
-        setUser({ ...user, photo: profilePhoto });
+      
+      // Update user context with the returned user data
+      if (setUser && response.data.user) {
+        setUser(response.data.user);
       }
+      
+      // Force reload to reflect changes immediately
+      window.location.reload();
     } catch (error) {
       console.error("Failed to update profile photo:", error);
-      toast.error("Failed to update profile photo");
+      toast.error(error.response?.data?.detail || "Failed to update profile photo");
     }
   };
 
