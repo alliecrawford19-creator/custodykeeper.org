@@ -287,13 +287,41 @@ async def login(credentials: UserLogin):
 
 @api_router.get("/auth/me", response_model=UserResponse)
 async def get_me(current_user: dict = Depends(get_current_user)):
+    photo = current_user.get("photo", "")
     return UserResponse(
         user_id=current_user["user_id"],
         email=current_user["email"],
         full_name=current_user["full_name"],
         state=current_user["state"],
+        photo=photo,
         created_at=current_user["created_at"]
     )
+
+@api_router.put("/auth/profile")
+async def update_profile(
+    full_name: Optional[str] = None,
+    photo: Optional[str] = None,
+    current_user: dict = Depends(get_current_user)
+):
+    update_data = {}
+    if full_name is not None:
+        update_data["full_name"] = full_name
+    if photo is not None:
+        update_data["photo"] = photo
+    
+    if update_data:
+        await db.users.update_one(
+            {"user_id": current_user["user_id"]},
+            {"$set": update_data}
+        )
+    
+    # Get updated user
+    updated_user = await db.users.find_one(
+        {"user_id": current_user["user_id"]},
+        {"_id": 0}
+    )
+    
+    return {"message": "Profile updated successfully", "user": updated_user}
 
 # ============== CHILDREN ROUTES ==============
 
