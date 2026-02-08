@@ -50,19 +50,75 @@ export default function SettingsPage() {
     }
   };
 
+  const handlePhotoUpload = (e, isProfile = false) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error("Photo size must be less than 10MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (isProfile) {
+          setProfilePhoto(reader.result);
+        } else {
+          setFormData({ ...formData, photo: reader.result });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleProfilePhotoSave = async () => {
+    try {
+      await axios.put(`${API}/auth/profile`, 
+        { photo: profilePhoto },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success("Profile photo updated successfully");
+      setProfilePhotoDialogOpen(false);
+      // Update user context
+      if (setUser) {
+        setUser({ ...user, photo: profilePhoto });
+      }
+    } catch (error) {
+      console.error("Failed to update profile photo:", error);
+      toast.error("Failed to update profile photo");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API}/children`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      toast.success("Child added successfully");
+      if (editingChild) {
+        await axios.put(`${API}/children/${editingChild.child_id}`, formData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success("Child updated successfully");
+      } else {
+        await axios.post(`${API}/children`, formData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success("Child added successfully");
+      }
       setDialogOpen(false);
       resetForm();
       fetchChildren();
     } catch (error) {
-      toast.error("Failed to add child");
+      toast.error(editingChild ? "Failed to update child" : "Failed to add child");
     }
+  };
+
+  const handleEdit = (child) => {
+    setEditingChild(child);
+    setFormData({
+      name: child.name,
+      date_of_birth: child.date_of_birth,
+      notes: child.notes || "",
+      photo: child.photo || "",
+      color: child.color || "#3B82F6"
+    });
+    setDialogOpen(true);
   };
 
   const handleDelete = async (childId) => {
