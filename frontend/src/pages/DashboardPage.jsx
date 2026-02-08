@@ -14,7 +14,8 @@ import {
   Plus,
   ArrowRight,
   Clock,
-  Gavel
+  Gavel,
+  UserPlus
 } from "lucide-react";
 import { format, parseISO, differenceInDays, differenceInHours } from "date-fns";
 
