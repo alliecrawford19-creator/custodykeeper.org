@@ -303,9 +303,39 @@ export default function SettingsPage() {
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle className="font-['Merriweather']">Add Child</DialogTitle>
+                  <DialogTitle className="font-['Merriweather']">
+                    {editingChild ? "Edit Child" : "Add Child"}
+                  </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                  {/* Photo Upload */}
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="relative">
+                      {formData.photo ? (
+                        <img 
+                          src={formData.photo} 
+                          alt="Child"
+                          className="w-24 h-24 rounded-full object-cover border-4 border-[#E8F6F3]"
+                        />
+                      ) : (
+                        <div className="w-24 h-24 rounded-full bg-[#E8F6F3] flex items-center justify-center">
+                          <User className="w-12 h-12 text-[#718096]" />
+                        </div>
+                      )}
+                      <label htmlFor="child-photo-upload" className="absolute bottom-0 right-0 w-8 h-8 bg-[#2C3E50] hover:bg-[#34495E] rounded-full flex items-center justify-center cursor-pointer">
+                        <Camera className="w-4 h-4 text-white" />
+                        <input
+                          id="child-photo-upload"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handlePhotoUpload}
+                        />
+                      </label>
+                    </div>
+                    <p className="text-xs text-[#718096]">Click camera to upload photo</p>
+                  </div>
+
                   <div className="space-y-2">
                     <Label>Child's Name</Label>
                     <Input
@@ -355,7 +385,7 @@ export default function SettingsPage() {
                       className="bg-[#2C3E50] hover:bg-[#34495E] text-white"
                       data-testid="save-child-btn"
                     >
-                      Add Child
+                      {editingChild ? "Update Child" : "Add Child"}
                     </Button>
                   </div>
                 </form>
