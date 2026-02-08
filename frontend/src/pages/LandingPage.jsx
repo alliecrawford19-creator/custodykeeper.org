@@ -74,14 +74,14 @@ export default function LandingPage() {
               <p className="text-lg text-[#718096] mb-8 max-w-lg">
                 Keep comprehensive records of parenting time, document violations, and organize court materials—all in one secure place designed for family court litigation.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/register">
-                  <Button className="bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full px-8 py-6 text-lg font-bold shadow-lg btn-hover" data-testid="hero-get-started-btn">
+              <div className="flex flex-col sm:flex-row gap-4 pb-4">
+                <Link to="/register" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full px-8 py-6 text-lg font-bold shadow-lg btn-hover" data-testid="hero-get-started-btn">
                     Start Documenting Free
                   </Button>
                 </Link>
-                <Link to="/login">
-                  <Button variant="outline" className="border-[#E2E8F0] text-[#2C3E50] rounded-full px-8 py-6 text-lg btn-hover" data-testid="hero-login-btn">
+                <Link to="/login" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto border-[#E2E8F0] text-[#2C3E50] rounded-full px-8 py-6 text-lg btn-hover" data-testid="hero-login-btn">
                     Sign In
                   </Button>
                 </Link>
