@@ -158,7 +158,7 @@ export default function DashboardPage() {
         )}
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <Link to="/settings" className="block">
             <Card className="bg-white border-[#E2E8F0] card-hover cursor-pointer transition-all hover:shadow-md hover:border-[#2C3E50]/30" data-testid="stat-children">
               <CardContent className="p-4 text-center">
@@ -211,6 +211,17 @@ export default function DashboardPage() {
                 </div>
                 <p className="text-2xl font-bold text-[#1A202C]">{stats?.counts?.events || 0}</p>
                 <p className="text-xs text-[#718096]">Events</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/contacts" className="block">
+            <Card className="bg-white border-[#E2E8F0] card-hover cursor-pointer transition-all hover:shadow-md hover:border-[#2C3E50]/30" data-testid="stat-contacts">
+              <CardContent className="p-4 text-center">
+                <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-[#E8F6F3] flex items-center justify-center">
+                  <UserPlus className="w-5 h-5 text-[#2C3E50]" />
+                </div>
+                <p className="text-2xl font-bold text-[#1A202C]">{stats?.counts?.contacts || 0}</p>
+                <p className="text-xs text-[#718096]">Contacts</p>
               </CardContent>
             </Card>
           </Link>
