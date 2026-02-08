@@ -151,11 +151,15 @@ export default function DocumentsPage() {
 
   const handleDownload = async (document) => {
     try {
+      toast.info("Downloading document...");
       const response = await axios.get(`${API}/documents/${document.document_id}/download`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'json'
       });
       
       const { filename, file_type, file_data } = response.data;
+      
+      // Decode base64 to blob
       const byteCharacters = atob(file_data);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -164,14 +168,66 @@ export default function DocumentsPage() {
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: file_type });
       
+      // Create download link
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = filename;
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
       URL.revokeObjectURL(url);
+      
+      toast.success("Document downloaded successfully");
     } catch (error) {
+      console.error("Download error:", error);
       toast.error("Failed to download document");
+    }
+  };
+
+  const handleShare = async (document) => {
+    try {
+      // Get the file data
+      const response = await axios.get(`${API}/documents/${document.document_id}/download`, {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'json'
+      });
+      
+      const { filename, file_type, file_data } = response.data;
+      
+      // Decode base64 to blob
+      const byteCharacters = atob(file_data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: file_type });
+      
+      // Create File object for Web Share API
+      const file = new File([blob], filename, { type: file_type });
+      
+      // Check if Web Share API is supported
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: filename,
+          text: document.description || `Sharing ${filename}`
+        });
+        toast.success("Document shared successfully");
+      } else {
+        // Fallback: Copy link or show message
+        toast.info("Web Share not supported. Document will be downloaded instead.");
+        handleDownload(document);
+      }
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        // User cancelled the share
+        console.log("Share cancelled");
+      } else {
+        console.error("Share error:", error);
+        toast.error("Failed to share document");
+      }
     }
   };
 
