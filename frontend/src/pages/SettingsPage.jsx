@@ -182,6 +182,87 @@ export default function SettingsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="flex items-center gap-6 pb-4 border-b border-[#E2E8F0]">
+              <div className="relative">
+                {user?.photo ? (
+                  <img 
+                    src={user.photo} 
+                    alt={user.full_name}
+                    className="w-20 h-20 rounded-full object-cover border-4 border-[#E8F6F3]"
+                  />
+                ) : (
+                  <div className="w-20 h-20 rounded-full bg-[#E8F6F3] flex items-center justify-center border-4 border-[#E8F6F3]">
+                    <User className="w-10 h-10 text-[#2C3E50]" />
+                  </div>
+                )}
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-[#1A202C]">{user?.full_name}</h3>
+                <p className="text-sm text-[#718096]">{user?.email}</p>
+                <Dialog open={profilePhotoDialogOpen} onOpenChange={setProfilePhotoDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="mt-2"
+                      onClick={() => setProfilePhoto(user?.photo || "")}
+                    >
+                      <Camera className="w-4 h-4 mr-2" />
+                      {user?.photo ? "Change Photo" : "Add Photo"}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="font-['Merriweather']">Update Profile Photo</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 mt-4">
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="relative">
+                          {profilePhoto ? (
+                            <img 
+                              src={profilePhoto} 
+                              alt="Profile preview"
+                              className="w-32 h-32 rounded-full object-cover border-4 border-[#E8F6F3]"
+                            />
+                          ) : (
+                            <div className="w-32 h-32 rounded-full bg-[#E8F6F3] flex items-center justify-center">
+                              <User className="w-16 h-16 text-[#718096]" />
+                            </div>
+                          )}
+                          <label htmlFor="profile-photo-upload" className="absolute bottom-0 right-0 w-10 h-10 bg-[#2C3E50] hover:bg-[#34495E] rounded-full flex items-center justify-center cursor-pointer">
+                            <Camera className="w-5 h-5 text-white" />
+                            <input
+                              id="profile-photo-upload"
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => handlePhotoUpload(e, true)}
+                            />
+                          </label>
+                        </div>
+                        <p className="text-xs text-[#718096] text-center">Click camera to upload photo (max 10MB)</p>
+                      </div>
+                      <div className="flex gap-3 pt-4">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setProfilePhotoDialogOpen(false)}
+                          className="flex-1"
+                        >
+                          Cancel
+                        </Button>
+                        <Button 
+                          onClick={handleProfilePhotoSave}
+                          className="flex-1 bg-[#2C3E50] hover:bg-[#34495E]"
+                        >
+                          Save Photo
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-[#718096]">Full Name</Label>
