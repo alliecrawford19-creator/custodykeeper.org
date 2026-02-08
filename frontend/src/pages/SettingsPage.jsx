@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { User, Plus, Trash2, Users, Calendar } from "lucide-react";
+import { User, Plus, Trash2, Users, Calendar, Camera, Edit2, X } from "lucide-react";
 import { format, parseISO, differenceInYears } from "date-fns";
 
 export default function SettingsPage() {
