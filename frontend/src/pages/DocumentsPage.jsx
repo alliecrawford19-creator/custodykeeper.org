@@ -580,6 +580,7 @@ export default function DocumentsPage() {
                       onClick={() => handlePreview(doc)}
                       className="border-[#E2E8F0] text-[#2C3E50]"
                       data-testid={`view-doc-${doc.document_id}`}
+                      title="Preview"
                     >
                       <Eye className="w-4 h-4" />
                     </Button>
@@ -589,8 +590,19 @@ export default function DocumentsPage() {
                       onClick={() => handleDownload(doc)}
                       className="border-[#E2E8F0] text-[#2C3E50]"
                       data-testid={`download-doc-${doc.document_id}`}
+                      title="Download"
                     >
                       <Download className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleShare(doc)}
+                      className="border-[#E2E8F0] text-[#2C3E50]"
+                      data-testid={`share-doc-${doc.document_id}`}
+                      title="Share"
+                    >
+                      <Share2 className="w-4 h-4" />
                     </Button>
                     <Button
                       variant="outline"
@@ -598,6 +610,7 @@ export default function DocumentsPage() {
                       onClick={() => handleDelete(doc.document_id)}
                       className="border-[#E2E8F0] text-red-500 hover:text-red-700 hover:bg-red-50"
                       data-testid={`delete-doc-${doc.document_id}`}
+                      title="Delete"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
