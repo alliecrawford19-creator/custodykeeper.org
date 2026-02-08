@@ -93,9 +93,17 @@ export const Layout = ({ children }) => {
                     className="flex items-center gap-2 text-[#2C3E50]"
                     data-testid="user-menu-trigger"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                      <User className="w-4 h-4 text-[#2C3E50]" />
-                    </div>
+                    {user?.photo ? (
+                      <img 
+                        src={user.photo} 
+                        alt={user.full_name}
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-[#E8F6F3] flex items-center justify-center">
+                        <User className="w-4 h-4 text-[#2C3E50]" />
+                      </div>
+                    )}
                     <span className="hidden sm:block text-sm font-medium">{user?.full_name}</span>
                     <ChevronDown className="w-4 h-4" />
                   </Button>
