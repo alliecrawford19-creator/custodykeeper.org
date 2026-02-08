@@ -62,6 +62,7 @@ class UserResponse(BaseModel):
     email: str
     full_name: str
     state: str
+    photo: Optional[str] = ""
     created_at: str
 
 class TokenResponse(BaseModel):
