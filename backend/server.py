@@ -1149,6 +1149,7 @@ async def get_dashboard_stats(current_user: dict = Depends(get_current_user)):
     violations_count = await db.violations.count_documents({"user_id": user_id})
     documents_count = await db.documents.count_documents({"user_id": user_id})
     events_count = await db.calendar_events.count_documents({"user_id": user_id})
+    contacts_count = await db.contacts.count_documents({"user_id": user_id})
     
     # Get upcoming events
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -1175,7 +1176,8 @@ async def get_dashboard_stats(current_user: dict = Depends(get_current_user)):
             "journals": journals_count,
             "violations": violations_count,
             "documents": documents_count,
-            "events": events_count
+            "events": events_count,
+            "contacts": contacts_count
         },
         "upcoming_events": upcoming_events,
         "recent_journals": recent_journals,
