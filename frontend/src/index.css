@@ -64,6 +64,33 @@ code, .mono {
     --chart-5: 27 87% 67%;
     --radius: 0.75rem;
   }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 14%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 14%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 163 47% 50%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 217 33% 25%;
+    --input: 217 33% 25%;
+    --ring: 163 47% 50%;
+    --chart-1: 24 100% 50%;
+    --chart-2: 163 47% 50%;
+    --chart-3: 210 40% 60%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
 }
 
 @layer base {
