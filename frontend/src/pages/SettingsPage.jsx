@@ -6,6 +6,8 @@ import { ProfileSection } from "@/components/settings/ProfileSection";
 import { ChildrenSection } from "@/components/settings/ChildrenSection";
 import { ExportDataSection } from "@/components/settings/ExportDataSection";
 import { SecuritySection } from "@/components/settings/SecuritySection";
+import { LanguageSection } from "@/components/settings/LanguageSection";
+import { useTranslation } from "react-i18next";
 
 export default function SettingsPage() {
   const { user, token, setUser } = useAuth();
