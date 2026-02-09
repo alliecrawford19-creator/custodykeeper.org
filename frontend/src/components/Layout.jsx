@@ -129,6 +129,14 @@ export const Layout = ({ children }) => {
                       Settings
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setContactDialogOpen(true)}
+                    className="flex items-center gap-2 cursor-pointer"
+                    data-testid="menu-contact"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    Contact Us
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={handleLogout}
