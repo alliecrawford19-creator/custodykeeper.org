@@ -228,44 +228,48 @@ export default function DashboardPage() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid gap-6">
           {/* Upcoming Events */}
-          <Card className="lg:col-span-2 bg-white border-[#E2E8F0]" data-testid="upcoming-events-card">
+          <Card className="bg-white border-[#E2E8F0]" data-testid="upcoming-events-card">
             <CardHeader className="flex flex-row items-center justify-between pb-4">
               <CardTitle className="font-['Merriweather'] text-lg font-bold text-[#1A202C]">
-                Upcoming Parenting Time
+                Upcoming Events
               </CardTitle>
               <Link to="/calendar">
                 <Button variant="ghost" size="sm" className="text-[#2C3E50]" data-testid="view-calendar-btn">
-                  View Calendar <ArrowRight className="w-4 h-4 ml-1" />
+                  View All <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </Link>
             </CardHeader>
             <CardContent>
               {stats?.upcoming_events?.length > 0 ? (
-                <div className="space-y-3">
-                  {stats.upcoming_events.map((event) => (
+                <div className="grid md:grid-cols-3 gap-4">
+                  {stats.upcoming_events.slice(0, 3).map((event) => (
                     <div
                       key={event.event_id}
-                      className="flex items-center gap-4 p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0]"
+                      className="flex flex-col gap-3 p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0]"
                       data-testid={`event-${event.event_id}`}
                     >
-                      <div className="w-12 h-12 rounded-lg bg-[#E8F6F3] flex items-center justify-center flex-shrink-0">
-                        <Calendar className="w-6 h-6 text-[#2C3E50]" />
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-lg bg-[#E8F6F3] flex items-center justify-center flex-shrink-0">
+                          <Calendar className="w-6 h-6 text-[#2C3E50]" />
+                        </div>
+                        <span className={`badge ${
+                          event.event_type === "court_date" ? "badge-danger" :
+                          event.event_type === "parenting_time" ? "badge-primary" : "badge-warning"
+                        }`}>
+                          {event.event_type.replace("_", " ")}
+                        </span>
                       </div>
-                      <div className="flex-1 min-w-0">
+                      <div className="min-w-0">
                         <p className="font-semibold text-[#1A202C] truncate">{event.title}</p>
-                        <p className="text-sm text-[#718096]">
+                        <p className="text-sm text-[#718096] mt-1">
                           {formatDate(event.start_date)}
-                          {event.location && ` • ${event.location}`}
                         </p>
+                        {event.location && (
+                          <p className="text-sm text-[#718096] truncate mt-1">{event.location}</p>
+                        )}
                       </div>
-                      <span className={`badge ${
-                        event.event_type === "court_date" ? "badge-danger" :
-                        event.event_type === "parenting_time" ? "badge-primary" : "badge-warning"
-                      }`}>
-                        {event.event_type.replace("_", " ")}
-                      </span>
                     </div>
                   ))}
                 </div>
@@ -278,154 +282,6 @@ export default function DashboardPage() {
                       <Plus className="w-4 h-4 mr-2" /> Add Event
                     </Button>
                   </Link>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Quick Actions */}
-          <Card className="bg-white border-[#E2E8F0]" data-testid="quick-actions-card">
-            <CardHeader>
-              <CardTitle className="font-['Merriweather'] text-lg font-bold text-[#1A202C]">
-                Quick Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Link to="/journal" className="block">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-3 h-12 border-[#E2E8F0] hover:bg-[#E8F6F3] hover:border-[#2C3E50]/30"
-                  data-testid="quick-add-journal"
-                >
-                  <BookOpen className="w-5 h-5 text-[#2C3E50]" />
-                  <span className="text-[#1A202C]">Add Journal Entry</span>
-                </Button>
-              </Link>
-              <Link to="/violations" className="block">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-3 h-12 border-[#E2E8F0] hover:bg-[#FEE2E2] hover:border-[#D35400]/30"
-                  data-testid="quick-log-violation"
-                >
-                  <AlertTriangle className="w-5 h-5 text-[#D35400]" />
-                  <span className="text-[#1A202C]">Log Violation</span>
-                </Button>
-              </Link>
-              <Link to="/documents" className="block">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-3 h-12 border-[#E2E8F0] hover:bg-[#E8F6F3] hover:border-[#2C3E50]/30"
-                  data-testid="quick-upload-doc"
-                >
-                  <FileText className="w-5 h-5 text-[#2C3E50]" />
-                  <span className="text-[#1A202C]">Upload Document</span>
-                </Button>
-              </Link>
-              <Link to="/calendar" className="block">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start gap-3 h-12 border-[#E2E8F0] hover:bg-[#E8F6F3] hover:border-[#2C3E50]/30"
-                  data-testid="quick-add-event"
-                >
-                  <Calendar className="w-5 h-5 text-[#2C3E50]" />
-                  <span className="text-[#1A202C]">Schedule Event</span>
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Recent Journals */}
-          <Card className="bg-white border-[#E2E8F0]" data-testid="recent-journals-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-4">
-              <CardTitle className="font-['Merriweather'] text-lg font-bold text-[#1A202C]">
-                Recent Journal Entries
-              </CardTitle>
-              <Link to="/journal">
-                <Button variant="ghost" size="sm" className="text-[#2C3E50]" data-testid="view-journals-btn">
-                  View All <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
-              </Link>
-            </CardHeader>
-            <CardContent>
-              {stats?.recent_journals?.length > 0 ? (
-                <div className="space-y-3">
-                  {stats.recent_journals.slice(0, 3).map((journal) => (
-                    <div
-                      key={journal.journal_id}
-                      className="p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0]"
-                      data-testid={`recent-journal-${journal.journal_id}`}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0 flex-1">
-                          <p className="font-semibold text-[#1A202C] truncate">{journal.title}</p>
-                          <p className="text-sm text-[#718096] line-clamp-2 mt-1">{journal.content}</p>
-                        </div>
-                        <span className="text-xs text-[#718096] whitespace-nowrap flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {formatDate(journal.date)}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="empty-state py-8">
-                  <BookOpen className="w-12 h-12 text-[#718096] opacity-50" />
-                  <p className="text-[#718096] mt-4">No journal entries yet</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Recent Violations */}
-          <Card className="bg-white border-[#E2E8F0]" data-testid="recent-violations-card">
-            <CardHeader className="flex flex-row items-center justify-between pb-4">
-              <CardTitle className="font-['Merriweather'] text-lg font-bold text-[#1A202C]">
-                Recent Violations
-              </CardTitle>
-              <Link to="/violations">
-                <Button variant="ghost" size="sm" className="text-[#2C3E50]" data-testid="view-violations-btn">
-                  View All <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
-              </Link>
-            </CardHeader>
-            <CardContent>
-              {stats?.recent_violations?.length > 0 ? (
-                <div className="space-y-3">
-                  {stats.recent_violations.slice(0, 3).map((violation) => (
-                    <div
-                      key={violation.violation_id}
-                      className="p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0]"
-                      data-testid={`recent-violation-${violation.violation_id}`}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <p className="font-semibold text-[#1A202C] truncate">{violation.title}</p>
-                            <span className={`badge text-xs ${
-                              violation.severity === "high" ? "severity-high" :
-                              violation.severity === "medium" ? "severity-medium" : "severity-low"
-                            }`}>
-                              {violation.severity}
-                            </span>
-                          </div>
-                          <p className="text-sm text-[#718096] line-clamp-2 mt-1">{violation.description}</p>
-                        </div>
-                        <span className="text-xs text-[#718096] whitespace-nowrap flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {formatDate(violation.date)}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="empty-state py-8">
-                  <AlertTriangle className="w-12 h-12 text-[#718096] opacity-50" />
-                  <p className="text-[#718096] mt-4">No violations logged</p>
                 </div>
               )}
             </CardContent>
