@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -17,16 +18,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2 } from "lucide-react";
+import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2, Edit2, Users } from "lucide-react";
 import { format, parseISO, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval, startOfWeek, endOfWeek, addMonths, subMonths } from "date-fns";
 
 const EVENT_TYPES = [
-  { value: "parenting_time", label: "Parenting Time", color: "bg-[#E8F6F3] text-[#2C3E50]" },
   { value: "family_court", label: "Family Court", color: "bg-[#FEE2E2] text-[#991B1B]" },
   { value: "child_support_court", label: "Child Support Court", color: "bg-[#FED7AA] text-[#9A3412]" },
   { value: "attorney", label: "Attorney Meeting", color: "bg-[#DBEAFE] text-[#1E40AF]" },
-  { value: "exchange", label: "Child Exchange", color: "bg-[#FEF3C7] text-[#92400E]" },
+  { value: "visitation", label: "Visitation", color: "bg-[#E8F6F3] text-[#2C3E50]" },
+  { value: "medical", label: "Medical Appointment", color: "bg-[#FCE7F3] text-[#9D174D]" },
+  { value: "school", label: "School Event", color: "bg-[#FEF3C7] text-[#92400E]" },
   { value: "other", label: "Other", color: "bg-[#F3F4F6] text-[#374151]" },
+];
+
+// Color palette for grouped children events
+const GROUP_COLORS = [
+  "#8B5CF6", "#EC4899", "#F97316", "#14B8A6", "#6366F1",
+  "#EF4444", "#22C55E", "#0EA5E9", "#F59E0B", "#A855F7"
 ];
 
 export default function CalendarPage() {
