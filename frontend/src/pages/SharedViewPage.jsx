@@ -12,7 +12,8 @@ import {
   Clock,
   MapPin,
   Shield,
-  Download
+  Download,
+  Printer
 } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
@@ -28,6 +29,10 @@ export default function SharedViewPage() {
   useEffect(() => {
     fetchSharedData();
   }, [shareToken]);
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   const fetchSharedData = async () => {
     try {
