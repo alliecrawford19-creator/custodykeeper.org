@@ -204,6 +204,12 @@ export default function JournalPage() {
             >
               <Download className="w-4 h-4 mr-2" /> Export
             </Button>
+            <PrintableExport 
+              title="Parenting Journal" 
+              records={filteredJournals} 
+              type="journal"
+              children={children}
+            />
             <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
               <DialogTrigger asChild>
                 <Button
