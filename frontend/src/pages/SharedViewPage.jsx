@@ -109,17 +109,24 @@ export default function SharedViewPage() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handlePrint}
-              className="border-[#E2E8F0]"
-            >
-              <Printer className="w-4 h-4 mr-2" /> Print Records
-            </Button>
+            {canPrint && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handlePrint}
+                className="border-[#E2E8F0]"
+              >
+                <Printer className="w-4 h-4 mr-2" /> Print Records
+              </Button>
+            )}
             <div className="flex items-center gap-2 text-sm text-[#718096]">
               <Shield className="w-4 h-4" />
-              <span>Read-Only View</span>
+              <span>
+                {data?.permission_level === 'read_only' && 'View Only'}
+                {data?.permission_level === 'read_print' && 'View & Print'}
+                {data?.permission_level === 'read_print_download' && 'Full Access'}
+                {!data?.permission_level && 'Read-Only View'}
+              </span>
             </div>
           </div>
         </div>
