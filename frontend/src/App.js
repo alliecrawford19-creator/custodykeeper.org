@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 // Pages
 import LandingPage from "@/pages/LandingPage";
@@ -26,42 +27,7 @@ const API = `${BACKEND_URL}/api`;
 // Create Auth Context
 const AuthContext = createContext(null);
 
-// Create Theme Context
-const ThemeContext = createContext(null);
-
 export const useAuth = () => useContext(AuthContext);
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  // Return default values if outside provider
-  if (!context) {
-    return { theme: "light", setTheme: () => {}, toggleTheme: () => {} };
-  }
-  return context;
-};
-
-// Theme Provider Component
-const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem("theme");
-    return saved || "light";
-  });
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === "light" ? "dark" : "light");
-  };
-
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
 
 // Auth Provider Component
 const AuthProvider = ({ children }) => {
