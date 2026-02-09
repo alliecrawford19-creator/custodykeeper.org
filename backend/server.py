@@ -1843,6 +1843,41 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Create database indexes for better performance
+@app.on_event("startup")
+async def create_indexes():
+    """Create indexes for better query performance"""
+    try:
+        # User indexes
+        await db.users.create_index("email", unique=True)
+        await db.users.create_index("user_id", unique=True)
+        
+        # Journal indexes
+        await db.journals.create_index([("user_id", 1), ("date", -1)])
+        await db.journals.create_index([("user_id", 1), ("children_involved", 1)])
+        
+        # Violation indexes
+        await db.violations.create_index([("user_id", 1), ("date", -1)])
+        await db.violations.create_index([("user_id", 1), ("severity", 1)])
+        
+        # Calendar indexes
+        await db.calendar_events.create_index([("user_id", 1), ("start_date", -1)])
+        await db.calendar_events.create_index([("user_id", 1), ("event_type", 1)])
+        
+        # Document indexes
+        await db.documents.create_index([("user_id", 1), ("category", 1)])
+        
+        # Contact indexes
+        await db.contacts.create_index([("user_id", 1), ("category", 1)])
+        
+        # Share token indexes
+        await db.share_tokens.create_index("share_token", unique=True)
+        await db.share_tokens.create_index([("user_id", 1), ("is_active", 1)])
+        
+        logger.info("Database indexes created successfully")
+    except Exception as e:
+        logger.warning(f"Index creation warning (may already exist): {str(e)}")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
