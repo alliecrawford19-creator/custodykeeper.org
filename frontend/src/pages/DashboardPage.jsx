@@ -255,7 +255,7 @@ export default function DashboardPage() {
                   <Calendar className="w-5 h-5 text-[#2C3E50]" />
                 </div>
                 <p className="text-2xl font-bold text-[#1A202C]">{stats?.counts?.events || 0}</p>
-                <p className="text-xs text-[#718096]">Events</p>
+                <p className="text-xs text-[#718096]">Calendar</p>
               </CardContent>
             </Card>
           </Link>
