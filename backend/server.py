@@ -790,6 +790,10 @@ async def get_calendar_events(current_user: dict = Depends(get_current_user)):
         {"user_id": current_user["user_id"]}, 
         {"_id": 0}
     ).sort("start_date", 1).to_list(1000)
+    # Add default values for custom_color if not present
+    for event in events:
+        if "custom_color" not in event:
+            event["custom_color"] = ""
     return [CalendarEventResponse(**event) for event in events]
 
 @api_router.put("/calendar/{event_id}", response_model=CalendarEventResponse)
@@ -802,7 +806,8 @@ async def update_calendar_event(event_id: str, event_data: CalendarEventCreate, 
         "children_involved": event_data.children_involved,
         "notes": event_data.notes or "",
         "location": event_data.location or "",
-        "recurring": event_data.recurring or False
+        "recurring": event_data.recurring or False,
+        "custom_color": event_data.custom_color or ""
     }
     
     result = await db.calendar_events.update_one(
@@ -817,6 +822,8 @@ async def update_calendar_event(event_id: str, event_data: CalendarEventCreate, 
         {"event_id": event_id}, 
         {"_id": 0}
     )
+    if "custom_color" not in event:
+        event["custom_color"] = ""
     return CalendarEventResponse(**event)
 
 @api_router.delete("/calendar/{event_id}")
