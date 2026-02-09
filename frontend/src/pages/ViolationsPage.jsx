@@ -388,7 +388,7 @@ export default function ViolationsPage() {
             />
           </div>
           <Select value={filterSeverity} onValueChange={setFilterSeverity}>
-            <SelectTrigger className="w-full sm:w-48 h-12 bg-white border-[#E2E8F0]" data-testid="filter-severity-select">
+            <SelectTrigger className="w-full sm:w-48 h-12 bg-white border-[#E2E8F0] text-[#1A202C]" data-testid="filter-severity-select">
               <SelectValue placeholder="Filter by severity" />
             </SelectTrigger>
             <SelectContent>

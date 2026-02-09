@@ -542,7 +542,7 @@ export default function DocumentsPage() {
             />
           </div>
           <Select value={filterCategory} onValueChange={setFilterCategory}>
-            <SelectTrigger className="w-full sm:w-48 h-12 bg-white border-[#E2E8F0]" data-testid="filter-category-select">
+            <SelectTrigger className="w-full sm:w-48 h-12 bg-white border-[#E2E8F0] text-[#1A202C]" data-testid="filter-category-select">
               <SelectValue placeholder="Filter by category" />
             </SelectTrigger>
             <SelectContent>
@@ -568,8 +568,8 @@ export default function DocumentsPage() {
                     <div className="flex-shrink-0">
                       {getFileIcon(doc.file_type)}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[#1A202C] truncate text-sm">{doc.filename}</p>
+                    <div className="flex-1 min-w-0 overflow-hidden">
+                      <p className="font-semibold text-[#1A202C] truncate text-sm max-w-full" title={doc.filename}>{doc.filename}</p>
                       <p className="text-xs text-[#718096] mt-1">
                         {DOCUMENT_CATEGORIES.find(c => c.value === doc.category)?.label}
                       </p>
