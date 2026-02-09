@@ -106,12 +106,13 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [ ] PDF export for journals and violations (court-ready format)
 - [ ] Document preview/viewer in-app
 - [ ] Mobile-responsive polish for on-the-go use
+- [ ] Verify Documents Share button works on mobile
 
 ### P1 - High Priority
 - [ ] Recurring calendar events
 - [ ] Notification reminders for upcoming events
 - [ ] Photo/evidence attachment to journal entries
-- [ ] Court date countdown widget
+- [ ] Multiple children selection in Journal entries
 
 ### P2 - Nice to Have
 - [ ] Multi-child filtering in journals
@@ -119,6 +120,8 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [ ] Print-friendly export formatting
 - [ ] Attorney collaboration/sharing mode
 - [ ] Dark mode theme option
+- [ ] Refactor SettingsPage.jsx into smaller components
+- [ ] Refactor LandingPage.jsx static content into components
 
 ## Tech Stack
 - **Frontend**: React 19, Tailwind CSS, Shadcn/UI
