@@ -199,6 +199,28 @@ class CalendarEventResponse(BaseModel):
     custom_color: str
     created_at: str
 
+# Share Token Models
+class ShareTokenCreate(BaseModel):
+    name: str  # Attorney name or description
+    expires_days: int = 30  # Token expires after N days
+    include_journals: bool = True
+    include_violations: bool = True
+    include_documents: bool = True
+    include_calendar: bool = True
+
+class ShareTokenResponse(BaseModel):
+    token_id: str
+    user_id: str
+    name: str
+    share_token: str
+    expires_at: str
+    include_journals: bool
+    include_violations: bool
+    include_documents: bool
+    include_calendar: bool
+    created_at: str
+    is_active: bool
+
 # Email Models
 class EmailRequest(BaseModel):
     recipient_email: EmailStr
