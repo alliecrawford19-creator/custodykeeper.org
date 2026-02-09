@@ -98,6 +98,12 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] **Print-Friendly Calendar Export** - Export PDF and Print buttons in calendar header
 - [x] **Mobile Responsive Calendar** - Optimized layout for smaller screens
 
+### Phase 5 - Code Quality & Bug Fixes ✅ (Feb 9, 2026)
+- [x] **White Popup Text Fix** - Fixed text visibility on white dialog popups (dialog, sheet, popover, dropdown, select, alert-dialog)
+- [x] **Component Refactoring** - SettingsPage split into ProfileSection + ChildrenSection components
+- [x] **Component Refactoring** - LandingPage split into Navbar, HeroSection, FeatureSection, ResearchSection, DocumentationSection, Footer components
+- [x] New component directories: `/src/components/settings/` and `/src/components/landing/`
+
 ### Testing Results
 - Backend: 100% pass rate
 - Frontend: 100% pass rate
