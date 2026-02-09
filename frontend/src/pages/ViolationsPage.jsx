@@ -53,14 +53,18 @@ export default function ViolationsPage() {
   const [violations, setViolations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingViolation, setEditingViolation] = useState(null);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [selectedViolation, setSelectedViolation] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState("all");
   const [filterSeverity, setFilterSeverity] = useState("all");
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
+    violation_type: "parenting_time_denial",
     description: "",
-    date: format(new Date(), "yyyy-MM-dd"),
-    violation_type: "custody_interference",
+    date: new Date().toISOString().split("T")[0],
     severity: "medium",
     witnesses: "",
     evidence_notes: ""
