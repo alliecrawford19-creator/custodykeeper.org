@@ -43,17 +43,20 @@ export default function CalendarPage() {
   const [children, setChildren] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     start_date: "",
     end_date: "",
-    event_type: "parenting_time",
+    event_type: "visitation",
     children_involved: [],
     notes: "",
     location: "",
-    recurring: false
+    recurring: false,
+    custom_color: ""
   });
 
   useEffect(() => {
