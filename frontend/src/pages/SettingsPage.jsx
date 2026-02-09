@@ -48,10 +48,13 @@ export default function SettingsPage() {
         {/* Header */}
         <div>
           <h1 className="font-['Merriweather'] text-2xl sm:text-3xl font-bold text-[#1A202C]">
-            Settings
+            {t('settings.title')}
           </h1>
-          <p className="text-[#718096] mt-1">Manage your account, security, and children's information</p>
+          <p className="text-[#718096] mt-1">{t('settings.subtitle')}</p>
         </div>
+
+        {/* Language Section */}
+        <LanguageSection />
 
         {/* Profile Section */}
         <ProfileSection 
