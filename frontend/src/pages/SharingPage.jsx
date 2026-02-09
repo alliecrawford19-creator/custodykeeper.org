@@ -279,8 +279,8 @@ export default function SharingPage() {
           </Dialog>
         </div>
 
-        {/* Info Card */}
-        <Card className="bg-[#E8F6F3] border-none">
+        {/* Info Card - Hidden on mobile to prevent overlap */}
+        <Card className="bg-[#E8F6F3] border-none hidden sm:block">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
               <Shield className="w-8 h-8 text-[#2C3E50] flex-shrink-0" />
