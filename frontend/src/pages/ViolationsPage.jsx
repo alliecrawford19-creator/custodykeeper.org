@@ -88,16 +88,37 @@ export default function ViolationsPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API}/violations`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      toast.success("Violation logged successfully");
+      if (editingViolation) {
+        await axios.put(`${API}/violations/${editingViolation.violation_id}`, formData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success("Violation updated successfully");
+      } else {
+        await axios.post(`${API}/violations`, formData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success("Violation logged successfully");
+      }
       setDialogOpen(false);
       resetForm();
       fetchViolations();
     } catch (error) {
-      toast.error("Failed to log violation");
+      toast.error(editingViolation ? "Failed to update violation" : "Failed to log violation");
     }
+  };
+
+  const handleEdit = (violation) => {
+    setEditingViolation(violation);
+    setFormData({
+      title: violation.title,
+      violation_type: violation.violation_type,
+      description: violation.description,
+      date: violation.date,
+      severity: violation.severity,
+      witnesses: violation.witnesses || "",
+      evidence_notes: violation.evidence_notes || ""
+    });
+    setDialogOpen(true);
   };
 
   const handleDelete = async (violationId) => {
