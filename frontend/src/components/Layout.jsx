@@ -33,7 +33,7 @@ const navItems = [
   { path: "/violations", label: "Violations", icon: AlertTriangle },
   { path: "/documents", label: "Documents", icon: FileText },
   { path: "/contacts", label: "Contacts", icon: UserPlus },
-  { path: "/state-laws", label: "State Laws", icon: Gavel },
+  { path: "/state-laws", label: "Support & Advocacy", icon: Gavel },
 ];
 
 export const Layout = ({ children }) => {
