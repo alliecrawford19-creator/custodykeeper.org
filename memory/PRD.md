@@ -76,29 +76,23 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] Warm professional design with Merriweather/Lato fonts
 - [x] Mobile responsive design
 
-### Recent Updates (Feb 9, 2026)
-- ✅ Calendar Enhancements:
-  - Added edit functionality for all calendar entries
-  - Removed "Parenting Time" and "Child Exchange" event types
-  - Added new event types: Visitation, Medical Appointment, School Event
-  - Children can be associated with events (uses child's color)
-  - Group events (multiple children) can have custom color
-- ✅ Dashboard Clickable Events:
-  - Events in "Upcoming Events" section are now clickable
-  - Opens detail dialog with event info (title, date, location, notes)
-  - "Edit in Calendar" button navigates to Calendar page
-- ✅ Universal Edit Functionality:
-  - Journals: Edit working
-  - Violations: Edit working
-  - Contacts: Edit working
-  - Children: Edit working
-  - Calendar Events: Edit working (NEW)
-- ✅ Bug Fix: Dialog overlay blocking clicks (fixed bg-white to bg-black/60)
+### Phase 2 - New Features Complete ✅ (Feb 9, 2026)
+- [x] **Dark Mode Theme** - Toggle in header, persists via localStorage
+- [x] **Timeline/History View** - Chronological view of all records at /timeline
+  - Filter by record type (journals, violations, events, documents)
+  - Search functionality
+  - Date range filters
+  - Sort by newest/oldest
+- [x] **Multi-Child Filtering in Journals** - Filter entries by specific child
+- [x] **Print-Friendly Export** - Print buttons on Journals and Violations pages
+- [x] **Recurring Calendar Events** - Daily, Weekly, Bi-weekly, Monthly patterns
+  - End date for recurrence
+  - Visual display of recurring events on calendar
 
 ### Testing Results
 - Backend: 100% pass rate
 - Frontend: 100% pass rate
-- All CRUD operations verified across Calendar, Violations, Journals, Contacts
+- All features verified working
 
 ## Prioritized Backlog
 
