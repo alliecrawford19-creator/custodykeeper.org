@@ -26,11 +26,16 @@ export default function SharedViewPage() {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('journals');
 
+  // Permission helpers
+  const canPrint = data?.permission_level === 'read_print' || data?.permission_level === 'read_print_download';
+  const canDownload = data?.permission_level === 'read_print_download';
+
   useEffect(() => {
     fetchSharedData();
   }, [shareToken]);
 
   const handlePrint = () => {
+    if (!canPrint) return;
     window.print();
   };
 
