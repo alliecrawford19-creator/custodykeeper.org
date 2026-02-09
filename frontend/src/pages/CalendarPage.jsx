@@ -358,16 +358,41 @@ export default function CalendarPage() {
             </h1>
             <p className="text-[#718096] mt-1">Track parenting time, court dates, and attorney meetings</p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
-            <DialogTrigger asChild>
-              <Button
-                className="bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full btn-hover"
-                onClick={() => openNewEventDialog()}
-                data-testid="add-event-btn"
-              >
-                <Plus className="w-4 h-4 mr-2" /> Add Event
-              </Button>
-            </DialogTrigger>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                const monthEvents = events.filter(event => {
+                  const eventDate = parseISO(event.start_date);
+                  return eventDate.getMonth() === currentMonth.getMonth() && 
+                         eventDate.getFullYear() === currentMonth.getFullYear();
+                });
+                generateCalendarPDF({ events: monthEvents, month: currentMonth, children });
+                toast.success("Calendar PDF downloaded");
+              }}
+              className="border-[#E2E8F0]"
+              data-testid="export-calendar-pdf-btn"
+            >
+              <FileDown className="w-4 h-4 mr-2" /> Export PDF
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.print()}
+              className="border-[#E2E8F0]"
+              data-testid="print-calendar-btn"
+            >
+              <Printer className="w-4 h-4 mr-2" /> Print
+            </Button>
+            <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
+              <DialogTrigger asChild>
+                <Button
+                  className="bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full btn-hover"
+                  onClick={() => openNewEventDialog()}
+                  data-testid="add-event-btn"
+                >
+                  <Plus className="w-4 h-4 mr-2" /> Add Event
+                </Button>
+              </DialogTrigger>
             <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="font-['Merriweather']">
