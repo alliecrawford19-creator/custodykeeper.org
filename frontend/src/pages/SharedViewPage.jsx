@@ -83,8 +83,19 @@ export default function SharedViewPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
+      {/* Print Styles */}
+      <style>{`
+        @media print {
+          .no-print { display: none !important; }
+          .print-break { page-break-before: always; }
+          body { background: white !important; }
+          .bg-\\[\\#FDFBF7\\] { background: white !important; }
+          .bg-\\[\\#E8F6F3\\] { background: #f0f0f0 !important; }
+        }
+      `}</style>
+      
       {/* Header */}
-      <header className="bg-white border-b border-[#E2E8F0] py-4">
+      <header className="bg-white border-b border-[#E2E8F0] py-4 no-print">
         <div className="max-w-5xl mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Scale className="w-8 h-8 text-[#2C3E50]" />
@@ -92,12 +103,32 @@ export default function SharedViewPage() {
               CustodyKeeper
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-[#718096]">
-            <Shield className="w-4 h-4" />
-            <span>Read-Only View</span>
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handlePrint}
+              className="border-[#E2E8F0]"
+            >
+              <Printer className="w-4 h-4 mr-2" /> Print Records
+            </Button>
+            <div className="flex items-center gap-2 text-sm text-[#718096]">
+              <Shield className="w-4 h-4" />
+              <span>Read-Only View</span>
+            </div>
           </div>
         </div>
       </header>
+
+      {/* Print Header - Only shows when printing */}
+      <div className="hidden print:block p-4 border-b border-gray-300 mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <Scale className="w-6 h-6" />
+          <span className="font-bold text-lg">CustodyKeeper - Shared Records</span>
+        </div>
+        <p className="text-sm text-gray-600">Shared by: {data?.shared_by}</p>
+        <p className="text-sm text-gray-600">Printed: {format(new Date(), "MMMM d, yyyy")}</p>
+      </div>
 
       <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Info Banner */}
