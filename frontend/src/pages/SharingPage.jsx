@@ -330,9 +330,9 @@ export default function SharingPage() {
                           <span className="badge badge-warning">Documents</span>
                         )}
                         {shareToken.include_calendar && (
-                          <span className="badge bg-green-100 text-green-700">Calendar</span>
+                          <span className="badge bg-green-100 text-green-800">Calendar</span>
                         )}
-                        <span className="badge bg-purple-100 text-purple-700">
+                        <span className="badge bg-purple-100 text-purple-800 font-medium">
                           {PERMISSION_LABELS[shareToken.permission_level || "read_only"]?.label || "View Only"}
                         </span>
                       </div>
