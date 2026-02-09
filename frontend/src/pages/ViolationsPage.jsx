@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, AlertTriangle, Search, Trash2, Download, Clock, FileWarning } from "lucide-react";
+import { Plus, AlertTriangle, Search, Trash2, Download, Clock, FileWarning, Edit2 } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
 const VIOLATION_TYPES = [
