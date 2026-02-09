@@ -187,6 +187,8 @@ export default function DocumentsPage() {
 
   const handleShare = async (document) => {
     try {
+      toast.info("Preparing document for sharing...");
+      
       // Get the file data
       const response = await axios.get(`${API}/documents/${document.document_id}/download`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -208,26 +210,31 @@ export default function DocumentsPage() {
       const file = new File([blob], filename, { type: file_type });
       
       // Check if Web Share API is supported
-      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: filename,
-          text: document.description || `Sharing ${filename}`
-        });
-        toast.success("Document shared successfully");
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: filename,
+            text: document.description || `Sharing ${filename}`
+          });
+          toast.success("Document shared successfully");
+        } catch (shareError) {
+          if (shareError.name === 'AbortError') {
+            // User cancelled the share
+            console.log("Share cancelled");
+            toast.info("Share cancelled");
+          } else {
+            throw shareError;
+          }
+        }
       } else {
-        // Fallback: Copy link or show message
-        toast.info("Web Share not supported. Document will be downloaded instead.");
+        // Fallback: Download instead
+        toast.info("Sharing not available. Downloading document instead.");
         handleDownload(document);
       }
     } catch (error) {
-      if (error.name === 'AbortError') {
-        // User cancelled the share
-        console.log("Share cancelled");
-      } else {
-        console.error("Share error:", error);
-        toast.error("Failed to share document");
-      }
+      console.error("Share error:", error);
+      toast.error("Failed to share document. Try downloading instead.");
     }
   };
 
