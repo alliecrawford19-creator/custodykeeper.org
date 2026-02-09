@@ -86,7 +86,8 @@ export default function SharingPage() {
         include_journals: true,
         include_violations: true,
         include_documents: true,
-        include_calendar: true
+        include_calendar: true,
+        permission_level: "read_print"
       });
       fetchTokens();
     } catch (error) {
