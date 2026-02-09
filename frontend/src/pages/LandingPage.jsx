@@ -60,7 +60,7 @@ export default function LandingPage() {
               <div className="flex flex-col sm:flex-row gap-4 pb-6">
                 <Link to="/register" className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full px-8 py-6 text-lg font-bold shadow-lg btn-hover" data-testid="hero-get-started-btn">
-                    Start Documenting Free
+                    Start Documenting Today
                   </Button>
                 </Link>
                 <Link to="/login" className="w-full sm:w-auto">
