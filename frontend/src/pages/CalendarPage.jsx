@@ -140,20 +140,59 @@ export default function CalendarPage() {
       title: "",
       start_date: "",
       end_date: "",
-      event_type: "parenting_time",
+      event_type: "visitation",
       children_involved: [],
       notes: "",
       location: "",
-      recurring: false
+      recurring: false,
+      custom_color: ""
     });
+    setEditingEvent(null);
   };
 
   const openNewEventDialog = (date = null) => {
+    resetForm();
     if (date) {
       const dateStr = format(date, "yyyy-MM-dd");
       setFormData(prev => ({ ...prev, start_date: dateStr, end_date: dateStr }));
     }
     setDialogOpen(true);
+  };
+
+  const handleViewEvent = (event) => {
+    setSelectedEvent(event);
+    setViewDialogOpen(true);
+  };
+
+  const toggleChildInvolved = (childId) => {
+    setFormData(prev => {
+      const isSelected = prev.children_involved.includes(childId);
+      return {
+        ...prev,
+        children_involved: isSelected
+          ? prev.children_involved.filter(id => id !== childId)
+          : [...prev.children_involved, childId]
+      };
+    });
+  };
+
+  // Get the display color for an event based on children involved
+  const getEventDisplayColor = (event) => {
+    // If custom color is set (for grouped events), use it
+    if (event.custom_color) {
+      return event.custom_color;
+    }
+    
+    // If single child is involved, use their color
+    if (event.children_involved && event.children_involved.length === 1) {
+      const child = children.find(c => c.child_id === event.children_involved[0]);
+      if (child?.color) {
+        return child.color;
+      }
+    }
+    
+    // Default: use event type color
+    return null;
   };
 
   const getEventsForDate = (date) => {
