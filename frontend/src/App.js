@@ -18,6 +18,7 @@ import DocumentsPage from "@/pages/DocumentsPage";
 import StateLawsPage from "@/pages/StateLawsPage";
 import SettingsPage from "@/pages/SettingsPage";
 import ContactsPage from "@/pages/ContactsPage";
+import TimelinePage from "@/pages/TimelinePage";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -25,7 +26,35 @@ const API = `${BACKEND_URL}/api`;
 // Create Auth Context
 const AuthContext = createContext(null);
 
+// Create Theme Context
+const ThemeContext = createContext(null);
+
 export const useAuth = () => useContext(AuthContext);
+export const useTheme = () => useContext(ThemeContext);
+
+// Theme Provider Component
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved || "light";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === "light" ? "dark" : "light");
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
 
 // Auth Provider Component
 const AuthProvider = ({ children }) => {
