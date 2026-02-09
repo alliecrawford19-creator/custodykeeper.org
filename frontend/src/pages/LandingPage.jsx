@@ -27,11 +27,6 @@ export default function LandingPage() {
                   Sign In
                 </Button>
               </Link>
-              <Link to="/register">
-                <Button className="bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full px-6" data-testid="nav-register-btn">
-                  Get Started
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
