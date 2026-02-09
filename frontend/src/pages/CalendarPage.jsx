@@ -430,6 +430,64 @@ export default function CalendarPage() {
                   </div>
                 )}
 
+                {/* Recurring Event */}
+                <div className="space-y-4 p-4 bg-[#FDFBF7] rounded-lg border border-[#E2E8F0]">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Repeat className="w-4 h-4 text-[#2C3E50]" />
+                      <Label className="font-medium">Recurring Event</Label>
+                    </div>
+                    <Switch
+                      checked={formData.recurring}
+                      onCheckedChange={(checked) => setFormData({ 
+                        ...formData, 
+                        recurring: checked,
+                        recurrence_pattern: checked ? 'weekly' : '',
+                        recurrence_end_date: ''
+                      })}
+                      data-testid="recurring-toggle"
+                    />
+                  </div>
+                  
+                  {formData.recurring && (
+                    <div className="space-y-4 pt-2">
+                      <div className="space-y-2">
+                        <Label>Repeat Pattern</Label>
+                        <Select
+                          value={formData.recurrence_pattern}
+                          onValueChange={(value) => setFormData({ ...formData, recurrence_pattern: value })}
+                        >
+                          <SelectTrigger className="border-[#E2E8F0]" data-testid="recurrence-pattern-select">
+                            <SelectValue placeholder="Select pattern" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {RECURRENCE_PATTERNS.map(pattern => (
+                              <SelectItem key={pattern.value} value={pattern.value}>
+                                {pattern.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>End Repeat (optional)</Label>
+                        <Input
+                          type="date"
+                          value={formData.recurrence_end_date}
+                          onChange={(e) => setFormData({ ...formData, recurrence_end_date: e.target.value })}
+                          min={formData.start_date}
+                          className="border-[#E2E8F0]"
+                          data-testid="recurrence-end-date"
+                        />
+                        <p className="text-xs text-[#718096]">
+                          If not set, events will repeat for 6 months.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 <div className="space-y-2">
                   <Label>Location (optional)</Label>
                   <Input
