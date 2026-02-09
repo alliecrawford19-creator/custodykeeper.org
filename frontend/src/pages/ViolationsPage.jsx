@@ -431,6 +431,15 @@ export default function ViolationsPage() {
                       <Button
                         variant="outline"
                         size="sm"
+                        onClick={() => handleEdit(violation)}
+                        className="border-[#E2E8F0] text-[#2C3E50] hover:bg-[#E8F6F3]"
+                        data-testid={`edit-violation-${violation.violation_id}`}
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => handleDelete(violation.violation_id)}
                         className="border-[#E2E8F0] text-red-500 hover:text-red-700 hover:bg-red-50"
                         data-testid={`delete-violation-${violation.violation_id}`}
