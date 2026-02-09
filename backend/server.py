@@ -1101,11 +1101,11 @@ PARENTAL_ALIENATION_RESOURCES = [
         ]
     },
     {
-        "name": "Children's Rights Council",
+        "name": "The Children's Rights Movement",
         "description": "Non-profit focused on ensuring children have meaningful relationships with both parents",
         "links": [
             {"platform": "Website", "url": "https://projectcoparent.com"},
-            {"platform": "Facebook", "url": "https://www.facebook.com/ChildrensRightsCouncil"}
+            {"platform": "Facebook", "url": "https://www.facebook.com/share/1CFtrz3ihh/"}
         ]
     },
     {
