@@ -579,8 +579,8 @@ export default function CalendarPage() {
 
         {/* Calendar */}
         <Card className="bg-white border-[#E2E8F0]" data-testid="calendar-card">
-          <CardHeader className="flex flex-row items-center justify-between pb-4">
-            <div className="flex items-center gap-4">
+          <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <Button
                 variant="outline"
                 size="sm"
@@ -590,7 +590,7 @@ export default function CalendarPage() {
               >
                 ←
               </Button>
-              <h2 className="font-['Merriweather'] text-xl font-bold text-[#1A202C]">
+              <h2 className="font-['Merriweather'] text-lg sm:text-xl font-bold text-[#1A202C]">
                 {format(currentMonth, "MMMM yyyy")}
               </h2>
               <Button
@@ -613,11 +613,11 @@ export default function CalendarPage() {
               Today
             </Button>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-2 sm:px-6">
             {/* Day headers */}
             <div className="grid grid-cols-7 mb-2">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(day => (
-                <div key={day} className="text-center text-sm font-semibold text-[#718096] py-2">
+                <div key={day} className="text-center text-xs sm:text-sm font-semibold text-[#718096] py-2">
                   {day}
                 </div>
               ))}
