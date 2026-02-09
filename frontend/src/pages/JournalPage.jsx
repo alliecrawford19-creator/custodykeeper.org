@@ -44,7 +44,6 @@ export default function JournalPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingJournal, setEditingJournal] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
