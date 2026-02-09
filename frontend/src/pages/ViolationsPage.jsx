@@ -221,7 +221,7 @@ export default function ViolationsPage() {
             </h1>
             <p className="text-[#718096] mt-1">Document custody agreement violations for legal proceedings</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <Button
               variant="outline"
               onClick={handleExport}
@@ -229,6 +229,14 @@ export default function ViolationsPage() {
               data-testid="export-violations-btn"
             >
               <Download className="w-4 h-4 mr-2" /> Export
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handlePDFExport}
+              className="border-[#E2E8F0] text-[#2C3E50]"
+              data-testid="pdf-export-violations-btn"
+            >
+              <FileText className="w-4 h-4 mr-2" /> PDF
             </Button>
             <PrintableExport 
               title="Violation Log" 
