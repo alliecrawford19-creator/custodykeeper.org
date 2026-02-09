@@ -1711,8 +1711,8 @@ async def import_calendar(
 async def get_import_template(data_type: str):
     """Get CSV template for importing data"""
     templates = {
-        "journals": "title,date,entry,mood\n\"Family dinner\",\"2026-01-15\",\"Had a wonderful dinner with the kids...\",\"happy\"\n",
-        "violations": "violation_type,date,time,description,severity,witnesses,evidence_notes\n\"Late pickup\",\"2026-01-15\",\"18:30\",\"Was 45 minutes late for pickup\",\"medium\",\"Neighbor saw\",\"Text messages saved\"\n",
+        "journals": "title,date,entry,mood,location\n\"Family dinner\",\"2026-01-15\",\"Had a wonderful dinner with the kids...\",\"happy\",\"Home\"\n",
+        "violations": "title,violation_type,date,description,severity,witnesses,evidence_notes\n\"Late pickup incident\",\"Late pickup\",\"2026-01-15\",\"Was 45 minutes late for pickup\",\"medium\",\"Neighbor saw\",\"Text messages saved\"\n",
         "calendar": "title,start_date,end_date,event_type,location,notes\n\"Court hearing\",\"2026-02-20\",\"2026-02-20\",\"court_date\",\"Family Court Room 3\",\"Custody modification hearing\"\n"
     }
     
