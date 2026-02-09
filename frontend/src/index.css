@@ -224,3 +224,92 @@ input:focus, textarea:focus, select:focus, button:focus-visible {
     display: contents !important;
   }
 }
+
+/* Dark mode specific styles */
+.dark .gradient-hero {
+  background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+}
+
+.dark .glass {
+  background: rgba(45, 55, 72, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark ::selection {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Badge styles */
+.badge {
+  @apply px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.badge-primary {
+  @apply bg-[#E8F6F3] text-[#2C3E50];
+}
+
+.badge-danger {
+  @apply bg-red-100 text-red-700;
+}
+
+.badge-warning {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.dark .badge-primary {
+  @apply bg-[#2D3748] text-[#4FD1C5];
+}
+
+.dark .badge-danger {
+  @apply bg-red-900/30 text-red-400;
+}
+
+.dark .badge-warning {
+  @apply bg-amber-900/30 text-amber-400;
+}
+
+/* Empty state styling */
+.empty-state {
+  @apply flex flex-col items-center justify-center text-center;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .dark body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
