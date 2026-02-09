@@ -726,7 +726,7 @@ async def upload_document(
     ]
     
     if file.content_type not in allowed_types:
-        raise HTTPException(status_code=400, detail=f"File type not allowed. Supported: PDF, Images, Word docs, Videos, Audio")
+        raise HTTPException(status_code=400, detail="File type not allowed. Supported: PDF, Images, Word docs, Videos, Audio")
     
     # Read file content
     file_content = await file.read()
@@ -1231,9 +1231,9 @@ async def send_email(request: EmailRequest, current_user: dict = Depends(get_cur
         sender_email = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
         
         # Build email content based on content_type
-        html_content = f"<h2>Family Court Records Export</h2>"
+        html_content = "<h2>Family Court Records Export</h2>"
         html_content += f"<p>Sent by: {current_user['full_name']}</p>"
-        html_content += f"<hr>"
+        html_content += "<hr>"
         
         if request.content_type == "journals":
             journals = await db.journals.find(
@@ -1245,7 +1245,7 @@ async def send_email(request: EmailRequest, current_user: dict = Depends(get_cur
                 html_content += f"<h3>{journal['title']}</h3>"
                 html_content += f"<p><strong>Date:</strong> {journal['date']}</p>"
                 html_content += f"<p>{journal['content']}</p>"
-                html_content += f"<hr>"
+                html_content += "<hr>"
         
         elif request.content_type == "violations":
             violations = await db.violations.find(
@@ -1259,7 +1259,7 @@ async def send_email(request: EmailRequest, current_user: dict = Depends(get_cur
                 html_content += f"<p><strong>Type:</strong> {violation['violation_type']}</p>"
                 html_content += f"<p><strong>Severity:</strong> {violation['severity']}</p>"
                 html_content += f"<p>{violation['description']}</p>"
-                html_content += f"<hr>"
+                html_content += "<hr>"
         
         params = {
             "from": sender_email,
