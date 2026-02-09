@@ -111,8 +111,8 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] Print-friendly export for calendar - Export PDF and Print buttons added
 
 ### P1 - High Priority
-- [ ] Component refactoring (SettingsPage, LandingPage into smaller components)
-- [ ] Email notification reminders (server-side)
+- [x] Component refactoring (SettingsPage, LandingPage into smaller components) ✅ Feb 9, 2026
+- [x] White popup text visibility fix ✅ Feb 9, 2026
 
 ### P2 - Nice to Have
 - [ ] Advanced sharing permissions (edit access for attorneys)
