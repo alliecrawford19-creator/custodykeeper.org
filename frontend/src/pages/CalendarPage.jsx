@@ -613,6 +613,7 @@ export default function CalendarPage() {
               </form>
             </DialogContent>
           </Dialog>
+          </div>
         </div>
 
         {/* Calendar */}
