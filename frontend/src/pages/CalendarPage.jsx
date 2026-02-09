@@ -98,7 +98,14 @@ export default function CalendarPage() {
         children_involved: formData.children_involved
       };
       
-      if (editingEvent) {
+      if (editingEvent && editingEvent.__createException) {
+        // Creating a single instance exception from recurring event
+        payload.parent_event_id = editingEvent.parentEventId;
+        await axios.post(`${API}/calendar`, payload, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success("Exception created for this date");
+      } else if (editingEvent && editingEvent.event_id) {
         await axios.put(`${API}/calendar/${editingEvent.event_id}`, payload, {
           headers: { Authorization: `Bearer ${token}` }
         });
