@@ -183,6 +183,41 @@ export default function SharingPage() {
                   </Select>
                 </div>
 
+                <div className="space-y-2">
+                  <Label>Permission Level</Label>
+                  <Select
+                    value={formData.permission_level}
+                    onValueChange={(value) => setFormData({ ...formData, permission_level: value })}
+                  >
+                    <SelectTrigger className="border-[#E2E8F0]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="read_only">
+                        <div className="flex items-center gap-2">
+                          <Eye className="w-4 h-4" />
+                          <span>View Only</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="read_print">
+                        <div className="flex items-center gap-2">
+                          <Printer className="w-4 h-4" />
+                          <span>View & Print</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="read_print_download">
+                        <div className="flex items-center gap-2">
+                          <Download className="w-4 h-4" />
+                          <span>Full Access (View, Print, Download)</span>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-[#9CA3AF]">
+                    {PERMISSION_LABELS[formData.permission_level]?.description}
+                  </p>
+                </div>
+
                 <div className="space-y-3 pt-2">
                   <Label className="text-sm font-medium">Include in Share</Label>
                   
