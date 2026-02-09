@@ -183,19 +183,6 @@ export default function JournalPage() {
     }
   };
 
-  const handleEdit = (journal) => {
-    setEditingJournal(journal);
-    setFormData({
-      title: journal.title,
-      content: journal.content,
-      date: journal.date,
-      children_involved: journal.children_involved,
-      mood: journal.mood,
-      location: journal.location
-    });
-    setDialogOpen(true);
-  };
-
   const resetForm = () => {
     setEditingJournal(null);
     setFormData({
