@@ -447,16 +447,6 @@ export default function ViolationsPage() {
             </CardContent>
           </Card>
         )}
-
-        {/* Email Share Dialog */}
-        <EmailShareDialog
-          open={emailDialogOpen}
-          onOpenChange={setEmailDialogOpen}
-          contentType="violations"
-          contentIds={violations.map(v => v.violation_id)}
-          token={token}
-          defaultSubject="CustodyKeeper Violations Report"
-        />
       </div>
     </Layout>
   );
