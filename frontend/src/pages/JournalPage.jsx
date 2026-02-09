@@ -204,8 +204,23 @@ export default function JournalPage() {
       date: format(new Date(), "yyyy-MM-dd"),
       children_involved: [],
       mood: "neutral",
-      location: ""
+      location: "",
+      photos: []
     });
+  };
+
+  const handleEdit = (journal) => {
+    setEditingJournal(journal);
+    setFormData({
+      title: journal.title,
+      content: journal.content,
+      date: journal.date,
+      children_involved: journal.children_involved || [],
+      mood: journal.mood,
+      location: journal.location || "",
+      photos: journal.photos || []
+    });
+    setDialogOpen(true);
   };
 
   const handleExport = async () => {
