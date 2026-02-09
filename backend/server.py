@@ -1374,6 +1374,7 @@ async def create_share_token(token_data: ShareTokenCreate, current_user: dict = 
         "include_violations": token_data.include_violations,
         "include_documents": token_data.include_documents,
         "include_calendar": token_data.include_calendar,
+        "permission_level": token_data.permission_level,
         "created_at": now.isoformat(),
         "is_active": True
     }
@@ -1388,6 +1389,10 @@ async def get_share_tokens(current_user: dict = Depends(get_current_user)):
         {"user_id": current_user["user_id"]},
         {"_id": 0}
     ).sort("created_at", -1).to_list(100)
+    # Add default permission_level for old tokens
+    for token in tokens:
+        if "permission_level" not in token:
+            token["permission_level"] = "read_only"
     return [ShareTokenResponse(**token) for token in tokens]
 
 @api_router.delete("/share/tokens/{token_id}")
