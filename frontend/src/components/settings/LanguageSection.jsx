@@ -26,9 +26,9 @@ export function LanguageSection() {
             value={i18n.language}
             onValueChange={handleLanguageChange}
           >
-            <SelectTrigger className="w-full sm:w-64 border-[#E2E8F0]" data-testid="language-select">
+            <SelectTrigger className="w-full sm:w-64 border-[#E2E8F0] bg-white text-[#1A202C]" data-testid="language-select">
               <SelectValue>
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 text-[#1A202C]">
                   <span>{currentLanguage.nativeName}</span>
                   <span className="text-[#718096]">({currentLanguage.name})</span>
                 </span>
@@ -37,7 +37,7 @@ export function LanguageSection() {
             <SelectContent>
               {languages.map((lang) => (
                 <SelectItem key={lang.code} value={lang.code}>
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center gap-2 text-[#1A202C]">
                     <span>{lang.nativeName}</span>
                     <span className="text-[#718096]">({lang.name})</span>
                   </span>
