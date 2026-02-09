@@ -4,6 +4,7 @@ import { useAuth, API } from "@/App";
 import { Layout } from "@/components/Layout";
 import { ProfileSection } from "@/components/settings/ProfileSection";
 import { ChildrenSection } from "@/components/settings/ChildrenSection";
+import { ExportDataSection } from "@/components/settings/ExportDataSection";
 
 export default function SettingsPage() {
   const { user, token, setUser } = useAuth();
@@ -62,6 +63,12 @@ export default function SettingsPage() {
           token={token} 
           API={API} 
           fetchChildren={fetchChildren} 
+        />
+
+        {/* Export Data Section */}
+        <ExportDataSection 
+          token={token} 
+          API={API} 
         />
       </div>
     </Layout>
