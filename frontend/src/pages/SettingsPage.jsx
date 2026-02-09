@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 
 export default function SettingsPage() {
   const { user, token, setUser } = useAuth();
+  const { t } = useTranslation();
   const [children, setChildren] = useState([]);
   const [loading, setLoading] = useState(true);
 
