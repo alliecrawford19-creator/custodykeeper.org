@@ -51,6 +51,7 @@ export const Layout = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
 
@@ -60,15 +61,15 @@ export const Layout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
+    <div className="min-h-screen bg-background">
       {/* Top Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#E2E8F0] shadow-sm">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-card border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/dashboard" className="flex items-center gap-2">
-              <Scale className="w-8 h-8 text-[#2C3E50]" />
-              <span className="font-['Merriweather'] font-bold text-xl text-[#2C3E50] hidden sm:block">
+              <Scale className="w-8 h-8 text-primary" />
+              <span className="font-['Merriweather'] font-bold text-xl text-foreground hidden sm:block">
                 CustodyKeeper
               </span>
             </Link>
@@ -84,10 +85,10 @@ export const Layout = ({ children }) => {
                     to={item.path}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-[#E8F6F3] text-[#2C3E50] font-semibold"
-                        : "text-[#718096] hover:bg-[#F7FAFC] hover:text-[#2C3E50]"
+                        ? "bg-secondary text-primary font-semibold"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
-                    data-testid={`nav-${item.label.toLowerCase().replace(" ", "-")}`}
+                    data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                   >
                     <Icon className="w-4 h-4" />
                     <span className="text-sm">{item.label}</span>
@@ -97,12 +98,27 @@ export const Layout = ({ children }) => {
             </div>
 
             {/* User Menu */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              {/* Theme Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="text-muted-foreground hover:text-foreground"
+                data-testid="theme-toggle"
+              >
+                {theme === "light" ? (
+                  <Moon className="w-5 h-5" />
+                ) : (
+                  <Sun className="w-5 h-5" />
+                )}
+              </Button>
+
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="flex items-center gap-2 text-[#2C3E50]"
+                    className="flex items-center gap-2 text-foreground"
                     data-testid="user-menu-trigger"
                   >
                     {user?.photo ? (
@@ -112,8 +128,8 @@ export const Layout = ({ children }) => {
                         className="w-8 h-8 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                        <User className="w-4 h-4 text-[#2C3E50]" />
+                      <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+                        <User className="w-4 h-4 text-primary" />
                       </div>
                     )}
                     <span className="hidden sm:block text-sm font-medium">{user?.full_name}</span>
@@ -122,9 +138,9 @@ export const Layout = ({ children }) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   <div className="px-2 py-2">
-                    <p className="text-sm font-medium text-[#1A202C]">{user?.full_name}</p>
-                    <p className="text-xs text-[#718096]">{user?.email}</p>
-                    <p className="text-xs text-[#718096] mt-1">{user?.state}</p>
+                    <p className="text-sm font-medium text-foreground">{user?.full_name}</p>
+                    <p className="text-xs text-muted-foreground">{user?.email}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{user?.state}</p>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
@@ -144,7 +160,7 @@ export const Layout = ({ children }) => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={handleLogout}
-                    className="flex items-center gap-2 cursor-pointer text-red-600"
+                    className="flex items-center gap-2 cursor-pointer text-destructive"
                     data-testid="menu-logout"
                   >
                     <LogOut className="w-4 h-4" />
@@ -156,7 +172,7 @@ export const Layout = ({ children }) => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-[#718096] hover:text-[#2C3E50]"
+                className="lg:hidden p-2 text-muted-foreground hover:text-foreground"
                 data-testid="mobile-menu-toggle"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -167,7 +183,7 @@ export const Layout = ({ children }) => {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-[#E2E8F0] bg-white animate-fade-in">
+          <div className="lg:hidden border-t border-border bg-card animate-fade-in">
             <div className="px-4 py-4 space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -179,10 +195,10 @@ export const Layout = ({ children }) => {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-[#E8F6F3] text-[#2C3E50] font-semibold"
-                        : "text-[#718096] hover:bg-[#F7FAFC]"
+                        ? "bg-secondary text-primary font-semibold"
+                        : "text-muted-foreground hover:bg-muted"
                     }`}
-                    data-testid={`mobile-nav-${item.label.toLowerCase().replace(" ", "-")}`}
+                    data-testid={`mobile-nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                   >
                     <Icon className="w-5 h-5" />
                     <span>{item.label}</span>
@@ -208,21 +224,21 @@ export const Layout = ({ children }) => {
             <DialogTitle className="font-['Merriweather'] text-xl">Contact Us</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 mt-4">
-            <div className="flex items-center gap-3 p-4 bg-[#E8F6F3] rounded-lg">
-              <MessageSquare className="w-5 h-5 text-[#2C3E50]" />
+            <div className="flex items-center gap-3 p-4 bg-secondary rounded-lg">
+              <MessageSquare className="w-5 h-5 text-primary" />
               <div className="flex-1">
-                <p className="font-medium text-[#1A202C]">Feedback & Suggestions</p>
+                <p className="font-medium text-foreground">Feedback & Suggestions</p>
                 <a 
                   href="mailto:custodykeeper.feedback@gmail.com"
-                  className="text-sm text-[#2C3E50] hover:underline"
+                  className="text-sm text-primary hover:underline"
                 >
                   custodykeeper.feedback@gmail.com
                 </a>
               </div>
             </div>
             
-            <div className="text-sm text-[#718096] space-y-2">
-              <p className="font-medium text-[#1A202C]">📧 This email is for feedback purposes only</p>
+            <div className="text-sm text-muted-foreground space-y-2">
+              <p className="font-medium text-foreground">This email is for feedback purposes only</p>
               <p>
                 We value your input! Share your feedback, suggestions, and ideas to help us improve CustodyKeeper. 
                 Your opinions guide our future updates and changes.
@@ -231,7 +247,7 @@ export const Layout = ({ children }) => {
 
             <Button
               onClick={() => setContactDialogOpen(false)}
-              className="w-full bg-[#2C3E50] hover:bg-[#34495E] text-white"
+              className="w-full"
             >
               Close
             </Button>
