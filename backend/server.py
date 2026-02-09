@@ -571,12 +571,36 @@ async def create_journal(journal_data: JournalCreate, current_user: dict = Depen
     
     return JournalResponse(**journal_doc)
 
+# Pagination response model
+class PaginatedResponse(BaseModel):
+    items: List[dict]
+    total: int
+    page: int
+    page_size: int
+    total_pages: int
+
 @api_router.get("/journals", response_model=List[JournalResponse])
-async def get_journals(current_user: dict = Depends(get_current_user)):
+async def get_journals(
+    current_user: dict = Depends(get_current_user),
+    page: int = 1,
+    page_size: int = 50,
+    child_id: Optional[str] = None
+):
+    query = {"user_id": current_user["user_id"]}
+    if child_id:
+        query["children_involved"] = child_id
+    
+    # Get total count for pagination info
+    total = await db.journals.count_documents(query)
+    
+    # Calculate skip
+    skip = (page - 1) * page_size
+    
     journals = await db.journals.find(
-        {"user_id": current_user["user_id"]}, 
+        query, 
         {"_id": 0}
-    ).sort("date", -1).to_list(1000)
+    ).sort("date", -1).skip(skip).limit(page_size).to_list(page_size)
+    
     # Add default values for photos if not present
     for journal in journals:
         if "photos" not in journal:
