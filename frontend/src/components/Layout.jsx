@@ -155,22 +155,22 @@ export const Layout = ({ children }) => {
                     <ChevronDown className="w-4 h-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuContent align="end" className="w-56 bg-white text-[#1A202C]">
                   <div className="px-2 py-2">
-                    <p className="text-sm font-medium text-foreground">{user?.full_name}</p>
-                    <p className="text-xs text-muted-foreground">{user?.email}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{user?.state}</p>
+                    <p className="text-sm font-medium text-[#1A202C]">{user?.full_name}</p>
+                    <p className="text-xs text-[#718096]">{user?.email}</p>
+                    <p className="text-xs text-[#718096] mt-1">{user?.state}</p>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/settings" className="flex items-center gap-2 cursor-pointer" data-testid="menu-settings">
+                    <Link to="/settings" className="flex items-center gap-2 cursor-pointer text-[#1A202C]" data-testid="menu-settings">
                       <Settings className="w-4 h-4" />
                       Settings
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => setContactDialogOpen(true)}
-                    className="flex items-center gap-2 cursor-pointer"
+                    className="flex items-center gap-2 cursor-pointer text-[#1A202C]"
                     data-testid="menu-contact"
                   >
                     <MessageSquare className="w-4 h-4" />
