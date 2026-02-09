@@ -53,8 +53,10 @@ export default function JournalPage() {
     date: format(new Date(), "yyyy-MM-dd"),
     children_involved: [],
     mood: "neutral",
-    location: ""
+    location: "",
+    photos: [] // Array of photo URLs
   });
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
 
   const handlePDFExport = () => {
     if (filteredJournals.length === 0) {
@@ -75,6 +77,44 @@ export default function JournalPage() {
       toast.error("Failed to generate PDF");
       console.error(error);
     }
+  };
+
+  const handlePhotoUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    
+    setUploadingPhotos(true);
+    const newPhotos = [...formData.photos];
+    
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) {
+        toast.error(`${file.name} is not an image`);
+        continue;
+      }
+      
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(`${file.name} is too large (max 5MB)`);
+        continue;
+      }
+      
+      // Convert to base64
+      const reader = new FileReader();
+      const photoData = await new Promise((resolve) => {
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+      
+      newPhotos.push(photoData);
+    }
+    
+    setFormData({ ...formData, photos: newPhotos });
+    setUploadingPhotos(false);
+    toast.success(`${files.length} photo(s) added`);
+  };
+
+  const removePhoto = (index) => {
+    const newPhotos = formData.photos.filter((_, i) => i !== index);
+    setFormData({ ...formData, photos: newPhotos });
   };
 
   useEffect(() => {
