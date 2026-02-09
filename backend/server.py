@@ -590,10 +590,7 @@ async def get_journals(
     if child_id:
         query["children_involved"] = child_id
     
-    # Get total count for pagination info
-    total = await db.journals.count_documents(query)
-    
-    # Calculate skip
+    # Calculate skip for pagination
     skip = (page - 1) * page_size
     
     journals = await db.journals.find(
