@@ -48,6 +48,7 @@ export const Layout = ({ children }) => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactDialogOpen, setContactDialogOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
