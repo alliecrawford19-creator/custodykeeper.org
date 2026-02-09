@@ -85,6 +85,12 @@ export default function SettingsPage() {
           token={token} 
           API={API} 
         />
+
+        {/* Import Data Section */}
+        <ImportDataSection 
+          token={token} 
+          API={API} 
+        />
       </div>
     </Layout>
   );
