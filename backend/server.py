@@ -575,6 +575,8 @@ async def update_journal(journal_id: str, journal_data: JournalCreate, current_u
         {"journal_id": journal_id}, 
         {"_id": 0}
     )
+    if "photos" not in journal:
+        journal["photos"] = []
     return JournalResponse(**journal)
 
 @api_router.delete("/journals/{journal_id}")
