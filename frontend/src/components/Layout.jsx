@@ -134,26 +134,23 @@ export const Layout = ({ children }) => {
               </Button>
 
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-2 text-foreground"
-                    data-testid="user-menu-trigger"
-                  >
-                    {user?.photo ? (
-                      <img 
-                        src={user.photo} 
-                        alt={user.full_name}
-                        className="w-8 h-8 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
-                        <User className="w-4 h-4 text-primary" />
-                      </div>
-                    )}
-                    <span className="hidden sm:block text-sm font-medium">{user?.full_name}</span>
-                    <ChevronDown className="w-4 h-4" />
-                  </Button>
+                <DropdownMenuTrigger
+                  className="flex items-center gap-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-2 transition-colors"
+                  data-testid="user-menu-trigger"
+                >
+                  {user?.photo ? (
+                    <img 
+                      src={user.photo} 
+                      alt={user.full_name}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+                      <User className="w-4 h-4 text-primary" />
+                    </div>
+                  )}
+                  <span className="hidden sm:block text-sm font-medium">{user?.full_name}</span>
+                  <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-white text-[#1A202C]">
                   <div className="px-2 py-2">
