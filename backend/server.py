@@ -776,6 +776,7 @@ async def create_calendar_event(event_data: CalendarEventCreate, current_user: d
         "notes": event_data.notes or "",
         "location": event_data.location or "",
         "recurring": event_data.recurring or False,
+        "custom_color": event_data.custom_color or "",
         "created_at": now
     }
     
