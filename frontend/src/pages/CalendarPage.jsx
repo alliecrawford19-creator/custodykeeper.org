@@ -529,43 +529,77 @@ export default function CalendarPage() {
           <CardContent>
             {events.length > 0 ? (
               <div className="space-y-3">
-                {events.map(event => (
-                  <div
-                    key={event.event_id}
-                    className="flex items-center justify-between p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0]"
-                    data-testid={`event-item-${event.event_id}`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className={`w-3 h-12 rounded-full ${getEventTypeColor(event.event_type).split(" ")[0]}`}></div>
-                      <div>
-                        <p className="font-semibold text-[#1A202C]">{event.title}</p>
-                        <p className="text-sm text-[#718096]">
-                          {format(parseISO(event.start_date), "MMM d, yyyy")}
-                          {event.start_date !== event.end_date && ` - ${format(parseISO(event.end_date), "MMM d, yyyy")}`}
-                        </p>
-                        {event.location && (
-                          <p className="text-sm text-[#718096] flex items-center gap-1 mt-1">
-                            <MapPin className="w-3 h-3" /> {event.location}
+                {events.map(event => {
+                  const customColor = getEventDisplayColor(event);
+                  const eventChildren = event.children_involved?.map(id => 
+                    children.find(c => c.child_id === id)
+                  ).filter(Boolean);
+                  
+                  return (
+                    <div
+                      key={event.event_id}
+                      className="flex items-center justify-between p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0] cursor-pointer hover:border-[#2C3E50]/30 transition-all"
+                      onClick={() => handleViewEvent(event)}
+                      data-testid={`event-item-${event.event_id}`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div 
+                          className="w-3 h-12 rounded-full"
+                          style={{ backgroundColor: customColor || undefined }}
+                          {...(!customColor && { className: `w-3 h-12 rounded-full ${getEventTypeColor(event.event_type).split(" ")[0]}` })}
+                        ></div>
+                        <div>
+                          <p className="font-semibold text-[#1A202C]">{event.title}</p>
+                          <p className="text-sm text-[#718096]">
+                            {format(parseISO(event.start_date), "MMM d, yyyy")}
+                            {event.start_date !== event.end_date && ` - ${format(parseISO(event.end_date), "MMM d, yyyy")}`}
                           </p>
-                        )}
+                          {event.location && (
+                            <p className="text-sm text-[#718096] flex items-center gap-1 mt-1">
+                              <MapPin className="w-3 h-3" /> {event.location}
+                            </p>
+                          )}
+                          {eventChildren && eventChildren.length > 0 && (
+                            <div className="flex items-center gap-1 mt-1">
+                              {eventChildren.map(child => (
+                                <span 
+                                  key={child.child_id}
+                                  className="text-xs px-2 py-0.5 rounded-full text-white"
+                                  style={{ backgroundColor: child.color || '#3B82F6' }}
+                                >
+                                  {child.name}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                        <span className={`badge ${getEventTypeColor(event.event_type)}`}>
+                          {EVENT_TYPES.find(t => t.value === event.event_type)?.label || event.event_type}
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEdit(event)}
+                          className="text-[#2C3E50] hover:text-[#34495E] hover:bg-[#E8F6F3]"
+                          data-testid={`edit-event-${event.event_id}`}
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(event.event_id)}
+                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                          data-testid={`delete-event-${event.event_id}`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className={`badge ${getEventTypeColor(event.event_type)}`}>
-                        {EVENT_TYPES.find(t => t.value === event.event_type)?.label}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(event.event_id)}
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                        data-testid={`delete-event-${event.event_id}`}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="empty-state py-8">
@@ -582,6 +616,86 @@ export default function CalendarPage() {
             )}
           </CardContent>
         </Card>
+
+        {/* View Event Dialog */}
+        <Dialog open={viewDialogOpen} onOpenChange={setViewDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="font-['Merriweather']">Event Details</DialogTitle>
+            </DialogHeader>
+            {selectedEvent && (
+              <div className="space-y-4 mt-4">
+                <div>
+                  <h3 className="font-semibold text-lg text-[#1A202C]">{selectedEvent.title}</h3>
+                  <span className={`badge ${getEventTypeColor(selectedEvent.event_type)} mt-2 inline-block`}>
+                    {EVENT_TYPES.find(t => t.value === selectedEvent.event_type)?.label || selectedEvent.event_type}
+                  </span>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2 text-[#718096]">
+                    <CalendarIcon className="w-4 h-4" />
+                    <span>
+                      {format(parseISO(selectedEvent.start_date), "MMMM d, yyyy")}
+                      {selectedEvent.start_date !== selectedEvent.end_date && 
+                        ` - ${format(parseISO(selectedEvent.end_date), "MMMM d, yyyy")}`
+                      }
+                    </span>
+                  </div>
+                  
+                  {selectedEvent.location && (
+                    <div className="flex items-center gap-2 text-[#718096]">
+                      <MapPin className="w-4 h-4" />
+                      <span>{selectedEvent.location}</span>
+                    </div>
+                  )}
+                  
+                  {selectedEvent.children_involved && selectedEvent.children_involved.length > 0 && (
+                    <div className="flex items-start gap-2 text-[#718096]">
+                      <Users className="w-4 h-4 mt-0.5" />
+                      <div className="flex flex-wrap gap-1">
+                        {selectedEvent.children_involved.map(childId => {
+                          const child = children.find(c => c.child_id === childId);
+                          return child ? (
+                            <span 
+                              key={childId}
+                              className="text-xs px-2 py-0.5 rounded-full text-white"
+                              style={{ backgroundColor: child.color || '#3B82F6' }}
+                            >
+                              {child.name}
+                            </span>
+                          ) : null;
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {selectedEvent.notes && (
+                  <div className="pt-2 border-t border-[#E2E8F0]">
+                    <p className="text-sm text-[#718096] whitespace-pre-wrap">{selectedEvent.notes}</p>
+                  </div>
+                )}
+                
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setViewDialogOpen(false)}
+                    className="flex-1"
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    onClick={() => handleEdit(selectedEvent)}
+                    className="flex-1 bg-[#2C3E50] hover:bg-[#34495E]"
+                  >
+                    <Edit2 className="w-4 h-4 mr-2" /> Edit Event
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
