@@ -92,6 +92,12 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] Landing page: Removed "Get Started" button, changed to "Start Documenting Today"
 - [x] Dashboard: Event popup is now view-only (removed Edit button)
 
+### Phase 4 - Calendar Enhancements ✅ (Feb 9, 2026)
+- [x] **Recurring Event Editing** - Dialog to choose "Edit this event only" or "Edit all events in series"
+- [x] **Exception System** - Creates standalone events linked via `parent_event_id`, auto-updates parent's `exception_dates`
+- [x] **Print-Friendly Calendar Export** - Export PDF and Print buttons in calendar header
+- [x] **Mobile Responsive Calendar** - Optimized layout for smaller screens
+
 ### Testing Results
 - Backend: 100% pass rate
 - Frontend: 100% pass rate
