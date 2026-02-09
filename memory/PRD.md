@@ -99,13 +99,13 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 
 ## Prioritized Backlog
 
-### P0 - Critical
-- [ ] Mobile-responsive polish for on-the-go use
-- [ ] Recurring event editing (edit all instances vs single)
+### P0 - Critical (COMPLETED Feb 9, 2026)
+- [x] Mobile-responsive polish for on-the-go use
+- [x] Recurring event editing (edit all instances vs single) - implemented with exception_dates system
+- [x] Print-friendly export for calendar - Export PDF and Print buttons added
 
 ### P1 - High Priority
 - [ ] Component refactoring (SettingsPage, LandingPage into smaller components)
-- [ ] Print-friendly export for calendar
 - [ ] Email notification reminders (server-side)
 
 ### P2 - Nice to Have
