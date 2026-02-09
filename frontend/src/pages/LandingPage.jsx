@@ -339,39 +339,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Export & Share Section - Keep this */}
-      <section className="py-20 px-4 bg-[#FDFBF7]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
-              Export & Share Your Records
-            </h2>
-            <p className="text-lg text-[#718096] max-w-2xl mx-auto">
-              Download your records and share them directly from your device using native sharing.
-            </p>
-          </div>
-          <div className="max-w-2xl mx-auto">
-            {features.map((feature, index) => (
-              <div 
-                key={feature.title}
-                className={`custom-card interactive animate-fade-in`}
-                data-testid={`feature-card-${index}`}
-              >
-                <div className="w-14 h-14 rounded-xl bg-[#E8F6F3] flex items-center justify-center text-[#2C3E50] mb-4 mx-auto">
-                  {feature.icon}
-                </div>
-                <h3 className="font-['Merriweather'] text-xl font-bold text-[#1A202C] mb-2 text-center">
-                  {feature.title}
-                </h3>
-                <p className="text-[#718096] text-center">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Research & Benefits Section */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
