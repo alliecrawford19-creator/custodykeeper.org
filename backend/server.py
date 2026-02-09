@@ -177,6 +177,8 @@ class CalendarEventCreate(BaseModel):
     notes: Optional[str] = ""
     location: Optional[str] = ""
     recurring: Optional[bool] = False
+    recurrence_pattern: Optional[str] = ""  # daily, weekly, biweekly, monthly, custom
+    recurrence_end_date: Optional[str] = ""
     custom_color: Optional[str] = ""
 
 class CalendarEventResponse(BaseModel):
@@ -190,6 +192,8 @@ class CalendarEventResponse(BaseModel):
     notes: str
     location: str
     recurring: bool
+    recurrence_pattern: str
+    recurrence_end_date: str
     custom_color: str
     created_at: str
 
