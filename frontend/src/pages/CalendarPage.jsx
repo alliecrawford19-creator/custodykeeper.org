@@ -865,6 +865,55 @@ export default function CalendarPage() {
             )}
           </DialogContent>
         </Dialog>
+
+        {/* Recurring Edit Choice Dialog */}
+        <Dialog open={recurringEditDialogOpen} onOpenChange={setRecurringEditDialogOpen}>
+          <DialogContent className="sm:max-w-md bg-white">
+            <DialogHeader>
+              <DialogTitle className="font-['Merriweather']">Edit Recurring Event</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 mt-4">
+              <p className="text-[#718096]">
+                This is a recurring event. Would you like to edit just this occurrence or all occurrences?
+              </p>
+              
+              <div className="space-y-3">
+                <Button
+                  onClick={() => proceedWithEdit(pendingEditEvent, 'single')}
+                  variant="outline"
+                  className="w-full justify-start h-auto py-4"
+                >
+                  <div className="text-left">
+                    <p className="font-semibold">This event only</p>
+                    <p className="text-sm text-[#718096]">Create a one-time exception for this date</p>
+                  </div>
+                </Button>
+                
+                <Button
+                  onClick={() => proceedWithEdit(pendingEditEvent, 'all')}
+                  variant="outline"
+                  className="w-full justify-start h-auto py-4"
+                >
+                  <div className="text-left">
+                    <p className="font-semibold">All events in series</p>
+                    <p className="text-sm text-[#718096]">Changes will apply to all occurrences</p>
+                  </div>
+                </Button>
+              </div>
+              
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setRecurringEditDialogOpen(false);
+                  setPendingEditEvent(null);
+                }}
+                className="w-full"
+              >
+                Cancel
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
