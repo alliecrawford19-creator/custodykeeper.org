@@ -1104,7 +1104,15 @@ PARENTAL_ALIENATION_RESOURCES = [
         "name": "Children's Rights Council",
         "description": "Non-profit focused on ensuring children have meaningful relationships with both parents",
         "links": [
+            {"platform": "Website", "url": "https://projectcoparent.com"},
             {"platform": "Facebook", "url": "https://www.facebook.com/ChildrensRightsCouncil"}
+        ]
+    },
+    {
+        "name": "Americans for Equal Shared Parenting",
+        "description": "National organization advocating for equal shared parenting legislation and reform",
+        "links": [
+            {"platform": "Website", "url": "https://afesp.com"}
         ]
     }
 ]
