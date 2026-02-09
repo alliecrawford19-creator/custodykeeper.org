@@ -562,64 +562,64 @@ export default function DocumentsPage() {
                 className={`bg-white border-[#E2E8F0] card-hover animate-fade-in stagger-${Math.min(index + 1, 5)}`}
                 data-testid={`document-card-${doc.document_id}`}
               >
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
+                <CardContent className="p-3 sm:p-4">
+                  <div className="flex items-start gap-3">
                     <div className="flex-shrink-0">
                       {getFileIcon(doc.file_type)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[#1A202C] truncate">{doc.filename}</p>
-                      <p className="text-sm text-[#718096] mt-1">
+                      <p className="font-semibold text-[#1A202C] truncate text-sm">{doc.filename}</p>
+                      <p className="text-xs text-[#718096] mt-1">
                         {DOCUMENT_CATEGORIES.find(c => c.value === doc.category)?.label}
                       </p>
                       {doc.description && (
-                        <p className="text-sm text-[#718096] mt-1 line-clamp-2">{doc.description}</p>
+                        <p className="text-xs text-[#718096] mt-1 line-clamp-1 sm:line-clamp-2">{doc.description}</p>
                       )}
-                      <p className="text-xs text-[#9CA3AF] mt-2">
-                        {formatFileSize(doc.file_size)} • {format(parseISO(doc.created_at), "MMM d, yyyy")}
+                      <p className="text-xs text-[#9CA3AF] mt-1">
+                        {formatFileSize(doc.file_size)} • {format(parseISO(doc.created_at), "MMM d")}
                       </p>
                     </div>
                   </div>
-                  <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-[#E2E8F0]">
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mt-3 pt-3 border-t border-[#E2E8F0]">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handlePreview(doc)}
-                      className="border-[#E2E8F0] text-[#2C3E50]"
+                      className="border-[#E2E8F0] text-[#2C3E50] flex-1 sm:flex-none"
                       data-testid={`view-doc-${doc.document_id}`}
                       title="Preview"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleDownload(doc)}
-                      className="border-[#E2E8F0] text-[#2C3E50]"
+                      className="border-[#E2E8F0] text-[#2C3E50] flex-1 sm:flex-none"
                       data-testid={`download-doc-${doc.document_id}`}
                       title="Download"
                     >
-                      <Download className="w-4 h-4" />
+                      <Download className="w-3 h-3 sm:w-4 sm:h-4" />
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleShare(doc)}
-                      className="border-[#E2E8F0] text-[#2C3E50]"
+                      className="border-[#E2E8F0] text-[#2C3E50] flex-1 sm:flex-none"
                       data-testid={`share-doc-${doc.document_id}`}
                       title="Share"
                     >
-                      <Share2 className="w-4 h-4" />
+                      <Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleDelete(doc.document_id)}
-                      className="border-[#E2E8F0] text-red-500 hover:text-red-700 hover:bg-red-50"
+                      className="border-[#E2E8F0] text-red-500 hover:text-red-700 hover:bg-red-50 flex-1 sm:flex-none"
                       data-testid={`delete-doc-${doc.document_id}`}
                       title="Delete"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                     </Button>
                   </div>
                 </CardContent>
