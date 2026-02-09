@@ -457,9 +457,13 @@ export default function SettingsPage() {
                           src={child.photo} 
                           alt={child.name}
                           className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                          style={{ border: `3px solid ${child.color || '#3B82F6'}` }}
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-full bg-[#E8F6F3] flex items-center justify-center flex-shrink-0">
+                        <div 
+                          className="w-12 h-12 rounded-full bg-[#E8F6F3] flex items-center justify-center flex-shrink-0"
+                          style={{ border: `3px solid ${child.color || '#3B82F6'}` }}
+                        >
                           <User className="w-6 h-6 text-[#2C3E50]" />
                         </div>
                       )}
