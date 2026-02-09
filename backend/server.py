@@ -315,6 +315,18 @@ async def login(credentials: UserLogin):
     if not user or not verify_password(credentials.password, user["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
+    # Check if 2FA is enabled
+    tfa_settings = await db.two_factor_settings.find_one({"user_id": user["user_id"]})
+    if tfa_settings and tfa_settings.get("enabled", False):
+        # Return indicator that 2FA is required
+        raise HTTPException(
+            status_code=202, 
+            detail={
+                "requires_2fa": True,
+                "message": "Two-factor authentication required"
+            }
+        )
+    
     token = create_token(user["user_id"], user["email"])
     
     return TokenResponse(
