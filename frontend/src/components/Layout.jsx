@@ -223,10 +223,6 @@ export const Layout = ({ children }) => {
                 We value your input! Share your feedback, suggestions, and ideas to help us improve CustodyKeeper. 
                 Your opinions guide our future updates and changes.
               </p>
-              <p className="text-xs mt-3 pt-3 border-t border-[#E2E8F0]">
-                <strong>Note:</strong> This email is not monitored for support requests. For urgent matters, 
-                please use the appropriate legal or technical support channels.
-              </p>
             </div>
 
             <Button
