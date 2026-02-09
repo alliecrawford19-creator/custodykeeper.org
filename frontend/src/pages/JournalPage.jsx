@@ -16,9 +16,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, BookOpen, Search, Trash2, Edit2, Download, Clock, MapPin } from "lucide-react";
+import { Plus, BookOpen, Search, Trash2, Edit2, Download, Clock, MapPin, FileText } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { PrintableExport } from "@/components/PrintableExport";
+import { generateCourtReadyPDF } from "@/utils/pdfExport";
 
 const MOOD_OPTIONS = [
   { value: "happy", label: "Happy", color: "mood-happy" },
