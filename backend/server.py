@@ -685,11 +685,22 @@ async def create_violation(violation_data: ViolationCreate, current_user: dict =
     return ViolationResponse(**violation_doc)
 
 @api_router.get("/violations", response_model=List[ViolationResponse])
-async def get_violations(current_user: dict = Depends(get_current_user)):
+async def get_violations(
+    current_user: dict = Depends(get_current_user),
+    page: int = 1,
+    page_size: int = 50,
+    severity: Optional[str] = None
+):
+    query = {"user_id": current_user["user_id"]}
+    if severity:
+        query["severity"] = severity
+    
+    skip = (page - 1) * page_size
+    
     violations = await db.violations.find(
-        {"user_id": current_user["user_id"]}, 
+        query, 
         {"_id": 0}
-    ).sort("date", -1).to_list(1000)
+    ).sort("date", -1).skip(skip).limit(page_size).to_list(page_size)
     return [ViolationResponse(**violation) for violation in violations]
 
 @api_router.get("/violations/{violation_id}", response_model=ViolationResponse)
