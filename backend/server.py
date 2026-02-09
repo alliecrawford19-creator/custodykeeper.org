@@ -515,6 +515,7 @@ async def create_journal(journal_data: JournalCreate, current_user: dict = Depen
         "children_involved": journal_data.children_involved,
         "mood": journal_data.mood or "neutral",
         "location": journal_data.location or "",
+        "photos": journal_data.photos or [],
         "created_at": now,
         "updated_at": now
     }
@@ -529,6 +530,10 @@ async def get_journals(current_user: dict = Depends(get_current_user)):
         {"user_id": current_user["user_id"]}, 
         {"_id": 0}
     ).sort("date", -1).to_list(1000)
+    # Add default values for photos if not present
+    for journal in journals:
+        if "photos" not in journal:
+            journal["photos"] = []
     return [JournalResponse(**journal) for journal in journals]
 
 @api_router.get("/journals/{journal_id}", response_model=JournalResponse)
@@ -539,6 +544,8 @@ async def get_journal(journal_id: str, current_user: dict = Depends(get_current_
     )
     if not journal:
         raise HTTPException(status_code=404, detail="Journal not found")
+    if "photos" not in journal:
+        journal["photos"] = []
     return JournalResponse(**journal)
 
 @api_router.put("/journals/{journal_id}", response_model=JournalResponse)
@@ -552,6 +559,7 @@ async def update_journal(journal_id: str, journal_data: JournalCreate, current_u
         "children_involved": journal_data.children_involved,
         "mood": journal_data.mood or "neutral",
         "location": journal_data.location or "",
+        "photos": journal_data.photos or [],
         "updated_at": now
     }
     
