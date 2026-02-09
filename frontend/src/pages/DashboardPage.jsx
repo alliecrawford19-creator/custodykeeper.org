@@ -280,11 +280,24 @@ export default function DashboardPage() {
               <CardTitle className="font-['Merriweather'] text-lg font-bold text-[#1A202C]">
                 Upcoming Events
               </CardTitle>
-              <Link to="/calendar">
-                <Button variant="ghost" size="sm" className="text-[#2C3E50]" data-testid="view-calendar-btn">
-                  View All <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
-              </Link>
+              <div className="flex items-center gap-2">
+                {!notificationsEnabled && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleEnableNotifications}
+                    className="text-[#2C3E50] border-[#E2E8F0]"
+                    data-testid="enable-notifications-btn"
+                  >
+                    <Bell className="w-4 h-4 mr-1" /> Enable Reminders
+                  </Button>
+                )}
+                <Link to="/calendar">
+                  <Button variant="ghost" size="sm" className="text-[#2C3E50]" data-testid="view-calendar-btn">
+                    View All <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </Link>
+              </div>
             </CardHeader>
             <CardContent>
               {stats?.upcoming_events?.length > 0 ? (
