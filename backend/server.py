@@ -823,8 +823,17 @@ async def create_calendar_event(event_data: CalendarEventCreate, current_user: d
         "recurrence_pattern": event_data.recurrence_pattern or "",
         "recurrence_end_date": event_data.recurrence_end_date or "",
         "custom_color": event_data.custom_color or "",
+        "exception_dates": event_data.exception_dates or [],
+        "parent_event_id": event_data.parent_event_id or "",
         "created_at": now
     }
+    
+    # If creating single instance exception, add date to parent's exception_dates
+    if event_data.parent_event_id:
+        await db.calendar_events.update_one(
+            {"event_id": event_data.parent_event_id, "user_id": current_user["user_id"]},
+            {"$addToSet": {"exception_dates": event_data.start_date}}
+        )
     
     await db.calendar_events.insert_one(event_doc)
     
@@ -844,6 +853,10 @@ async def get_calendar_events(current_user: dict = Depends(get_current_user)):
             event["recurrence_pattern"] = ""
         if "recurrence_end_date" not in event:
             event["recurrence_end_date"] = ""
+        if "exception_dates" not in event:
+            event["exception_dates"] = []
+        if "parent_event_id" not in event:
+            event["parent_event_id"] = ""
     return [CalendarEventResponse(**event) for event in events]
 
 @api_router.put("/calendar/{event_id}", response_model=CalendarEventResponse)
@@ -861,6 +874,8 @@ async def update_calendar_event(event_id: str, event_data: CalendarEventCreate, 
         "recurrence_end_date": event_data.recurrence_end_date or "",
         "custom_color": event_data.custom_color or ""
     }
+    
+    # Don't overwrite exception_dates on normal update
     
     result = await db.calendar_events.update_one(
         {"event_id": event_id, "user_id": current_user["user_id"]},
@@ -880,6 +895,10 @@ async def update_calendar_event(event_id: str, event_data: CalendarEventCreate, 
         event["recurrence_pattern"] = ""
     if "recurrence_end_date" not in event:
         event["recurrence_end_date"] = ""
+    if "exception_dates" not in event:
+        event["exception_dates"] = []
+    if "parent_event_id" not in event:
+        event["parent_event_id"] = ""
     return CalendarEventResponse(**event)
 
 @api_router.delete("/calendar/{event_id}")
