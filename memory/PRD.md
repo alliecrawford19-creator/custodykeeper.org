@@ -99,22 +99,19 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 
 ## Prioritized Backlog
 
-### P0 - Critical (Next Sprint)
-- [ ] PDF export for journals and violations (court-ready format)
-- [ ] Document preview/viewer in-app
+### P0 - Critical
 - [ ] Mobile-responsive polish for on-the-go use
-
-### P1 - High Priority
-- [ ] Notification reminders for upcoming events
-- [ ] Photo/evidence attachment to journal entries
-- [ ] Multiple children selection in Journal entries
 - [ ] Recurring event editing (edit all instances vs single)
 
-### P2 - Nice to Have
-- [ ] Attorney collaboration/sharing mode
+### P1 - High Priority
+- [ ] Component refactoring (SettingsPage, LandingPage into smaller components)
 - [ ] Print-friendly export for calendar
-- [ ] Refactor SettingsPage.jsx into smaller components
-- [ ] Refactor LandingPage.jsx static content into components
+- [ ] Email notification reminders (server-side)
+
+### P2 - Nice to Have
+- [ ] Advanced sharing permissions (edit access for attorneys)
+- [ ] Two-factor authentication
+- [ ] Export all data as ZIP archive
 
 ## Tech Stack
 - **Frontend**: React 19, Tailwind CSS, Shadcn/UI
