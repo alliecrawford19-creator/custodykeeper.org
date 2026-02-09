@@ -308,17 +308,57 @@ export default function JournalPage() {
           </div>
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search journal entries..."
-            className="pl-12 h-12 bg-white border-[#E2E8F0]"
-            data-testid="journal-search-input"
-          />
+        {/* Search and Filter */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search journal entries..."
+              className="pl-12 h-12 bg-card border-border"
+              data-testid="journal-search-input"
+            />
+          </div>
+          {children.length > 0 && (
+            <Select value={childFilter} onValueChange={setChildFilter}>
+              <SelectTrigger className="w-full sm:w-[200px] h-12" data-testid="child-filter">
+                <SelectValue placeholder="Filter by child" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Children</SelectItem>
+                {children.map(child => (
+                  <SelectItem key={child.child_id} value={child.child_id}>
+                    <div className="flex items-center gap-2">
+                      <div 
+                        className="w-3 h-3 rounded-full" 
+                        style={{ backgroundColor: child.color || '#3B82F6' }}
+                      />
+                      {child.name}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         </div>
+
+        {/* Active Filters Display */}
+        {(searchQuery || childFilter !== "all") && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span>
+              Showing {filteredJournals.length} of {journals.length} entries
+            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => { setSearchQuery(""); setChildFilter("all"); }}
+              className="text-primary hover:text-primary/80"
+            >
+              Clear filters
+            </Button>
+          </div>
+        )}
 
         {/* Journal Entries */}
         {filteredJournals.length > 0 ? (
