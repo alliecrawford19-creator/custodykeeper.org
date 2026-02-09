@@ -33,7 +33,8 @@ import {
   MessageSquare,
   Moon,
   Sun,
-  Clock
+  Clock,
+  Share2
 } from "lucide-react";
 
 const navItems = [
@@ -44,6 +45,7 @@ const navItems = [
   { path: "/documents", label: "Documents", icon: FileText },
   { path: "/contacts", label: "Contacts", icon: UserPlus },
   { path: "/timeline", label: "Timeline", icon: Clock },
+  { path: "/sharing", label: "Sharing", icon: Share2 },
   { path: "/state-laws", label: "Support & Advocacy", icon: Gavel },
 ];
 
