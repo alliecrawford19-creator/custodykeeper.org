@@ -475,19 +475,6 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        {/* Email Settings Info */}
-        <Card className="bg-[#FDFBF7] border-[#E2E8F0]">
-          <CardContent className="p-6">
-            <h3 className="font-['Merriweather'] font-bold text-[#1A202C] mb-2">
-              Email Sharing
-            </h3>
-            <p className="text-[#718096] text-sm">
-              You can email your journal entries and violation logs directly to attorneys, mediators, 
-              or other parties. Use the export features on the Journal and Violations pages to share 
-              your records. Email service requires configuration - contact support if you need assistance.
-            </p>
-          </CardContent>
-        </Card>
       </div>
     </Layout>
   );
