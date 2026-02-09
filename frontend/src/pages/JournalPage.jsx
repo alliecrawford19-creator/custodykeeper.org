@@ -392,16 +392,6 @@ export default function JournalPage() {
             </CardContent>
           </Card>
         )}
-
-        {/* Email Share Dialog */}
-        <EmailShareDialog
-          open={emailDialogOpen}
-          onOpenChange={setEmailDialogOpen}
-          contentType="journals"
-          contentIds={journals.map(j => j.journal_id)}
-          token={token}
-          defaultSubject="CustodyKeeper Journal Export"
-        />
       </div>
     </Layout>
   );
