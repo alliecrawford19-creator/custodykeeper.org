@@ -417,18 +417,22 @@ export default function CalendarPage() {
                       {format(day, "d")}
                     </div>
                     <div className="space-y-1">
-                      {dayEvents.slice(0, 3).map(event => (
-                        <div
-                          key={event.event_id}
-                          className={`text-xs px-2 py-1 rounded truncate ${getEventTypeColor(event.event_type)}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedDate(event);
-                          }}
-                        >
-                          {event.title}
-                        </div>
-                      ))}
+                      {dayEvents.slice(0, 3).map(event => {
+                        const customColor = getEventDisplayColor(event);
+                        return (
+                          <div
+                            key={event.event_id}
+                            className={`text-xs px-2 py-1 rounded truncate cursor-pointer hover:opacity-80 ${!customColor ? getEventTypeColor(event.event_type) : 'text-white'}`}
+                            style={customColor ? { backgroundColor: customColor } : {}}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleViewEvent(event);
+                            }}
+                          >
+                            {event.title}
+                          </div>
+                        );
+                      })}
                       {dayEvents.length > 3 && (
                         <div className="text-xs text-[#718096]">+{dayEvents.length - 3} more</div>
                       )}
