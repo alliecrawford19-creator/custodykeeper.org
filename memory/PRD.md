@@ -60,15 +60,16 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 
 ### Phase 1 - MVP Complete ✅
 - [x] User authentication (register/login/logout)
-- [x] Dashboard with stats, quick actions, upcoming events
+- [x] Dashboard with stats, quick actions, upcoming events (view only)
 - [x] **Court Date Countdown Widget** - Shows days/hours until next court date
-- [x] **Dashboard Clickable Events** - Click events to view details with edit option
-- [x] Parenting Journal with CRUD, search, export, email
+- [x] **Dashboard Clickable Events** - Click events to view details (read-only popup)
+- [x] Parenting Journal with CRUD, search, export, email, **photo evidence uploads**
 - [x] Violation Log with type, severity, witnesses, export, email
-- [x] Document upload (PDF, Images, Word, Videos, Audio) with categories
+- [x] Document upload (PDF, Images, Word, Videos, Audio) with categories & **in-app preview**
 - [x] **Calendar with Full Edit Support** - Create, Read, Update, Delete events
 - [x] **Calendar Children Association** - Link children to events with color coding
 - [x] **Calendar Group Events** - Custom colors for multi-child events
+- [x] **Recurring Calendar Events** - Daily, Weekly, Bi-weekly, Monthly patterns
 - [x] State Laws/Support & Advocacy page with parental alienation resources
 - [x] Settings page with children management (photo upload, color selection)
 - [x] **Contacts Management** - Full CRUD for case-related contacts
@@ -76,18 +77,20 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] Warm professional design with Merriweather/Lato fonts
 - [x] Mobile responsive design
 
-### Phase 2 - New Features Complete ✅ (Feb 9, 2026)
+### Phase 2 - Enhanced Features Complete ✅ (Feb 9, 2026)
 - [x] **Dark Mode Theme** - Toggle in header, persists via localStorage
 - [x] **Timeline/History View** - Chronological view of all records at /timeline
-  - Filter by record type (journals, violations, events, documents)
-  - Search functionality
-  - Date range filters
-  - Sort by newest/oldest
 - [x] **Multi-Child Filtering in Journals** - Filter entries by specific child
 - [x] **Print-Friendly Export** - Print buttons on Journals and Violations pages
-- [x] **Recurring Calendar Events** - Daily, Weekly, Bi-weekly, Monthly patterns
-  - End date for recurrence
-  - Visual display of recurring events on calendar
+- [x] **PDF Export** - Court-ready PDF generation for Journals and Violations
+- [x] **Notification Reminders** - Browser notifications for events within 24 hours
+- [x] **Photo/Evidence Attachments** - Add photos to journal entries
+- [x] **Attorney Sharing Mode** - Create secure, expiring read-only share links at /sharing
+
+### Phase 3 - UI/UX Polish ✅ (Feb 9, 2026)
+- [x] All dialog popups have solid white backgrounds
+- [x] Landing page: Removed "Get Started" button, changed to "Start Documenting Today"
+- [x] Dashboard: Event popup is now view-only (removed Edit button)
 
 ### Testing Results
 - Backend: 100% pass rate
