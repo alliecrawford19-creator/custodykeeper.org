@@ -6,6 +6,12 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Calendar,
   BookOpen,
   AlertTriangle,
@@ -15,7 +21,9 @@ import {
   ArrowRight,
   Clock,
   Gavel,
-  UserPlus
+  UserPlus,
+  MapPin,
+  Edit2
 } from "lucide-react";
 import { format, parseISO, differenceInDays, differenceInHours } from "date-fns";
 
