@@ -5,6 +5,7 @@ import { Layout } from "@/components/Layout";
 import { ProfileSection } from "@/components/settings/ProfileSection";
 import { ChildrenSection } from "@/components/settings/ChildrenSection";
 import { ExportDataSection } from "@/components/settings/ExportDataSection";
+import { SecuritySection } from "@/components/settings/SecuritySection";
 
 export default function SettingsPage() {
   const { user, token, setUser } = useAuth();
@@ -46,7 +47,7 @@ export default function SettingsPage() {
           <h1 className="font-['Merriweather'] text-2xl sm:text-3xl font-bold text-[#1A202C]">
             Settings
           </h1>
-          <p className="text-[#718096] mt-1">Manage your account and children's information</p>
+          <p className="text-[#718096] mt-1">Manage your account, security, and children's information</p>
         </div>
 
         {/* Profile Section */}
@@ -55,6 +56,13 @@ export default function SettingsPage() {
           token={token} 
           API={API} 
           setUser={setUser} 
+        />
+
+        {/* Security Section */}
+        <SecuritySection 
+          token={token} 
+          API={API}
+          userEmail={user?.email}
         />
 
         {/* Children Section */}
