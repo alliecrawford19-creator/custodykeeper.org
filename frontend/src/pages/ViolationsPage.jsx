@@ -221,7 +221,7 @@ export default function ViolationsPage() {
                 <DialogHeader>
                   <DialogTitle className="font-['Merriweather'] flex items-center gap-2">
                     <AlertTriangle className="w-5 h-5 text-[#D35400]" />
-                    Log Custody Violation
+                    {editingViolation ? "Edit Violation" : "Log Custody Violation"}
                   </DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4 mt-4">
