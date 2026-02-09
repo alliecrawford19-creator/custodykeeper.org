@@ -23,7 +23,8 @@ import {
   X,
   User,
   ChevronDown,
-  UserPlus
+  UserPlus,
+  MessageSquare
 } from "lucide-react";
 
 const navItems = [
