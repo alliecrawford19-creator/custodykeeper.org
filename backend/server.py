@@ -711,6 +711,15 @@ async def get_violations(
         query, 
         {"_id": 0}
     ).sort("date", -1).skip(skip).limit(page_size).to_list(page_size)
+    
+    # Add default values for missing fields (backward compatibility)
+    for v in violations:
+        if "title" not in v:
+            v["title"] = v.get("violation_type", "")
+        if "witnesses" not in v:
+            v["witnesses"] = ""
+        if "evidence_notes" not in v:
+            v["evidence_notes"] = ""
     return [ViolationResponse(**violation) for violation in violations]
 
 @api_router.get("/violations/{violation_id}", response_model=ViolationResponse)
