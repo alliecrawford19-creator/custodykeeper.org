@@ -147,8 +147,8 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1 relative rounded-2xl overflow-hidden shadow-xl">
               <img 
-                src="https://images.unsplash.com/photo-1611224885990-ab7363d1f2a8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHw0fHxjYWxlbmRhciUyMHBsYW5uaW5nfGVufDB8fHx8MTc3MDQwMDAwMHww&ixlib=rb-4.1.0&q=85"
-                alt="Calendar planning"
+                src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0NjAzMjh8MHwxfHNlYXJjaHwxfHxjYWxlbmRhciUyMHBsYW5uaW5nfGVufDB8fHx8MTczOTUwMDAwMHww&ixlib=rb-4.1.0&q=85"
+                alt="Calendar and planning"
                 className="w-full h-auto object-cover"
               />
             </div>
