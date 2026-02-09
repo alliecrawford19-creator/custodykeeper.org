@@ -18,6 +18,7 @@ import {
 import { toast } from "sonner";
 import { Plus, FileText, Upload, Trash2, Download, Search, File, FileImage, FileType, Eye, X, Video, Music, Share2 } from "lucide-react";
 import { format, parseISO } from "date-fns";
+import { DocumentPreview } from "@/components/DocumentPreview";
 
 const DOCUMENT_CATEGORIES = [
   { value: "custody_agreement", label: "Custody Agreement/Parenting Plan" },
