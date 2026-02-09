@@ -183,6 +183,9 @@ class CalendarEventCreate(BaseModel):
     recurrence_pattern: Optional[str] = ""  # daily, weekly, biweekly, monthly, custom
     recurrence_end_date: Optional[str] = ""
     custom_color: Optional[str] = ""
+    # For recurring event exceptions
+    exception_dates: Optional[List[str]] = []  # Dates to skip in recurrence
+    parent_event_id: Optional[str] = ""  # If this is an exception instance
 
 class CalendarEventResponse(BaseModel):
     event_id: str
@@ -199,6 +202,8 @@ class CalendarEventResponse(BaseModel):
     recurrence_end_date: str
     custom_color: str
     created_at: str
+    exception_dates: List[str] = []
+    parent_event_id: str = ""
 
 # Share Token Models
 class ShareTokenCreate(BaseModel):
