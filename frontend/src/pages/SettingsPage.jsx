@@ -17,6 +17,20 @@ import { toast } from "sonner";
 import { User, Plus, Trash2, Users, Calendar, Camera, Edit2, X } from "lucide-react";
 import { format, parseISO, differenceInYears } from "date-fns";
 
+// Color palette for children
+const CHILD_COLORS = [
+  "#EF4444", "#F97316", "#F59E0B", "#EAB308", "#84CC16", 
+  "#22C55E", "#10B981", "#14B8A6", "#06B6D4", "#0EA5E9",
+  "#3B82F6", "#6366F1", "#8B5CF6", "#A855F7", "#D946EF",
+  "#EC4899", "#F43F5E", "#FB7185", "#FDA4AF", "#FCA5A5",
+  "#FDBA74", "#FCD34D", "#FDE047", "#BEF264", "#86EFAC",
+  "#6EE7B7", "#5EEAD4", "#67E8F9", "#7DD3FC", "#93C5FD",
+  "#A5B4FC", "#C4B5FD", "#D8B4FE", "#F0ABFC", "#F9A8D4",
+  "#FE2C55", "#FF6B35", "#FFD23F", "#00B4D8", "#90E0EF",
+  "#CAF0F8", "#ADE8F4", "#48CAE4", "#00B4D8", "#0077B6",
+  "#023E8A", "#03045E", "#7209B7", "#560BAD", "#480CA8"
+];
+
 export default function SettingsPage() {
   const { user, token, setUser } = useAuth();
   const [children, setChildren] = useState([]);
