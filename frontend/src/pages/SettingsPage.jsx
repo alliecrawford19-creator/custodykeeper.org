@@ -400,6 +400,27 @@ export default function SettingsPage() {
                     />
                   </div>
 
+                  <div className="space-y-2">
+                    <Label>Color Tag (optional)</Label>
+                    <div className="grid grid-cols-10 gap-2">
+                      {CHILD_COLORS.map((color) => (
+                        <button
+                          key={color}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, color })}
+                          className={`w-8 h-8 rounded-full transition-all ${
+                            formData.color === color 
+                              ? 'ring-2 ring-offset-2 ring-[#2C3E50] scale-110' 
+                              : 'hover:scale-110'
+                          }`}
+                          style={{ backgroundColor: color }}
+                          title={color}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-xs text-[#718096]">Selected color will appear next to child's name</p>
+                  </div>
+
                   <div className="flex justify-end gap-3 pt-4">
                     <Button
                       type="button"
