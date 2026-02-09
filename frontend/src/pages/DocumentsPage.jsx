@@ -656,7 +656,7 @@ export default function DocumentsPage() {
 
         {/* Document Preview Dialog */}
         <Dialog open={previewOpen} onOpenChange={(open) => { if (!open) closePreview(); }}>
-          <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-hidden">
+          <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-hidden bg-white">
             <DialogHeader className="flex flex-row items-center justify-between">
               <DialogTitle className="font-['Merriweather'] flex items-center gap-2">
                 {previewDoc && getFileIcon(previewDoc.file_type)}
