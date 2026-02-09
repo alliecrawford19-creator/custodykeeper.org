@@ -372,7 +372,7 @@ export default function LandingPage() {
               <span className="font-['Merriweather'] font-bold text-lg text-white">CustodyKeeper</span>
             </div>
             <a 
-              href="mailto:support@custodykeeper.app" 
+              href="mailto:custodykeeper.feedback@gmail.com" 
               className="text-[#718096] hover:text-white transition-colors text-sm underline"
             >
               Contact Us
