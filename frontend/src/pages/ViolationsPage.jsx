@@ -144,6 +144,7 @@ export default function ViolationsPage() {
       witnesses: "",
       evidence_notes: ""
     });
+    setEditingViolation(null);
   };
 
   const handleExport = async () => {
