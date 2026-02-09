@@ -165,11 +165,6 @@ export default function JournalPage() {
     }
   };
 
-  const filteredJournals = journals.filter(journal =>
-    journal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    journal.content.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   const getMoodColor = (mood) => {
     return MOOD_OPTIONS.find(m => m.value === mood)?.color || "mood-neutral";
   };
