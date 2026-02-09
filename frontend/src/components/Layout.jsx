@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "@/App";
+import { useAuth, useTheme } from "@/App";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -30,7 +30,10 @@ import {
   User,
   ChevronDown,
   UserPlus,
-  MessageSquare
+  MessageSquare,
+  Moon,
+  Sun,
+  Clock
 } from "lucide-react";
 
 const navItems = [
@@ -40,6 +43,7 @@ const navItems = [
   { path: "/violations", label: "Violations", icon: AlertTriangle },
   { path: "/documents", label: "Documents", icon: FileText },
   { path: "/contacts", label: "Contacts", icon: UserPlus },
+  { path: "/timeline", label: "Timeline", icon: Clock },
   { path: "/state-laws", label: "Support & Advocacy", icon: Gavel },
 ];
 
