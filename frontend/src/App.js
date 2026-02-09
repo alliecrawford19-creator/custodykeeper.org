@@ -30,7 +30,14 @@ const AuthContext = createContext(null);
 const ThemeContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  // Return default values if outside provider
+  if (!context) {
+    return { theme: "light", setTheme: () => {}, toggleTheme: () => {} };
+  }
+  return context;
+};
 
 // Theme Provider Component
 const ThemeProvider = ({ children }) => {
