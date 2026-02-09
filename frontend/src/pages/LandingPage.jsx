@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Calendar, FileText, Shield, Scale, Send } from "lucide-react";
+import { BookOpen, Calendar, FileText, Shield, Scale, Send, Users, CheckCircle2, AlertTriangle, Heart } from "lucide-react";
 
 export default function LandingPage() {
   const features = [
@@ -76,31 +76,296 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Documentation Makes a Difference Section */}
       <section className="py-20 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
+              Documentation Makes a Difference
+            </h2>
+            <p className="text-lg text-[#718096]">
+              Family law attorneys and child custody evaluators consistently emphasize that well-documented parenting time significantly impacts court decisions.
+            </p>
+          </div>
+          
+          <div className="text-[#4A5568] space-y-4">
+            <p className="text-lg">
+              Detailed records of involvement, consistent communication, and active participation in children's lives demonstrate commitment and capability. CustodyKeeper provides the tools to create this comprehensive documentation, supporting your case for meaningful parenting time.
+            </p>
+            <p className="text-lg">
+              Courts recognize that children need both parents actively involved in their lives. When you can demonstrate consistent, engaged parenting through detailed records, you strengthen your position in custody proceedings and help ensure your children benefit from the proven advantages of shared parenting arrangements.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Detailed Feature Sections */}
+      
+      {/* Parenting Journal Section */}
+      <section className="py-20 px-4 bg-[#FDFBF7]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block px-4 py-1 bg-[#E8F6F3] text-[#2C3E50] text-sm font-semibold rounded-full mb-4">
+                Parenting Journal
+              </span>
+              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
+                Document Every Moment That Matters
+              </h2>
+              <p className="text-lg text-[#718096] mb-6">
+                Create detailed, timestamped records of your time with your children. From daily activities to special milestones, build a comprehensive journal that demonstrates your involvement and dedication.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Record activities, meals, and quality time spent together</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Track mood and behavior patterns for court records</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Export entries for attorney review or court presentation</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1544776193-352d25ca82cd?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHw1fHxwYXJlbnQlMjB3cml0aW5nJTIwam91cm5hbHxlbnwwfHx8fDE3NzA0MDAwMDB8MA&ixlib=rb-4.1.0&q=85"
+                alt="Parent journaling"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Schedule Tracking Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1 relative rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1611224885990-ab7363d1f2a8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHw0fHxjYWxlbmRhciUyMHBsYW5uaW5nfGVufDB8fHx8MTc3MDQwMDAwMHww&ixlib=rb-4.1.0&q=85"
+                alt="Calendar planning"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <span className="inline-block px-4 py-1 bg-[#E8F6F3] text-[#2C3E50] text-sm font-semibold rounded-full mb-4">
+                Scheduling
+              </span>
+              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
+                Never Miss a Parenting Moment
+              </h2>
+              <p className="text-lg text-[#718096] mb-6">
+                Keep track of your custody schedule, court dates, and important events all in one organized calendar. Never miss a pickup, drop-off, or court appearance again.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Track parenting time and court dates in one place</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Set reminders for important court appearances</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Document schedule compliance for legal proceedings</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Violation Logging Section */}
+      <section className="py-20 px-4 bg-[#FDFBF7]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block px-4 py-1 bg-[#FEE2E2] text-[#D35400] text-sm font-semibold rounded-full mb-4">
+                Violation Tracking
+              </span>
+              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
+                Document Custody Order Violations
+              </h2>
+              <p className="text-lg text-[#718096] mb-6">
+                Record and track violations of your custody agreement with detailed timestamps, severity levels, and evidence notes. Build a comprehensive record for legal proceedings.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-[#D35400] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Log parenting time denials and schedule violations</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-[#D35400] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Track patterns of interference and non-compliance</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-[#D35400] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Maintain evidence and witness information securely</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHw2fHxsZWdhbCUyMGRvY3VtZW50cyUyMGdhd mVsfGVufDB8fHx8MTc3MDQwMDAwMHww&ixlib=rb-4.1.0&q=85"
+                alt="Legal documentation"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Document Storage Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1 relative rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1568667256549-094345857637?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHwzfHxmaWxpbmclMjBjYWJpbmV0fGVufDB8fHx8MTc3MDQwMDAwMHww&ixlib=rb-4.1.0&q=85"
+                alt="Document filing"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <span className="inline-block px-4 py-1 bg-[#E8F6F3] text-[#2C3E50] text-sm font-semibold rounded-full mb-4">
+                Document Management
+              </span>
+              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
+                Organize All Your Court Documents
+              </h2>
+              <p className="text-lg text-[#718096] mb-6">
+                Upload, store, and organize court orders, medical records, school reports, and evidence in one secure location. Access your documents anywhere, anytime.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Store custody agreements and court orders securely</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Upload photos, videos, and evidence for your case</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Share documents directly from your device when needed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Management Section */}
+      <section className="py-20 px-4 bg-[#FDFBF7]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block px-4 py-1 bg-[#E8F6F3] text-[#2C3E50] text-sm font-semibold rounded-full mb-4">
+                Contact Management
+              </span>
+              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
+                Keep Important Contacts Organized
+              </h2>
+              <p className="text-lg text-[#718096] mb-6">
+                Maintain a centralized directory of attorneys, therapists, teachers, doctors, and other key contacts involved in your family court case.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Users className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Store contact details for attorneys and legal professionals</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Users className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Keep track of witnesses and their information</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Users className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Quick access to therapists, doctors, and educators</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1521791136064-7986c2920216?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHw0fHxjb250YWN0cyUyMG5ldHdvcmt8ZW58MHx8fHwxNzcwNDAwMDAwfDA&ixlib=rb-4.1.0&q=85"
+                alt="Professional contacts"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Support & Advocacy Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1 relative rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHw3fHxzdXBwb3J0JTIwZ3JvdXB8ZW58MHx8fHwxNzcwNDAwMDAwfDA&ixlib=rb-4.1.0&q=85"
+                alt="Support community"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <span className="inline-block px-4 py-1 bg-[#E8F6F3] text-[#2C3E50] text-sm font-semibold rounded-full mb-4">
+                Support & Advocacy
+              </span>
+              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
+                Connect With Organizations That Support Parents
+              </h2>
+              <p className="text-lg text-[#718096] mb-6">
+                Access a curated list of advocacy groups, support organizations, and communities dedicated to helping parents navigate family court and shared parenting challenges.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Heart className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Find father's and mother's rights organizations</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Heart className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Connect with parental alienation support groups</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Heart className="w-5 h-5 text-[#2C3E50] mt-1 flex-shrink-0" />
+                  <span className="text-[#4A5568]">Access advocates fighting for equal shared parenting</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Export & Share Section - Keep this */}
+      <section className="py-20 px-4 bg-[#FDFBF7]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
-              Everything You Need for Family Court
+              Export & Share Your Records
             </h2>
             <p className="text-lg text-[#718096] max-w-2xl mx-auto">
-              Purpose-built tools to help you document, organize, and present your case with confidence.
+              Download your records and share them directly from your device using native sharing.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="max-w-2xl mx-auto">
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
-                className={`custom-card interactive animate-fade-in stagger-${index + 1}`}
+                className={`custom-card interactive animate-fade-in`}
                 data-testid={`feature-card-${index}`}
               >
-                <div className="w-14 h-14 rounded-xl bg-[#E8F6F3] flex items-center justify-center text-[#2C3E50] mb-4">
+                <div className="w-14 h-14 rounded-xl bg-[#E8F6F3] flex items-center justify-center text-[#2C3E50] mb-4 mx-auto">
                   {feature.icon}
                 </div>
-                <h3 className="font-['Merriweather'] text-xl font-bold text-[#1A202C] mb-2">
+                <h3 className="font-['Merriweather'] text-xl font-bold text-[#1A202C] mb-2 text-center">
                   {feature.title}
                 </h3>
-                <p className="text-[#718096]">
+                <p className="text-[#718096] text-center">
                   {feature.description}
                 </p>
               </div>
@@ -110,7 +375,7 @@ export default function LandingPage() {
       </section>
 
       {/* Research & Benefits Section */}
-      <section className="py-20 px-4 bg-[#FDFBF7]">
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
@@ -157,184 +422,7 @@ export default function LandingPage() {
             <p>
               Academic institutions including Stanford University and Arizona State University have published research showing that children in shared parenting arrangements perform better academically, with higher graduation rates and greater college attendance. They also demonstrate stronger social skills, better emotional regulation, and lower rates of substance abuse during adolescence.
             </p>
-
-            <h3 className="font-['Merriweather'] text-2xl font-bold text-[#1A202C] mt-8 mb-4">
-              Documentation Makes a Difference
-            </h3>
-
-            <p>
-              Family law attorneys and child custody evaluators consistently emphasize that well-documented parenting time significantly impacts court decisions. Detailed records of involvement, consistent communication, and active participation in children's lives demonstrate commitment and capability. CustodyKeeper provides the tools to create this comprehensive documentation, supporting your case for meaningful parenting time.
-            </p>
-
-            <p>
-              Courts recognize that children need both parents actively involved in their lives. When you can demonstrate consistent, engaged parenting through detailed records, you strengthen your position in custody proceedings and help ensure your children benefit from the proven advantages of shared parenting arrangements.
-            </p>
           </div>
-        </div>
-      </section>
-
-      {/* Journal Feature Highlight */}
-      <section className="py-20 px-4 bg-[#FDFBF7]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1 animate-fade-in">
-              <img 
-                src="https://images.unsplash.com/photo-1633442495686-e8b67cffab53?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzV8MHwxfHNlYXJjaHw0fHx3cml0aW5nJTIwaW4lMjBqb3VybmFsJTIwZGlhcnl8ZW58MHx8fHwxNzcwMzk3MjMyfDA&ixlib=rb-4.1.0&q=85"
-                alt="Person writing in a notebook"
-                className="rounded-2xl shadow-xl w-full"
-              />
-            </div>
-            <div className="order-1 lg:order-2 animate-fade-in stagger-2">
-              <span className="badge badge-primary mb-4">Journaling</span>
-              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-6">
-                Document Every Moment That Matters
-              </h2>
-              <p className="text-lg text-[#718096] mb-6">
-                Create detailed entries about your time with your children. Include dates, activities, moods, and observations. Build a comprehensive record that demonstrates your involvement and commitment.
-              </p>
-              <ul className="space-y-3 text-[#718096]">
-                <li className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                    <svg className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  Timestamped entries for legal validity
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                    <svg className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  Track children involved and activities
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                    <svg className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  Export complete journals for attorneys
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Calendar Feature Highlight */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <span className="badge badge-primary mb-4">Scheduling</span>
-              <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-6">
-                Never Miss a Parenting Moment
-              </h2>
-              <p className="text-lg text-[#718096] mb-6">
-                Keep track of your custody schedule, court dates, and important events. Our calendar helps you stay organized and ensures you're always prepared for what's ahead.
-              </p>
-              <ul className="space-y-3 text-[#718096]">
-                <li className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                    <svg className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  Track parenting time and court dates
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                    <svg className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  Set reminders for court appearances
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-[#E8F6F3] flex items-center justify-center">
-                    <svg className="w-4 h-4 text-[#2C3E50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  Document schedule compliance
-                </li>
-              </ul>
-            </div>
-            <div className="animate-fade-in stagger-2">
-              <img 
-                src="https://images.unsplash.com/photo-1610888662651-05dbdec7cfae?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwxfHxmYW1pbHklMjBjYWxlbmRhciUyMHNjaGVkdWxlfGVufDB8fHx8MTc3MDM5NzIzOHww&ixlib=rb-4.1.0&q=85"
-                alt="Wall calendar"
-                className="rounded-2xl shadow-xl w-full"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 px-4 bg-[#E8F6F3]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-[#1A202C] mb-4">
-              Trusted by Parents Like You
-            </h2>
-            <p className="text-lg text-[#718096]">
-              See how CustodyKeeper has helped families navigate difficult times.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="custom-card animate-fade-in" data-testid="testimonial-1">
-              <div className="flex items-center gap-4 mb-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1770058428154-9eee8a6a1fbb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwyfHxmcmllbmRseSUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0fGVufDB8fHx8MTc3MDM5NzI0NHww&ixlib=rb-4.1.0&q=85"
-                  alt="Testimonial avatar"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-bold text-[#1A202C]">Sarah M.</p>
-                  <p className="text-sm text-[#718096]">California</p>
-                </div>
-              </div>
-              <p className="text-[#718096] italic">
-                "The journal feature helped me document everything my attorney needed. Having organized records made such a difference in my custody case."
-              </p>
-            </div>
-            <div className="custom-card animate-fade-in stagger-2" data-testid="testimonial-2">
-              <div className="flex items-center gap-4 mb-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1770363758469-386b78e979e2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwzfHxmcmllbmRseSUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0fGVufDB8fHx8MTc3MDM5NzI0NHww&ixlib=rb-4.1.0&q=85"
-                  alt="Testimonial avatar"
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-bold text-[#1A202C]">Jennifer L.</p>
-                  <p className="text-sm text-[#718096]">Texas</p>
-                </div>
-              </div>
-              <p className="text-[#718096] italic">
-                "Being able to log violations and export them directly to my lawyer saved so much time. This app understands what parents going through custody disputes actually need."
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-[#2C3E50]">
-        <div className="max-w-4xl mx-auto text-center animate-fade-in">
-          <h2 className="font-['Merriweather'] text-3xl sm:text-4xl font-bold text-white mb-6">
-            Start Protecting Your Parental Rights Today
-          </h2>
-          <p className="text-lg text-white/80 mb-8">
-            Join thousands of parents who trust CustodyKeeper to document, organize, and prepare for family court.
-          </p>
-          <Link to="/register">
-            <Button className="bg-white text-[#2C3E50] hover:bg-[#E8F6F3] rounded-full px-10 py-6 text-lg font-bold shadow-lg btn-hover" data-testid="cta-get-started-btn">
-              Create Your Free Account
-            </Button>
-          </Link>
         </div>
       </section>
 
