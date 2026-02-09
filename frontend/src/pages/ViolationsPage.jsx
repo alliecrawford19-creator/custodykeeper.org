@@ -180,14 +180,6 @@ export default function ViolationsPage() {
           <div className="flex gap-3">
             <Button
               variant="outline"
-              onClick={() => setEmailDialogOpen(true)}
-              className="border-[#E2E8F0] text-[#2C3E50]"
-              data-testid="email-violations-btn"
-            >
-              <Mail className="w-4 h-4 mr-2" /> Email
-            </Button>
-            <Button
-              variant="outline"
               onClick={handleExport}
               className="border-[#E2E8F0] text-[#2C3E50]"
               data-testid="export-violations-btn"
