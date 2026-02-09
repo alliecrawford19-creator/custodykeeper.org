@@ -2,18 +2,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth, API } from "@/App";
 import { Layout } from "@/components/Layout";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Scale, ExternalLink, Search, MapPin, BookOpen, Users, Heart, Globe } from "lucide-react";
+import { Scale, ExternalLink, Search, Users, Heart, Globe } from "lucide-react";
 
 export default function StateLawsPage() {
-  const { user, token } = useAuth();
-  const [stateLaws, setStateLaws] = useState({});
+  const { token } = useAuth();
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("laws");
 
   useEffect(() => {
     fetchData();
@@ -21,29 +18,21 @@ export default function StateLawsPage() {
 
   const fetchData = async () => {
     try {
-      const [lawsRes, resourcesRes] = await Promise.all([
-        axios.get(`${API}/state-laws`, { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get(`${API}/resources/parental-alienation`, { headers: { Authorization: `Bearer ${token}` } })
-      ]);
-      setStateLaws(lawsRes.data.states);
+      const resourcesRes = await axios.get(`${API}/resources/parental-alienation`, { 
+        headers: { Authorization: `Bearer ${token}` } 
+      });
       setResources(resourcesRes.data.resources);
     } catch (error) {
-      console.error("Failed to fetch data:", error);
+      console.error("Failed to fetch resources:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredStates = Object.entries(stateLaws).filter(([state]) =>
-    state.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredResources = resources.filter(resource =>
+    resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    resource.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  // Put user's state first
-  const sortedStates = filteredStates.sort((a, b) => {
-    if (a[0] === user?.state) return -1;
-    if (b[0] === user?.state) return 1;
-    return a[0].localeCompare(b[0]);
-  });
 
   if (loading) {
     return (
