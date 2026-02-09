@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -18,8 +19,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2, Edit2, Users } from "lucide-react";
-import { format, parseISO, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval, startOfWeek, endOfWeek, addMonths, subMonths } from "date-fns";
+import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2, Edit2, Users, Repeat } from "lucide-react";
+import { format, parseISO, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval, startOfWeek, endOfWeek, addMonths, subMonths, addDays, addWeeks } from "date-fns";
 
 const EVENT_TYPES = [
   { value: "family_court", label: "Family Court", color: "bg-[#FEE2E2] text-[#991B1B]" },
@@ -29,6 +30,13 @@ const EVENT_TYPES = [
   { value: "medical", label: "Medical Appointment", color: "bg-[#FCE7F3] text-[#9D174D]" },
   { value: "school", label: "School Event", color: "bg-[#FEF3C7] text-[#92400E]" },
   { value: "other", label: "Other", color: "bg-[#F3F4F6] text-[#374151]" },
+];
+
+const RECURRENCE_PATTERNS = [
+  { value: "daily", label: "Daily" },
+  { value: "weekly", label: "Weekly" },
+  { value: "biweekly", label: "Every 2 Weeks" },
+  { value: "monthly", label: "Monthly" },
 ];
 
 // Color palette for grouped children events
@@ -56,6 +64,8 @@ export default function CalendarPage() {
     notes: "",
     location: "",
     recurring: false,
+    recurrence_pattern: "",
+    recurrence_end_date: "",
     custom_color: ""
   });
 
