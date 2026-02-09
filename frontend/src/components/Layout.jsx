@@ -196,6 +196,48 @@ export const Layout = ({ children }) => {
           {children}
         </div>
       </main>
+
+      {/* Contact Us Dialog */}
+      <Dialog open={contactDialogOpen} onOpenChange={setContactDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-['Merriweather'] text-xl">Contact Us</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <div className="flex items-center gap-3 p-4 bg-[#E8F6F3] rounded-lg">
+              <MessageSquare className="w-5 h-5 text-[#2C3E50]" />
+              <div className="flex-1">
+                <p className="font-medium text-[#1A202C]">Feedback & Suggestions</p>
+                <a 
+                  href="mailto:custodykeeper.feedback@gmail.com"
+                  className="text-sm text-[#2C3E50] hover:underline"
+                >
+                  custodykeeper.feedback@gmail.com
+                </a>
+              </div>
+            </div>
+            
+            <div className="text-sm text-[#718096] space-y-2">
+              <p className="font-medium text-[#1A202C]">📧 This email is for feedback purposes only</p>
+              <p>
+                We value your input! Share your feedback, suggestions, and ideas to help us improve CustodyKeeper. 
+                Your opinions guide our future updates and changes.
+              </p>
+              <p className="text-xs mt-3 pt-3 border-t border-[#E2E8F0]">
+                <strong>Note:</strong> This email is not monitored for support requests. For urgent matters, 
+                please use the appropriate legal or technical support channels.
+              </p>
+            </div>
+
+            <Button
+              onClick={() => setContactDialogOpen(false)}
+              className="w-full bg-[#2C3E50] hover:bg-[#34495E] text-white"
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
