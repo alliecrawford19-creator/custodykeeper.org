@@ -209,11 +209,63 @@ export default function CalendarPage() {
     return null;
   };
 
+  // Generate recurring event instances for a given date
+  const getRecurringInstancesForDate = (event, date) => {
+    if (!event.recurring || !event.recurrence_pattern) return [];
+    
+    const eventStart = parseISO(event.start_date);
+    const recurrenceEnd = event.recurrence_end_date ? parseISO(event.recurrence_end_date) : addMonths(eventStart, 6);
+    
+    // Don't show instances before original event or after recurrence end
+    if (date < eventStart || date > recurrenceEnd) return [];
+    
+    // Check if this date falls on a recurrence
+    const daysDiff = Math.floor((date - eventStart) / (1000 * 60 * 60 * 24));
+    
+    let isRecurrenceDay = false;
+    switch (event.recurrence_pattern) {
+      case 'daily':
+        isRecurrenceDay = daysDiff >= 0;
+        break;
+      case 'weekly':
+        isRecurrenceDay = daysDiff >= 0 && daysDiff % 7 === 0;
+        break;
+      case 'biweekly':
+        isRecurrenceDay = daysDiff >= 0 && daysDiff % 14 === 0;
+        break;
+      case 'monthly':
+        isRecurrenceDay = daysDiff >= 0 && date.getDate() === eventStart.getDate();
+        break;
+      default:
+        isRecurrenceDay = false;
+    }
+    
+    if (isRecurrenceDay && !isSameDay(date, eventStart)) {
+      return [{
+        ...event,
+        event_id: `${event.event_id}-${format(date, 'yyyy-MM-dd')}`,
+        start_date: format(date, 'yyyy-MM-dd'),
+        end_date: format(date, 'yyyy-MM-dd'),
+        isRecurringInstance: true,
+        originalEventId: event.event_id
+      }];
+    }
+    
+    return [];
+  };
+
   const getEventsForDate = (date) => {
-    return events.filter(event => {
+    const directEvents = events.filter(event => {
       const eventDate = parseISO(event.start_date);
       return isSameDay(eventDate, date);
     });
+    
+    // Add recurring event instances
+    const recurringInstances = events
+      .filter(event => event.recurring && event.recurrence_pattern)
+      .flatMap(event => getRecurringInstancesForDate(event, date));
+    
+    return [...directEvents, ...recurringInstances];
   };
 
   const getEventTypeColor = (type) => {
