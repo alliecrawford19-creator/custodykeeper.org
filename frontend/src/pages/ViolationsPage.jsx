@@ -16,9 +16,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, AlertTriangle, Search, Trash2, Download, Clock, FileWarning, Mail } from "lucide-react";
+import { Plus, AlertTriangle, Search, Trash2, Download, Clock, FileWarning } from "lucide-react";
 import { format, parseISO } from "date-fns";
-import { EmailShareDialog } from "@/components/EmailShareDialog";
 
 const VIOLATION_TYPES = [
   { value: "parenting_time_denial", label: "Parenting Time Denial" },
