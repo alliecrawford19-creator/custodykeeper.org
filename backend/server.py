@@ -613,6 +613,37 @@ async def get_violation(violation_id: str, current_user: dict = Depends(get_curr
         raise HTTPException(status_code=404, detail="Violation not found")
     return ViolationResponse(**violation)
 
+@api_router.put("/violations/{violation_id}", response_model=ViolationResponse)
+async def update_violation(violation_id: str, violation_data: ViolationCreate, current_user: dict = Depends(get_current_user)):
+    # Check if violation exists
+    existing_violation = await db.violations.find_one({
+        "violation_id": violation_id,
+        "user_id": current_user["user_id"]
+    }, {"_id": 0})
+    
+    if not existing_violation:
+        raise HTTPException(status_code=404, detail="Violation not found")
+    
+    # Update fields
+    update_data = {
+        "title": violation_data.title,
+        "violation_type": violation_data.violation_type,
+        "description": violation_data.description,
+        "date": violation_data.date,
+        "severity": violation_data.severity,
+        "witnesses": violation_data.witnesses or "",
+        "evidence_notes": violation_data.evidence_notes or "",
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.violations.update_one(
+        {"violation_id": violation_id, "user_id": current_user["user_id"]},
+        {"$set": update_data}
+    )
+    
+    existing_violation.update(update_data)
+    return ViolationResponse(**existing_violation)
+
 @api_router.delete("/violations/{violation_id}")
 async def delete_violation(violation_id: str, current_user: dict = Depends(get_current_user)):
     result = await db.violations.delete_one({
