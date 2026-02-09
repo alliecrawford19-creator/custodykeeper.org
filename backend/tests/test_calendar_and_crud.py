@@ -7,7 +7,7 @@ import requests
 import os
 import uuid
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://shared-custody.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://visibility-patch-1.preview.emergentagent.com')
 
 # Test credentials from the review request
 TEST_EMAIL = "test2@test.com"
