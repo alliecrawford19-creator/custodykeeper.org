@@ -1463,6 +1463,159 @@ async def get_shared_data(share_token: str):
     
     return data
 
+
+# ============== EXPORT ALL DATA ==============
+
+@api_router.get("/export/all")
+async def export_all_data(current_user: dict = Depends(get_current_user)):
+    """
+    Export all user data as a ZIP archive containing:
+    - account.json: User profile information
+    - children.json: Children profiles
+    - journals.json: All journal entries
+    - violations.json: All violation records
+    - calendar.json: All calendar events
+    - contacts.json: All contacts
+    - documents/: All uploaded documents
+    """
+    try:
+        user_id = current_user["user_id"]
+        
+        # Create in-memory ZIP file
+        zip_buffer = io.BytesIO()
+        
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            # 1. Account Information
+            account_data = {
+                "full_name": current_user.get("full_name", ""),
+                "email": current_user.get("email", ""),
+                "state": current_user.get("state", ""),
+                "created_at": current_user.get("created_at", ""),
+                "exported_at": datetime.now(timezone.utc).isoformat()
+            }
+            zip_file.writestr("account.json", json.dumps(account_data, indent=2))
+            
+            # 2. Children
+            children = await db.children.find(
+                {"user_id": user_id}, 
+                {"_id": 0}
+            ).to_list(100)
+            # Remove photo data to reduce size, keep reference
+            for child in children:
+                if child.get("photo"):
+                    child["has_photo"] = True
+                    child["photo"] = "[Photo data exported separately]"
+            zip_file.writestr("children.json", json.dumps(children, indent=2))
+            
+            # 3. Journals
+            journals = await db.journals.find(
+                {"user_id": user_id}, 
+                {"_id": 0}
+            ).sort("date", -1).to_list(10000)
+            # Handle photos
+            for journal in journals:
+                if journal.get("photos"):
+                    journal["photo_count"] = len(journal["photos"])
+                    journal["photos"] = "[Photo data included in documents folder]"
+            zip_file.writestr("journals.json", json.dumps(journals, indent=2))
+            
+            # 4. Violations
+            violations = await db.violations.find(
+                {"user_id": user_id}, 
+                {"_id": 0}
+            ).sort("date", -1).to_list(10000)
+            zip_file.writestr("violations.json", json.dumps(violations, indent=2))
+            
+            # 5. Calendar Events
+            events = await db.calendar_events.find(
+                {"user_id": user_id}, 
+                {"_id": 0}
+            ).sort("start_date", -1).to_list(10000)
+            zip_file.writestr("calendar.json", json.dumps(events, indent=2))
+            
+            # 6. Contacts
+            contacts = await db.contacts.find(
+                {"user_id": user_id}, 
+                {"_id": 0}
+            ).to_list(1000)
+            for contact in contacts:
+                if contact.get("photo"):
+                    contact["has_photo"] = True
+                    contact["photo"] = "[Photo data]"
+            zip_file.writestr("contacts.json", json.dumps(contacts, indent=2))
+            
+            # 7. Documents (metadata + files)
+            documents = await db.documents.find(
+                {"user_id": user_id}, 
+                {"_id": 0}
+            ).to_list(1000)
+            
+            doc_index = []
+            for i, doc in enumerate(documents):
+                doc_entry = {
+                    "document_id": doc.get("document_id", ""),
+                    "name": doc.get("name", ""),
+                    "category": doc.get("category", ""),
+                    "description": doc.get("description", ""),
+                    "uploaded_at": doc.get("uploaded_at", ""),
+                    "file_type": doc.get("file_type", ""),
+                    "file_size": doc.get("file_size", 0)
+                }
+                doc_index.append(doc_entry)
+                
+                # Include actual file content if available
+                if doc.get("content"):
+                    try:
+                        # Decode base64 content
+                        file_content = base64.b64decode(doc["content"])
+                        safe_name = doc.get("name", f"document_{i}").replace("/", "_").replace("\\", "_")
+                        zip_file.writestr(f"documents/{safe_name}", file_content)
+                    except Exception as e:
+                        logger.warning(f"Could not export document {doc.get('name')}: {str(e)}")
+            
+            zip_file.writestr("documents/index.json", json.dumps(doc_index, indent=2))
+            
+            # 8. Create a README
+            readme_content = f"""CustodyKeeper Data Export
+========================
+
+Exported: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")}
+User: {current_user.get("full_name", "Unknown")}
+
+Contents:
+- account.json: Your profile information
+- children.json: Your children's profiles
+- journals.json: All journal entries
+- violations.json: All violation records
+- calendar.json: All calendar events
+- contacts.json: All case contacts
+- documents/: All uploaded documents
+  - index.json: Document metadata
+
+This export contains all your CustodyKeeper data.
+Keep this file secure as it contains sensitive information.
+
+For questions, contact: custodykeeper.feedback@gmail.com
+"""
+            zip_file.writestr("README.txt", readme_content)
+        
+        # Prepare response
+        zip_buffer.seek(0)
+        filename = f"CustodyKeeper_Export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip"
+        
+        return StreamingResponse(
+            zip_buffer,
+            media_type="application/zip",
+            headers={
+                "Content-Disposition": f"attachment; filename={filename}"
+            }
+        )
+        
+    except Exception as e:
+        logger.error(f"Failed to export data: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to export data: {str(e)}")
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
