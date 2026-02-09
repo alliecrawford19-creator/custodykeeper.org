@@ -177,6 +177,7 @@ class CalendarEventCreate(BaseModel):
     notes: Optional[str] = ""
     location: Optional[str] = ""
     recurring: Optional[bool] = False
+    custom_color: Optional[str] = ""
 
 class CalendarEventResponse(BaseModel):
     event_id: str
@@ -189,6 +190,7 @@ class CalendarEventResponse(BaseModel):
     notes: str
     location: str
     recurring: bool
+    custom_color: str
     created_at: str
 
 # Email Models
