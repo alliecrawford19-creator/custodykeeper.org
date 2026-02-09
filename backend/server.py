@@ -1524,6 +1524,211 @@ async def get_shared_data(share_token: str):
     return data
 
 
+# ============== DATA IMPORT ==============
+
+class ImportResult(BaseModel):
+    success: bool
+    imported_count: int
+    errors: List[str]
+    skipped_count: int
+
+@api_router.post("/import/journals")
+async def import_journals(
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    """Import journals from CSV file"""
+    try:
+        import csv
+        
+        content = await file.read()
+        decoded = content.decode('utf-8-sig')
+        reader = csv.DictReader(io.StringIO(decoded))
+        
+        imported = 0
+        errors = []
+        skipped = 0
+        
+        for i, row in enumerate(reader, start=2):
+            try:
+                if not row.get('title') or not row.get('date'):
+                    errors.append(f"Row {i}: Missing required field (title or date)")
+                    skipped += 1
+                    continue
+                
+                journal_id = str(uuid.uuid4())
+                now = datetime.now(timezone.utc).isoformat()
+                
+                journal_doc = {
+                    "journal_id": journal_id,
+                    "user_id": current_user["user_id"],
+                    "title": row.get('title', '').strip(),
+                    "entry": row.get('entry', row.get('content', '')).strip(),
+                    "date": row.get('date', '').strip(),
+                    "mood": row.get('mood', '').strip() or None,
+                    "children_involved": [],
+                    "photos": [],
+                    "created_at": now
+                }
+                
+                await db.journals.insert_one(journal_doc)
+                imported += 1
+                
+            except Exception as e:
+                errors.append(f"Row {i}: {str(e)}")
+                skipped += 1
+        
+        return {
+            "success": True,
+            "imported_count": imported,
+            "skipped_count": skipped,
+            "errors": errors[:10]
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to import: {str(e)}")
+
+@api_router.post("/import/violations")
+async def import_violations(
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    """Import violations from CSV file"""
+    try:
+        import csv
+        
+        content = await file.read()
+        decoded = content.decode('utf-8-sig')
+        reader = csv.DictReader(io.StringIO(decoded))
+        
+        imported = 0
+        errors = []
+        skipped = 0
+        
+        for i, row in enumerate(reader, start=2):
+            try:
+                if not row.get('violation_type') or not row.get('date'):
+                    errors.append(f"Row {i}: Missing required field (violation_type or date)")
+                    skipped += 1
+                    continue
+                
+                violation_id = str(uuid.uuid4())
+                now = datetime.now(timezone.utc).isoformat()
+                
+                violation_doc = {
+                    "violation_id": violation_id,
+                    "user_id": current_user["user_id"],
+                    "violation_type": row.get('violation_type', '').strip(),
+                    "date": row.get('date', '').strip(),
+                    "time": row.get('time', '').strip() or None,
+                    "description": row.get('description', '').strip(),
+                    "severity": row.get('severity', 'medium').strip().lower(),
+                    "witnesses": row.get('witnesses', '').strip() or None,
+                    "evidence_notes": row.get('evidence_notes', row.get('evidence', '')).strip() or None,
+                    "created_at": now
+                }
+                
+                await db.violations.insert_one(violation_doc)
+                imported += 1
+                
+            except Exception as e:
+                errors.append(f"Row {i}: {str(e)}")
+                skipped += 1
+        
+        return {
+            "success": True,
+            "imported_count": imported,
+            "skipped_count": skipped,
+            "errors": errors[:10]
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to import: {str(e)}")
+
+@api_router.post("/import/calendar")
+async def import_calendar(
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    """Import calendar events from CSV file"""
+    try:
+        import csv
+        
+        content = await file.read()
+        decoded = content.decode('utf-8-sig')
+        reader = csv.DictReader(io.StringIO(decoded))
+        
+        imported = 0
+        errors = []
+        skipped = 0
+        
+        for i, row in enumerate(reader, start=2):
+            try:
+                if not row.get('title') or not row.get('start_date'):
+                    errors.append(f"Row {i}: Missing required field (title or start_date)")
+                    skipped += 1
+                    continue
+                
+                event_id = str(uuid.uuid4())
+                now = datetime.now(timezone.utc).isoformat()
+                
+                event_doc = {
+                    "event_id": event_id,
+                    "user_id": current_user["user_id"],
+                    "title": row.get('title', '').strip(),
+                    "start_date": row.get('start_date', '').strip(),
+                    "end_date": row.get('end_date', row.get('start_date', '')).strip(),
+                    "event_type": row.get('event_type', 'other').strip().lower(),
+                    "children_involved": [],
+                    "notes": row.get('notes', '').strip(),
+                    "location": row.get('location', '').strip(),
+                    "recurring": False,
+                    "recurrence_pattern": "",
+                    "recurrence_end_date": "",
+                    "custom_color": "",
+                    "exception_dates": [],
+                    "parent_event_id": "",
+                    "created_at": now
+                }
+                
+                await db.calendar_events.insert_one(event_doc)
+                imported += 1
+                
+            except Exception as e:
+                errors.append(f"Row {i}: {str(e)}")
+                skipped += 1
+        
+        return {
+            "success": True,
+            "imported_count": imported,
+            "skipped_count": skipped,
+            "errors": errors[:10]
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to import: {str(e)}")
+
+@api_router.get("/import/templates/{data_type}")
+async def get_import_template(data_type: str):
+    """Get CSV template for importing data"""
+    templates = {
+        "journals": "title,date,entry,mood\n\"Family dinner\",\"2026-01-15\",\"Had a wonderful dinner with the kids...\",\"happy\"\n",
+        "violations": "violation_type,date,time,description,severity,witnesses,evidence_notes\n\"Late pickup\",\"2026-01-15\",\"18:30\",\"Was 45 minutes late for pickup\",\"medium\",\"Neighbor saw\",\"Text messages saved\"\n",
+        "calendar": "title,start_date,end_date,event_type,location,notes\n\"Court hearing\",\"2026-02-20\",\"2026-02-20\",\"court_date\",\"Family Court Room 3\",\"Custody modification hearing\"\n"
+    }
+    
+    if data_type not in templates:
+        raise HTTPException(status_code=404, detail="Template not found")
+    
+    return StreamingResponse(
+        io.StringIO(templates[data_type]),
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename={data_type}_template.csv"
+        }
+    )
+
+
 # ============== TWO-FACTOR AUTHENTICATION ==============
 
 class TwoFactorSetup(BaseModel):
