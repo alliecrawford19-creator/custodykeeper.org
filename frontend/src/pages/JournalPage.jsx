@@ -184,14 +184,6 @@ export default function JournalPage() {
           <div className="flex gap-3">
             <Button
               variant="outline"
-              onClick={() => setEmailDialogOpen(true)}
-              className="border-[#E2E8F0] text-[#2C3E50]"
-              data-testid="email-journals-btn"
-            >
-              <Mail className="w-4 h-4 mr-2" /> Email
-            </Button>
-            <Button
-              variant="outline"
               onClick={handleExport}
               className="border-[#E2E8F0] text-[#2C3E50]"
               data-testid="export-journals-btn"
