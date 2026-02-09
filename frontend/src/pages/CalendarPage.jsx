@@ -624,10 +624,10 @@ export default function CalendarPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-                className="border-[#E2E8F0]"
+                className="border-[#E2E8F0] text-[#1A202C]"
                 data-testid="prev-month-btn"
               >
-                ←
+                <ChevronLeft className="w-4 h-4" />
               </Button>
               <h2 className="font-['Merriweather'] text-lg sm:text-xl font-bold text-[#1A202C]">
                 {format(currentMonth, "MMMM yyyy")}
@@ -636,10 +636,10 @@ export default function CalendarPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-                className="border-[#E2E8F0]"
+                className="border-[#E2E8F0] text-[#1A202C]"
                 data-testid="next-month-btn"
               >
-                →
+                <ChevronRight className="w-4 h-4" />
               </Button>
             </div>
             <Button
