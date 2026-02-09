@@ -65,8 +65,8 @@ export default function LandingPage() {
             <div className="animate-fade-in stagger-2 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1653130892002-02af4f13ba09?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHwyfHxjYWxtJTIwcGFyZW50JTIwb3JnYW5pemluZyUyMGRvY3VtZW50c3xlbnwwfHx8fDE3NzAzOTcyMjd8MA&ixlib=rb-4.1.0&q=85"
-                  alt="Organized documents and typewriter symbolizing co-parenting records"
+                  src="https://images.unsplash.com/photo-1609220136736-443140cffec6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0NjAzMjh8MHwxfHNlYXJjaHwxfHxmYW1pbHklMjBsYXclMjBkb2N1bWVudHN8ZW58MHx8fHwxNzM5NTAwMDAwfDA&ixlib=rb-4.1.0&q=85"
+                  alt="Family law documents and gavel representing legal organization"
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#FDFBF7]/80 to-transparent"></div>
