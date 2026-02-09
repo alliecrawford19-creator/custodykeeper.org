@@ -234,7 +234,7 @@ export default function CalendarPage() {
             </h1>
             <p className="text-[#718096] mt-1">Track parenting time, court dates, and attorney meetings</p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) resetForm(); }}>
             <DialogTrigger asChild>
               <Button
                 className="bg-[#2C3E50] hover:bg-[#34495E] text-white rounded-full btn-hover"
@@ -244,9 +244,11 @@ export default function CalendarPage() {
                 <Plus className="w-4 h-4 mr-2" /> Add Event
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-lg">
+            <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="font-['Merriweather']">Add Calendar Event</DialogTitle>
+                <DialogTitle className="font-['Merriweather']">
+                  {editingEvent ? "Edit Event" : "Add Calendar Event"}
+                </DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4 mt-4">
                 <div className="space-y-2">
@@ -303,6 +305,65 @@ export default function CalendarPage() {
                   </Select>
                 </div>
 
+                {/* Children Selection */}
+                {children.length > 0 && (
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      <Users className="w-4 h-4" /> Children Involved
+                    </Label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {children.map(child => (
+                        <div
+                          key={child.child_id}
+                          onClick={() => toggleChildInvolved(child.child_id)}
+                          className={`flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all ${
+                            formData.children_involved.includes(child.child_id)
+                              ? 'border-[#2C3E50] bg-[#E8F6F3]'
+                              : 'border-[#E2E8F0] hover:border-[#2C3E50]/50'
+                          }`}
+                        >
+                          <div
+                            className="w-4 h-4 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: child.color || '#3B82F6' }}
+                          />
+                          <span className="text-sm truncate">{child.name}</span>
+                          {formData.children_involved.includes(child.child_id) && (
+                            <span className="ml-auto text-[#2C3E50]">✓</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-[#718096]">
+                      Select children to associate with this event. Single child events use their color.
+                    </p>
+                  </div>
+                )}
+
+                {/* Custom Color for Group Events */}
+                {formData.children_involved.length > 1 && (
+                  <div className="space-y-2">
+                    <Label>Group Event Color</Label>
+                    <div className="flex flex-wrap gap-2">
+                      {GROUP_COLORS.map((color) => (
+                        <button
+                          key={color}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, custom_color: color })}
+                          className={`w-8 h-8 rounded-full transition-all ${
+                            formData.custom_color === color 
+                              ? 'ring-2 ring-offset-2 ring-[#2C3E50] scale-110' 
+                              : 'hover:scale-110'
+                          }`}
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-xs text-[#718096]">
+                      Choose a unique color for this group event on the calendar.
+                    </p>
+                  </div>
+                )}
+
                 <div className="space-y-2">
                   <Label>Location (optional)</Label>
                   <Input
@@ -329,7 +390,7 @@ export default function CalendarPage() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => setDialogOpen(false)}
+                    onClick={() => { setDialogOpen(false); resetForm(); }}
                     className="border-[#E2E8F0]"
                   >
                     Cancel
@@ -339,7 +400,7 @@ export default function CalendarPage() {
                     className="bg-[#2C3E50] hover:bg-[#34495E] text-white"
                     data-testid="save-event-btn"
                   >
-                    Save Event
+                    {editingEvent ? "Update Event" : "Save Event"}
                   </Button>
                 </div>
               </form>
