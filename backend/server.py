@@ -121,6 +121,7 @@ class JournalCreate(BaseModel):
     children_involved: List[str] = []
     mood: Optional[str] = "neutral"
     location: Optional[str] = ""
+    photos: List[str] = []  # Base64 encoded photos
 
 class JournalResponse(BaseModel):
     journal_id: str
@@ -131,6 +132,7 @@ class JournalResponse(BaseModel):
     children_involved: List[str]
     mood: str
     location: str
+    photos: List[str]
     created_at: str
     updated_at: str
 
