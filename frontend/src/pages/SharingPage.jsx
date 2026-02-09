@@ -27,9 +27,18 @@ import {
   BookOpen,
   AlertTriangle,
   FileText,
-  Calendar
+  Calendar,
+  Eye,
+  Printer,
+  Download
 } from "lucide-react";
 import { format, parseISO } from "date-fns";
+
+const PERMISSION_LABELS = {
+  "read_only": { label: "View Only", icon: Eye, description: "Can only view records" },
+  "read_print": { label: "View & Print", icon: Printer, description: "Can view and print records" },
+  "read_print_download": { label: "Full Access", icon: Download, description: "Can view, print, and download documents" }
+};
 
 export default function SharingPage() {
   const { token } = useAuth();
@@ -42,7 +51,8 @@ export default function SharingPage() {
     include_journals: true,
     include_violations: true,
     include_documents: true,
-    include_calendar: true
+    include_calendar: true,
+    permission_level: "read_print"
   });
 
   useEffect(() => {
