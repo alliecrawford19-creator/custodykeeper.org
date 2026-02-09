@@ -359,6 +359,56 @@ export default function JournalPage() {
                     />
                   </div>
 
+                  {/* Photo Evidence Section */}
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" /> Photos/Evidence (optional)
+                    </Label>
+                    <div className="border-2 border-dashed border-[#E2E8F0] rounded-lg p-4">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                        id="photo-upload"
+                        data-testid="photo-upload-input"
+                      />
+                      <label
+                        htmlFor="photo-upload"
+                        className="flex flex-col items-center justify-center cursor-pointer"
+                      >
+                        <Download className="w-8 h-8 text-[#718096] mb-2 rotate-180" />
+                        <span className="text-sm text-[#718096]">
+                          {uploadingPhotos ? "Uploading..." : "Click to upload photos"}
+                        </span>
+                        <span className="text-xs text-[#A0AEC0]">Max 5MB per image</span>
+                      </label>
+                    </div>
+                    
+                    {/* Photo Previews */}
+                    {formData.photos.length > 0 && (
+                      <div className="grid grid-cols-4 gap-2 mt-2">
+                        {formData.photos.map((photo, index) => (
+                          <div key={index} className="relative group">
+                            <img
+                              src={photo}
+                              alt={`Evidence ${index + 1}`}
+                              className="w-full h-20 object-cover rounded-lg border border-[#E2E8F0]"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removePhoto(index)}
+                              className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
                   <div className="flex justify-end gap-3 pt-4">
                     <Button
                       type="button"
