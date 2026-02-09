@@ -120,7 +120,12 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] Component refactoring (SettingsPage, LandingPage into smaller components) ✅ Feb 9, 2026
 - [x] White popup text visibility fix ✅ Feb 9, 2026
 
-### P2 - Nice to Have
+### P2 - Nice to Have (COMPLETED Feb 9, 2026)
+- [x] **Export All Data as ZIP** - One-click download of all user data (journals, violations, calendar, documents, contacts)
+- [x] **Advanced Sharing Permissions** - Permission levels: View Only, View & Print, Full Access
+- [x] **Two-Factor Authentication** - Email-based verification codes for enhanced security
+
+### Future Enhancements
 - [ ] Advanced sharing permissions (edit access for attorneys)
 - [ ] Two-factor authentication
 - [ ] Export all data as ZIP archive
