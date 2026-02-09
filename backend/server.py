@@ -1323,6 +1323,117 @@ async def export_violations(current_user: dict = Depends(get_current_user)):
     
     return {"violations": violations, "exported_at": datetime.now(timezone.utc).isoformat()}
 
+# ============== SHARING ROUTES ==============
+
+@api_router.post("/share/tokens", response_model=ShareTokenResponse)
+async def create_share_token(token_data: ShareTokenCreate, current_user: dict = Depends(get_current_user)):
+    token_id = str(uuid.uuid4())
+    share_token = secrets.token_urlsafe(32)
+    now = datetime.now(timezone.utc)
+    expires_at = (now + timedelta(days=token_data.expires_days)).isoformat()
+    
+    token_doc = {
+        "token_id": token_id,
+        "user_id": current_user["user_id"],
+        "name": token_data.name,
+        "share_token": share_token,
+        "expires_at": expires_at,
+        "include_journals": token_data.include_journals,
+        "include_violations": token_data.include_violations,
+        "include_documents": token_data.include_documents,
+        "include_calendar": token_data.include_calendar,
+        "created_at": now.isoformat(),
+        "is_active": True
+    }
+    
+    await db.share_tokens.insert_one(token_doc)
+    
+    return ShareTokenResponse(**token_doc)
+
+@api_router.get("/share/tokens", response_model=List[ShareTokenResponse])
+async def get_share_tokens(current_user: dict = Depends(get_current_user)):
+    tokens = await db.share_tokens.find(
+        {"user_id": current_user["user_id"]},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(100)
+    return [ShareTokenResponse(**token) for token in tokens]
+
+@api_router.delete("/share/tokens/{token_id}")
+async def revoke_share_token(token_id: str, current_user: dict = Depends(get_current_user)):
+    result = await db.share_tokens.update_one(
+        {"token_id": token_id, "user_id": current_user["user_id"]},
+        {"$set": {"is_active": False}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Token not found")
+    return {"message": "Share token revoked"}
+
+# Public shared view (no auth required)
+@api_router.get("/shared/{share_token}")
+async def get_shared_data(share_token: str):
+    token = await db.share_tokens.find_one(
+        {"share_token": share_token, "is_active": True},
+        {"_id": 0}
+    )
+    
+    if not token:
+        raise HTTPException(status_code=404, detail="Invalid or expired share link")
+    
+    # Check if token has expired
+    expires_at = datetime.fromisoformat(token["expires_at"].replace('Z', '+00:00'))
+    if datetime.now(timezone.utc) > expires_at:
+        raise HTTPException(status_code=410, detail="Share link has expired")
+    
+    user_id = token["user_id"]
+    data = {"shared_by": token["name"], "expires_at": token["expires_at"]}
+    
+    # Get user's children for reference
+    children = await db.children.find(
+        {"user_id": user_id},
+        {"_id": 0, "child_id": 1, "name": 1, "color": 1}
+    ).to_list(100)
+    data["children"] = children
+    
+    if token.get("include_journals"):
+        journals = await db.journals.find(
+            {"user_id": user_id},
+            {"_id": 0}
+        ).sort("date", -1).to_list(500)
+        for j in journals:
+            if "photos" not in j:
+                j["photos"] = []
+        data["journals"] = journals
+    
+    if token.get("include_violations"):
+        violations = await db.violations.find(
+            {"user_id": user_id},
+            {"_id": 0}
+        ).sort("date", -1).to_list(500)
+        data["violations"] = violations
+    
+    if token.get("include_documents"):
+        documents = await db.documents.find(
+            {"user_id": user_id},
+            {"_id": 0, "file_data": 0}  # Exclude binary data
+        ).sort("uploaded_at", -1).to_list(500)
+        data["documents"] = documents
+    
+    if token.get("include_calendar"):
+        events = await db.calendar_events.find(
+            {"user_id": user_id},
+            {"_id": 0}
+        ).sort("start_date", 1).to_list(500)
+        for e in events:
+            if "custom_color" not in e:
+                e["custom_color"] = ""
+            if "recurrence_pattern" not in e:
+                e["recurrence_pattern"] = ""
+            if "recurrence_end_date" not in e:
+                e["recurrence_end_date"] = ""
+        data["events"] = events
+    
+    return data
+
 # Include the router in the main app
 app.include_router(api_router)
 
