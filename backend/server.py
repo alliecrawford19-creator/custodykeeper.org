@@ -217,6 +217,8 @@ class ShareTokenCreate(BaseModel):
     include_violations: bool = True
     include_documents: bool = True
     include_calendar: bool = True
+    # Advanced permissions
+    permission_level: str = "read_only"  # read_only, read_print, read_print_download
 
 class ShareTokenResponse(BaseModel):
     token_id: str
@@ -228,6 +230,7 @@ class ShareTokenResponse(BaseModel):
     include_violations: bool
     include_documents: bool
     include_calendar: bool
+    permission_level: str = "read_only"
     created_at: str
     is_active: bool
 
