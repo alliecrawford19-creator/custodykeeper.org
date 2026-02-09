@@ -16,9 +16,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, BookOpen, Search, Trash2, Edit2, Download, Send, Clock, MapPin, Mail } from "lucide-react";
+import { Plus, BookOpen, Search, Trash2, Edit2, Download, Send, Clock, MapPin } from "lucide-react";
 import { format, parseISO } from "date-fns";
-import { EmailShareDialog } from "@/components/EmailShareDialog";
 
 const MOOD_OPTIONS = [
   { value: "happy", label: "Happy", color: "mood-happy" },
