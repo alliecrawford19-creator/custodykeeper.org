@@ -39,7 +39,7 @@ const MOOD_OPTIONS = [
 ];
 
 export default function JournalPage() {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const [journals, setJournals] = useState([]);
   const [children, setChildren] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,6 +55,27 @@ export default function JournalPage() {
     mood: "neutral",
     location: ""
   });
+
+  const handlePDFExport = () => {
+    if (filteredJournals.length === 0) {
+      toast.error("No journal entries to export");
+      return;
+    }
+    try {
+      const fileName = generateCourtReadyPDF({
+        title: "Parenting Journal Records",
+        records: filteredJournals,
+        type: "journal",
+        children: children,
+        userName: user?.full_name,
+        userState: user?.state
+      });
+      toast.success(`PDF exported: ${fileName}`);
+    } catch (error) {
+      toast.error("Failed to generate PDF");
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     fetchData();
