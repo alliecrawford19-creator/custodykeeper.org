@@ -165,6 +165,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
           <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+          <Route path="/shared/:shareToken" element={<SharedViewPage />} />
           
           {/* Protected Routes */}
           <Route path="/onboarding" element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
@@ -177,6 +178,7 @@ function App() {
           <Route path="/state-laws" element={<ProtectedRoute><StateLawsPage /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
           <Route path="/timeline" element={<ProtectedRoute><TimelinePage /></ProtectedRoute>} />
+          <Route path="/sharing" element={<ProtectedRoute><SharingPage /></ProtectedRoute>} />
           
           {/* Catch all */}
           <Route path="*" element={<Navigate to="/" replace />} />
