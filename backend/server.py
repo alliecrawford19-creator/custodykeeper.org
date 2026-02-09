@@ -1477,6 +1477,162 @@ async def get_shared_data(share_token: str):
     return data
 
 
+# ============== TWO-FACTOR AUTHENTICATION ==============
+
+class TwoFactorSetup(BaseModel):
+    enabled: bool = True
+
+class TwoFactorVerify(BaseModel):
+    code: str
+
+@api_router.get("/auth/2fa/status")
+async def get_2fa_status(current_user: dict = Depends(get_current_user)):
+    """Get user's 2FA status"""
+    settings = await db.two_factor_settings.find_one(
+        {"user_id": current_user["user_id"]},
+        {"_id": 0}
+    )
+    return {
+        "enabled": settings.get("enabled", False) if settings else False,
+        "verified_devices": settings.get("verified_devices", []) if settings else []
+    }
+
+@api_router.post("/auth/2fa/enable")
+async def enable_2fa(current_user: dict = Depends(get_current_user)):
+    """Enable 2FA for user"""
+    await db.two_factor_settings.update_one(
+        {"user_id": current_user["user_id"]},
+        {"$set": {
+            "user_id": current_user["user_id"],
+            "enabled": True,
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }},
+        upsert=True
+    )
+    return {"status": "success", "message": "Two-factor authentication enabled"}
+
+@api_router.post("/auth/2fa/disable")
+async def disable_2fa(current_user: dict = Depends(get_current_user)):
+    """Disable 2FA for user"""
+    await db.two_factor_settings.update_one(
+        {"user_id": current_user["user_id"]},
+        {"$set": {"enabled": False, "updated_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    return {"status": "success", "message": "Two-factor authentication disabled"}
+
+@api_router.post("/auth/2fa/send-code")
+async def send_2fa_code(email: str = Form(...)):
+    """Send 2FA verification code to user's email"""
+    try:
+        import resend
+        
+        # Find user
+        user = await db.users.find_one({"email": email}, {"_id": 0})
+        if not user:
+            # Don't reveal if user exists
+            return {"status": "success", "message": "If the email exists, a code has been sent"}
+        
+        # Check if 2FA is enabled
+        settings = await db.two_factor_settings.find_one({"user_id": user["user_id"]})
+        if not settings or not settings.get("enabled", False):
+            return {"status": "not_required", "message": "2FA not enabled for this account"}
+        
+        # Generate 6-digit code
+        code = ''.join([str(secrets.randbelow(10)) for _ in range(6)])
+        expires_at = (datetime.now(timezone.utc) + timedelta(minutes=10)).isoformat()
+        
+        # Store code
+        await db.two_factor_codes.update_one(
+            {"user_id": user["user_id"]},
+            {"$set": {
+                "user_id": user["user_id"],
+                "code": code,
+                "expires_at": expires_at,
+                "created_at": datetime.now(timezone.utc).isoformat()
+            }},
+            upsert=True
+        )
+        
+        # Send email
+        resend_api_key = os.environ.get('RESEND_API_KEY')
+        if resend_api_key:
+            resend.api_key = resend_api_key
+            sender_email = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+            
+            html_content = f"""
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #2C3E50;">Your CustodyKeeper Verification Code</h2>
+                <p>Use this code to complete your sign-in:</p>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+                    <h1 style="color: #1A202C; margin: 0; letter-spacing: 8px; font-size: 36px;">{code}</h1>
+                </div>
+                <p style="color: #718096;">This code expires in 10 minutes.</p>
+                <p style="color: #718096; font-size: 12px;">
+                    If you didn't request this code, please ignore this email.
+                </p>
+            </div>
+            """
+            
+            await asyncio.to_thread(resend.Emails.send, {
+                "from": sender_email,
+                "to": [email],
+                "subject": f"Your CustodyKeeper verification code: {code}",
+                "html": html_content
+            })
+        
+        return {"status": "success", "message": "Verification code sent"}
+        
+    except Exception as e:
+        logger.error(f"Failed to send 2FA code: {str(e)}")
+        return {"status": "success", "message": "If the email exists, a code has been sent"}
+
+@api_router.post("/auth/2fa/verify")
+async def verify_2fa_code(email: str = Form(...), code: str = Form(...), device_id: str = Form(default="")):
+    """Verify 2FA code and return token"""
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    
+    # Get stored code
+    stored = await db.two_factor_codes.find_one({"user_id": user["user_id"]})
+    if not stored:
+        raise HTTPException(status_code=401, detail="No verification code found. Please request a new one.")
+    
+    # Check expiry
+    expires_at = datetime.fromisoformat(stored["expires_at"].replace('Z', '+00:00'))
+    if datetime.now(timezone.utc) > expires_at:
+        raise HTTPException(status_code=401, detail="Verification code expired. Please request a new one.")
+    
+    # Verify code
+    if stored["code"] != code:
+        raise HTTPException(status_code=401, detail="Invalid verification code")
+    
+    # Delete used code
+    await db.two_factor_codes.delete_one({"user_id": user["user_id"]})
+    
+    # Optionally store device as verified
+    if device_id:
+        await db.two_factor_settings.update_one(
+            {"user_id": user["user_id"]},
+            {"$addToSet": {"verified_devices": device_id}}
+        )
+    
+    # Generate token
+    token = create_token(user["user_id"], user["email"])
+    
+    return {
+        "access_token": token,
+        "user": {
+            "user_id": user["user_id"],
+            "email": user["email"],
+            "full_name": user["full_name"],
+            "state": user.get("state", ""),
+            "photo": user.get("photo", ""),
+            "created_at": user.get("created_at", "")
+        }
+    }
+
+
 # ============== EXPORT ALL DATA ==============
 
 @api_router.get("/export/all")
