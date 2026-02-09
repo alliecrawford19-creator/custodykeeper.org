@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { ThemeProvider } from "@/context/ThemeContext";
 
 // Pages
 import LandingPage from "@/pages/LandingPage";
