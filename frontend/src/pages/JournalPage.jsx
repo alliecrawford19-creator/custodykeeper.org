@@ -212,7 +212,7 @@ export default function JournalPage() {
             </h1>
             <p className="text-[#718096] mt-1">Document your time with your children</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <Button
               variant="outline"
               onClick={handleExport}
@@ -220,6 +220,14 @@ export default function JournalPage() {
               data-testid="export-journals-btn"
             >
               <Download className="w-4 h-4 mr-2" /> Export
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handlePDFExport}
+              className="border-[#E2E8F0] text-[#2C3E50]"
+              data-testid="pdf-export-journals-btn"
+            >
+              <FileText className="w-4 h-4 mr-2" /> PDF
             </Button>
             <PrintableExport 
               title="Parenting Journal" 
