@@ -730,6 +730,13 @@ async def get_violation(violation_id: str, current_user: dict = Depends(get_curr
     )
     if not violation:
         raise HTTPException(status_code=404, detail="Violation not found")
+    # Add default values for missing fields
+    if "title" not in violation:
+        violation["title"] = violation.get("violation_type", "")
+    if "witnesses" not in violation:
+        violation["witnesses"] = ""
+    if "evidence_notes" not in violation:
+        violation["evidence_notes"] = ""
     return ViolationResponse(**violation)
 
 @api_router.put("/violations/{violation_id}", response_model=ViolationResponse)
