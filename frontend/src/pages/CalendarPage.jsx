@@ -271,6 +271,11 @@ export default function CalendarPage() {
     // Don't show instances before original event or after recurrence end
     if (date < eventStart || date > recurrenceEnd) return [];
     
+    // Skip exception dates (dates that have been edited as single instances)
+    const exceptionDates = event.exception_dates || [];
+    const dateStr = format(date, 'yyyy-MM-dd');
+    if (exceptionDates.includes(dateStr)) return [];
+    
     // Check if this date falls on a recurrence
     const daysDiff = Math.floor((date - eventStart) / (1000 * 60 * 60 * 24));
     
