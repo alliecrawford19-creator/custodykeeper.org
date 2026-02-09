@@ -58,7 +58,6 @@ export default function ViolationsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterSeverity, setFilterSeverity] = useState("all");
-  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     violation_type: "parenting_time_denial",
