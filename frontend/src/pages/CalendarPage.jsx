@@ -118,21 +118,64 @@ export default function CalendarPage() {
   };
 
   const handleEdit = (event) => {
-    setEditingEvent(event);
-    setFormData({
-      title: event.title,
-      start_date: event.start_date,
-      end_date: event.end_date,
-      event_type: event.event_type,
-      children_involved: event.children_involved || [],
-      notes: event.notes || "",
-      location: event.location || "",
-      recurring: event.recurring || false,
-      recurrence_pattern: event.recurrence_pattern || "",
-      recurrence_end_date: event.recurrence_end_date || "",
-      custom_color: event.custom_color || ""
-    });
-    setViewDialogOpen(false);
+    // Check if this is a recurring event instance
+    if (event.isRecurringInstance) {
+      // This is an instance of a recurring event - ask user what to edit
+      setPendingEditEvent(event);
+      setRecurringEditDialogOpen(true);
+      setViewDialogOpen(false);
+    } else if (event.recurring && event.recurrence_pattern) {
+      // This is the original recurring event
+      setPendingEditEvent(event);
+      setRecurringEditDialogOpen(true);
+      setViewDialogOpen(false);
+    } else {
+      // Regular non-recurring event
+      proceedWithEdit(event);
+    }
+  };
+
+  const proceedWithEdit = (event, editType = 'all') => {
+    const originalEvent = event.originalEventId 
+      ? events.find(e => e.event_id === event.originalEventId) 
+      : event;
+    
+    if (editType === 'single' && event.isRecurringInstance) {
+      // Create a new non-recurring event for this single instance
+      setEditingEvent(null); // Will create new event
+      setFormData({
+        title: originalEvent.title,
+        start_date: event.start_date,
+        end_date: event.end_date,
+        event_type: originalEvent.event_type,
+        children_involved: originalEvent.children_involved || [],
+        notes: originalEvent.notes || "",
+        location: originalEvent.location || "",
+        recurring: false,
+        recurrence_pattern: "",
+        recurrence_end_date: "",
+        custom_color: originalEvent.custom_color || ""
+      });
+    } else {
+      // Edit the original/all recurring events
+      setEditingEvent(originalEvent);
+      setFormData({
+        title: originalEvent.title,
+        start_date: originalEvent.start_date,
+        end_date: originalEvent.end_date,
+        event_type: originalEvent.event_type,
+        children_involved: originalEvent.children_involved || [],
+        notes: originalEvent.notes || "",
+        location: originalEvent.location || "",
+        recurring: originalEvent.recurring || false,
+        recurrence_pattern: originalEvent.recurrence_pattern || "",
+        recurrence_end_date: originalEvent.recurrence_end_date || "",
+        custom_color: originalEvent.custom_color || ""
+      });
+    }
+    
+    setRecurringEditDialogOpen(false);
+    setPendingEditEvent(null);
     setDialogOpen(true);
   };
 
