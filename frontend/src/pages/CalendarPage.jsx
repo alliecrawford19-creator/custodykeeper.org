@@ -141,8 +141,8 @@ export default function CalendarPage() {
       : event;
     
     if (editType === 'single' && event.isRecurringInstance) {
-      // Create a new non-recurring event for this single instance
-      setEditingEvent(null); // Will create new event
+      // Create a new non-recurring event for this single instance (exception)
+      setEditingEvent({ __createException: true, parentEventId: event.originalEventId });
       setFormData({
         title: originalEvent.title,
         start_date: event.start_date,
