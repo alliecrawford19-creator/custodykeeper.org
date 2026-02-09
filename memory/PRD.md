@@ -103,6 +103,9 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] **Component Refactoring** - SettingsPage split into ProfileSection + ChildrenSection components
 - [x] **Component Refactoring** - LandingPage split into Navbar, HeroSection, FeatureSection, ResearchSection, DocumentationSection, Footer components
 - [x] New component directories: `/src/components/settings/` and `/src/components/landing/`
+- [x] **Dashboard User Menu Fix** - Fixed avatar dropdown not opening (z-index increased to z-[100])
+- [x] **Violations Dropdown Text Fix** - Added explicit text color to "All Severities" filter dropdown
+- [x] **Documents Dropdown Text Fix** - Added explicit text color to "All Categories" filter dropdown
 
 ### Phase 6 - P2 Security & Export Features ✅ (Feb 9, 2026)
 - [x] **Export All Data as ZIP** - Download all records (journals, violations, calendar, documents, contacts) as organized ZIP archive
