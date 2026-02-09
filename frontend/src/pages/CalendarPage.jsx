@@ -633,38 +633,39 @@ export default function CalendarPage() {
                 return (
                   <div
                     key={idx}
-                    className={`min-h-[100px] p-2 border-r border-b border-[#E2E8F0] cursor-pointer hover:bg-[#FDFBF7] transition-colors ${
+                    className={`min-h-[60px] sm:min-h-[100px] p-1 sm:p-2 border-r border-b border-[#E2E8F0] cursor-pointer hover:bg-[#FDFBF7] transition-colors ${
                       !isCurrentMonth ? "bg-[#F9FAFB]" : ""
                     }`}
                     onClick={() => openNewEventDialog(day)}
                     data-testid={`calendar-day-${format(day, "yyyy-MM-dd")}`}
                   >
-                    <div className={`text-sm mb-1 ${
+                    <div className={`text-xs sm:text-sm mb-1 ${
                       isToday 
-                        ? "w-7 h-7 rounded-full bg-[#2C3E50] text-white flex items-center justify-center" 
+                        ? "w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-[#2C3E50] text-white flex items-center justify-center text-xs" 
                         : isCurrentMonth ? "text-[#1A202C]" : "text-[#9CA3AF]"
                     }`}>
                       {format(day, "d")}
                     </div>
-                    <div className="space-y-1">
-                      {dayEvents.slice(0, 3).map(event => {
+                    <div className="space-y-0.5 sm:space-y-1">
+                      {dayEvents.slice(0, window.innerWidth < 640 ? 2 : 3).map(event => {
                         const customColor = getEventDisplayColor(event);
                         return (
                           <div
                             key={event.event_id}
-                            className={`text-xs px-2 py-1 rounded truncate cursor-pointer hover:opacity-80 ${!customColor ? getEventTypeColor(event.event_type) : 'text-white'}`}
+                            className={`text-[10px] sm:text-xs px-1 sm:px-2 py-0.5 sm:py-1 rounded truncate cursor-pointer hover:opacity-80 ${!customColor ? getEventTypeColor(event.event_type) : 'text-white'}`}
                             style={customColor ? { backgroundColor: customColor } : {}}
                             onClick={(e) => {
                               e.stopPropagation();
                               handleViewEvent(event);
                             }}
                           >
-                            {event.title}
+                            <span className="hidden sm:inline">{event.title}</span>
+                            <span className="sm:hidden">{event.title.substring(0, 3)}</span>
                           </div>
                         );
                       })}
-                      {dayEvents.length > 3 && (
-                        <div className="text-xs text-[#718096]">+{dayEvents.length - 3} more</div>
+                      {dayEvents.length > (window.innerWidth < 640 ? 2 : 3) && (
+                        <div className="text-[10px] sm:text-xs text-[#718096]">+{dayEvents.length - (window.innerWidth < 640 ? 2 : 3)}</div>
                       )}
                     </div>
                   </div>
@@ -676,8 +677,8 @@ export default function CalendarPage() {
 
         {/* Event Legend */}
         <Card className="bg-white border-[#E2E8F0]">
-          <CardContent className="py-4">
-            <div className="flex flex-wrap gap-4">
+          <CardContent className="py-4 px-2 sm:px-6">
+            <div className="flex flex-wrap gap-2 sm:gap-4 justify-center sm:justify-start">
               {EVENT_TYPES.map(type => (
                 <div key={type.value} className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded ${type.color.split(" ")[0]}`}></div>
