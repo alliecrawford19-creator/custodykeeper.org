@@ -1617,13 +1617,13 @@ async def import_violations(
                 violation_doc = {
                     "violation_id": violation_id,
                     "user_id": current_user["user_id"],
+                    "title": row.get('title', row.get('violation_type', '')).strip(),
                     "violation_type": row.get('violation_type', '').strip(),
                     "date": row.get('date', '').strip(),
-                    "time": row.get('time', '').strip() or None,
                     "description": row.get('description', '').strip(),
                     "severity": row.get('severity', 'medium').strip().lower(),
-                    "witnesses": row.get('witnesses', '').strip() or None,
-                    "evidence_notes": row.get('evidence_notes', row.get('evidence', '')).strip() or None,
+                    "witnesses": row.get('witnesses', '').strip() or "",
+                    "evidence_notes": row.get('evidence_notes', row.get('evidence', '')).strip() or "",
                     "created_at": now
                 }
                 
