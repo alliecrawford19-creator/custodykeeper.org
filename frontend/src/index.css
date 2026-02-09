@@ -313,3 +313,157 @@ input:focus, textarea:focus, select:focus, button:focus-visible {
     print-color-adjust: exact !important;
   }
 }
+
+/* ============== MOBILE OPTIMIZATIONS ============== */
+
+/* Ensure minimum touch target size (44px) */
+@media (max-width: 768px) {
+  button, 
+  [role="button"],
+  a,
+  input[type="checkbox"],
+  input[type="radio"],
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Larger tap targets for interactive elements */
+  .btn-hover {
+    padding: 12px 20px;
+  }
+
+  /* Better spacing for form elements */
+  input, 
+  textarea, 
+  select {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+    padding: 12px;
+  }
+
+  /* Improve card touch areas */
+  .card-hover {
+    padding: 16px;
+  }
+
+  /* Mobile navigation improvements */
+  nav a, 
+  nav button {
+    padding: 12px 16px;
+  }
+
+  /* Better spacing for list items */
+  .mobile-list-item {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  /* Sticky bottom actions for mobile */
+  .mobile-sticky-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    z-index: 40;
+  }
+
+  /* Improve scrolling */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+  }
+
+  /* Calendar mobile improvements */
+  .calendar-grid {
+    font-size: 12px;
+  }
+
+  .calendar-grid td {
+    padding: 4px 2px;
+    min-height: 60px;
+  }
+
+  .calendar-event-badge {
+    font-size: 9px;
+    padding: 2px 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  /* Dialog improvements for mobile */
+  [role="dialog"] {
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 16px;
+    width: calc(100% - 32px) !important;
+    max-width: none !important;
+  }
+
+  /* Bottom sheet style dialogs on mobile */
+  .mobile-bottom-sheet {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    transform: none !important;
+    border-radius: 16px 16px 0 0 !important;
+    max-height: 85vh;
+  }
+}
+
+/* Safe area insets for notched phones */
+@supports (padding: max(0px)) {
+  .safe-area-bottom {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  
+  .safe-area-top {
+    padding-top: max(16px, env(safe-area-inset-top));
+  }
+}
+
+/* Improved focus states for accessibility */
+@media (max-width: 768px) {
+  :focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Swipe-friendly horizontal scroll containers */
+.mobile-horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-horizontal-scroll > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Loading skeleton animation */
+.skeleton {
+  background: linear-gradient(90deg, var(--border) 25%, var(--surface) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
