@@ -18,6 +18,7 @@ import {
 import { toast } from "sonner";
 import { Plus, AlertTriangle, Search, Trash2, Download, Clock, FileWarning, Edit2 } from "lucide-react";
 import { format, parseISO } from "date-fns";
+import { PrintableExport } from "@/components/PrintableExport";
 
 const VIOLATION_TYPES = [
   { value: "parenting_time_denial", label: "Parenting Time Denial" },
