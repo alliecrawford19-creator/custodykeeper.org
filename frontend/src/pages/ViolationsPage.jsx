@@ -209,6 +209,11 @@ export default function ViolationsPage() {
             >
               <Download className="w-4 h-4 mr-2" /> Export
             </Button>
+            <PrintableExport 
+              title="Violation Log" 
+              records={filteredViolations} 
+              type="violation"
+            />
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
                 <Button
