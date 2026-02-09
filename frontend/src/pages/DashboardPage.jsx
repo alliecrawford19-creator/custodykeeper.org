@@ -23,9 +23,11 @@ import {
   Gavel,
   UserPlus,
   MapPin,
-  Edit2
+  Bell
 } from "lucide-react";
 import { format, parseISO, differenceInDays, differenceInHours } from "date-fns";
+import { requestNotificationPermission, sendNotification, checkUpcomingEvents, formatReminderMessage } from "@/utils/notifications";
+import { toast } from "sonner";
 
 export default function DashboardPage() {
   const { user, token } = useAuth();
@@ -33,10 +35,43 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventDialogOpen, setEventDialogOpen] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(
+    localStorage.getItem("notificationsEnabled") === "true"
+  );
 
   useEffect(() => {
     fetchStats();
   }, []);
+
+  // Check for upcoming events and send notifications
+  useEffect(() => {
+    if (notificationsEnabled && stats?.upcoming_events?.length > 0) {
+      const upcoming = checkUpcomingEvents(stats.upcoming_events, 24);
+      const notifiedKey = `notified_${new Date().toDateString()}`;
+      const alreadyNotified = JSON.parse(localStorage.getItem(notifiedKey) || '[]');
+      
+      upcoming.forEach(event => {
+        if (!alreadyNotified.includes(event.event_id)) {
+          const { title, body } = formatReminderMessage(event);
+          sendNotification(title, { body });
+          alreadyNotified.push(event.event_id);
+        }
+      });
+      
+      localStorage.setItem(notifiedKey, JSON.stringify(alreadyNotified));
+    }
+  }, [stats, notificationsEnabled]);
+
+  const handleEnableNotifications = async () => {
+    const granted = await requestNotificationPermission();
+    if (granted) {
+      setNotificationsEnabled(true);
+      localStorage.setItem("notificationsEnabled", "true");
+      toast.success("Notifications enabled! You'll be reminded of upcoming events.");
+    } else {
+      toast.error("Notification permission denied. Please enable in browser settings.");
+    }
+  };
 
   const fetchStats = async () => {
     try {
