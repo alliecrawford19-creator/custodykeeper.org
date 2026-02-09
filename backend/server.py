@@ -598,10 +598,16 @@ async def get_journals(
         {"_id": 0}
     ).sort("date", -1).skip(skip).limit(page_size).to_list(page_size)
     
-    # Add default values for photos if not present
+    # Add default values for missing fields (backward compatibility)
     for journal in journals:
         if "photos" not in journal:
             journal["photos"] = []
+        if "content" not in journal:
+            journal["content"] = journal.get("entry", "")
+        if "location" not in journal:
+            journal["location"] = ""
+        if "updated_at" not in journal:
+            journal["updated_at"] = journal.get("created_at", "")
     return [JournalResponse(**journal) for journal in journals]
 
 @api_router.get("/journals/{journal_id}", response_model=JournalResponse)
