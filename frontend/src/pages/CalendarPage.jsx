@@ -19,7 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2, Edit2, Users, Repeat, FileDown, Printer } from "lucide-react";
+import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2, Edit2, Users, Repeat, FileDown, Printer, ChevronLeft, ChevronRight } from "lucide-react";
 import { format, parseISO, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval, startOfWeek, endOfWeek, addMonths, subMonths, addDays, addWeeks } from "date-fns";
 import { generateCalendarPDF } from "@/utils/calendarPdfExport";
 
