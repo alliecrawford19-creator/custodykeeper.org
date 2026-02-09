@@ -257,7 +257,11 @@ export default function DashboardPage() {
                   {stats.upcoming_events.slice(0, 3).map((event) => (
                     <div
                       key={event.event_id}
-                      className="flex flex-col gap-3 p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0]"
+                      className="flex flex-col gap-3 p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0] cursor-pointer hover:border-[#2C3E50]/30 hover:shadow-md transition-all"
+                      onClick={() => {
+                        setSelectedEvent(event);
+                        setEventDialogOpen(true);
+                      }}
                       data-testid={`event-${event.event_id}`}
                     >
                       <div className="flex items-center gap-3">
@@ -265,10 +269,10 @@ export default function DashboardPage() {
                           <Calendar className="w-6 h-6 text-[#2C3E50]" />
                         </div>
                         <span className={`badge ${
-                          event.event_type === "court_date" ? "badge-danger" :
-                          event.event_type === "parenting_time" ? "badge-primary" : "badge-warning"
+                          event.event_type === "family_court" || event.event_type === "child_support_court" ? "badge-danger" :
+                          event.event_type === "visitation" ? "badge-primary" : "badge-warning"
                         }`}>
-                          {event.event_type.replace("_", " ")}
+                          {event.event_type.replace(/_/g, " ")}
                         </span>
                       </div>
                       <div className="min-w-0">
@@ -297,6 +301,71 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Event Detail Dialog */}
+        <Dialog open={eventDialogOpen} onOpenChange={setEventDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="font-['Merriweather']">Event Details</DialogTitle>
+            </DialogHeader>
+            {selectedEvent && (
+              <div className="space-y-4 mt-4">
+                <div>
+                  <h3 className="font-semibold text-lg text-[#1A202C]">{selectedEvent.title}</h3>
+                  <span className={`badge ${
+                    selectedEvent.event_type === "family_court" || selectedEvent.event_type === "child_support_court" 
+                      ? "badge-danger" 
+                      : selectedEvent.event_type === "visitation" 
+                        ? "badge-primary" 
+                        : "badge-warning"
+                  } mt-2 inline-block`}>
+                    {selectedEvent.event_type.replace(/_/g, " ")}
+                  </span>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2 text-[#718096]">
+                    <Calendar className="w-4 h-4" />
+                    <span>
+                      {formatDate(selectedEvent.start_date)}
+                      {selectedEvent.start_date !== selectedEvent.end_date && 
+                        ` - ${formatDate(selectedEvent.end_date)}`
+                      }
+                    </span>
+                  </div>
+                  
+                  {selectedEvent.location && (
+                    <div className="flex items-center gap-2 text-[#718096]">
+                      <MapPin className="w-4 h-4" />
+                      <span>{selectedEvent.location}</span>
+                    </div>
+                  )}
+                </div>
+                
+                {selectedEvent.notes && (
+                  <div className="pt-2 border-t border-[#E2E8F0]">
+                    <p className="text-sm text-[#718096] whitespace-pre-wrap">{selectedEvent.notes}</p>
+                  </div>
+                )}
+                
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setEventDialogOpen(false)}
+                    className="flex-1"
+                  >
+                    Close
+                  </Button>
+                  <Link to="/calendar" className="flex-1">
+                    <Button className="w-full bg-[#2C3E50] hover:bg-[#34495E]">
+                      <Edit2 className="w-4 h-4 mr-2" /> Edit in Calendar
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
