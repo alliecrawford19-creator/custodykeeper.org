@@ -44,6 +44,7 @@ export default function JournalPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingJournal, setEditingJournal] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [childFilter, setChildFilter] = useState("all"); // Multi-child filter
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -71,6 +72,18 @@ export default function JournalPage() {
       setLoading(false);
     }
   };
+
+  // Filter journals by search query and child
+  const filteredJournals = journals.filter(journal => {
+    const matchesSearch = !searchQuery || 
+      journal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      journal.content.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesChild = childFilter === "all" || 
+      (journal.children_involved && journal.children_involved.includes(childFilter));
+    
+    return matchesSearch && matchesChild;
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
