@@ -618,8 +618,15 @@ async def get_journal(journal_id: str, current_user: dict = Depends(get_current_
     )
     if not journal:
         raise HTTPException(status_code=404, detail="Journal not found")
+    # Add default values for missing fields
     if "photos" not in journal:
         journal["photos"] = []
+    if "content" not in journal:
+        journal["content"] = journal.get("entry", "")
+    if "location" not in journal:
+        journal["location"] = ""
+    if "updated_at" not in journal:
+        journal["updated_at"] = journal.get("created_at", "")
     return JournalResponse(**journal)
 
 @api_router.put("/journals/{journal_id}", response_model=JournalResponse)
