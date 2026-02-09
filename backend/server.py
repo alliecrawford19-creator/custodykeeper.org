@@ -780,6 +780,8 @@ async def create_calendar_event(event_data: CalendarEventCreate, current_user: d
         "notes": event_data.notes or "",
         "location": event_data.location or "",
         "recurring": event_data.recurring or False,
+        "recurrence_pattern": event_data.recurrence_pattern or "",
+        "recurrence_end_date": event_data.recurrence_end_date or "",
         "custom_color": event_data.custom_color or "",
         "created_at": now
     }
@@ -794,10 +796,14 @@ async def get_calendar_events(current_user: dict = Depends(get_current_user)):
         {"user_id": current_user["user_id"]}, 
         {"_id": 0}
     ).sort("start_date", 1).to_list(1000)
-    # Add default values for custom_color if not present
+    # Add default values for missing fields
     for event in events:
         if "custom_color" not in event:
             event["custom_color"] = ""
+        if "recurrence_pattern" not in event:
+            event["recurrence_pattern"] = ""
+        if "recurrence_end_date" not in event:
+            event["recurrence_end_date"] = ""
     return [CalendarEventResponse(**event) for event in events]
 
 @api_router.put("/calendar/{event_id}", response_model=CalendarEventResponse)
@@ -811,6 +817,8 @@ async def update_calendar_event(event_id: str, event_data: CalendarEventCreate, 
         "notes": event_data.notes or "",
         "location": event_data.location or "",
         "recurring": event_data.recurring or False,
+        "recurrence_pattern": event_data.recurrence_pattern or "",
+        "recurrence_end_date": event_data.recurrence_end_date or "",
         "custom_color": event_data.custom_color or ""
     }
     
@@ -828,6 +836,10 @@ async def update_calendar_event(event_id: str, event_data: CalendarEventCreate, 
     )
     if "custom_color" not in event:
         event["custom_color"] = ""
+    if "recurrence_pattern" not in event:
+        event["recurrence_pattern"] = ""
+    if "recurrence_end_date" not in event:
+        event["recurrence_end_date"] = ""
     return CalendarEventResponse(**event)
 
 @api_router.delete("/calendar/{event_id}")
