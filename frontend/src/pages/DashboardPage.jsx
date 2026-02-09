@@ -398,17 +398,11 @@ export default function DashboardPage() {
                 
                 <div className="flex gap-3 pt-4">
                   <Button
-                    variant="outline"
                     onClick={() => setEventDialogOpen(false)}
-                    className="flex-1"
+                    className="w-full bg-[#2C3E50] hover:bg-[#34495E]"
                   >
                     Close
                   </Button>
-                  <Link to="/calendar" className="flex-1">
-                    <Button className="w-full bg-[#2C3E50] hover:bg-[#34495E]">
-                      <Edit2 className="w-4 h-4 mr-2" /> Edit in Calendar
-                    </Button>
-                  </Link>
                 </div>
               </div>
             )}
