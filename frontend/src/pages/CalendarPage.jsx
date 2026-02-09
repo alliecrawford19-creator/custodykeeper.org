@@ -81,16 +81,45 @@ export default function CalendarPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API}/calendar`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      toast.success("Event created successfully");
+      const payload = {
+        ...formData,
+        children_involved: formData.children_involved
+      };
+      
+      if (editingEvent) {
+        await axios.put(`${API}/calendar/${editingEvent.event_id}`, payload, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success("Event updated successfully");
+      } else {
+        await axios.post(`${API}/calendar`, payload, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        toast.success("Event created successfully");
+      }
       setDialogOpen(false);
       resetForm();
       fetchData();
     } catch (error) {
-      toast.error("Failed to create event");
+      toast.error(editingEvent ? "Failed to update event" : "Failed to create event");
     }
+  };
+
+  const handleEdit = (event) => {
+    setEditingEvent(event);
+    setFormData({
+      title: event.title,
+      start_date: event.start_date,
+      end_date: event.end_date,
+      event_type: event.event_type,
+      children_involved: event.children_involved || [],
+      notes: event.notes || "",
+      location: event.location || "",
+      recurring: event.recurring || false,
+      custom_color: event.custom_color || ""
+    });
+    setViewDialogOpen(false);
+    setDialogOpen(true);
   };
 
   const handleDelete = async (eventId) => {
