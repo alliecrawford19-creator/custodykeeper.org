@@ -332,6 +332,9 @@ export default function SharingPage() {
                         {shareToken.include_calendar && (
                           <span className="badge bg-green-100 text-green-700">Calendar</span>
                         )}
+                        <span className="badge bg-purple-100 text-purple-700">
+                          {PERMISSION_LABELS[shareToken.permission_level || "read_only"]?.label || "View Only"}
+                        </span>
                       </div>
                       <p className="text-xs text-[#718096] mt-2 flex items-center gap-1">
                         <Clock className="w-3 h-3" />
