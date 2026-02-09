@@ -5,34 +5,9 @@ import { BookOpen, Calendar, FileText, Shield, Scale, Send } from "lucide-react"
 export default function LandingPage() {
   const features = [
     {
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "Parenting Journal",
-      description: "Document every moment spent with your children. Create detailed records that stand up in court."
-    },
-    {
-      icon: <Calendar className="w-8 h-8" />,
-      title: "Schedule Tracking",
-      description: "Keep track of parenting time and important court dates in one organized calendar."
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Violation Logging",
-      description: "Record custody agreement violations with timestamps and evidence for legal proceedings."
-    },
-    {
-      icon: <FileText className="w-8 h-8" />,
-      title: "Document Storage",
-      description: "Upload and organize court orders, evidence, and important documents securely."
-    },
-    {
-      icon: <Scale className="w-8 h-8" />,
-      title: "State Law Reference",
-      description: "Quick access to your state's family court resources and legal guidelines."
-    },
-    {
       icon: <Send className="w-8 h-8" />,
       title: "Export & Share",
-      description: "Download or email your records to attorneys, mediators, or the court."
+      description: "Download your records and share directly from your device to attorneys, mediators, or save to your computer."
     }
   ];
 
