@@ -1,16 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Calendar, FileText, Shield, Scale, Send, Users, CheckCircle2, AlertTriangle, Heart } from "lucide-react";
+import { BookOpen, Calendar, FileText, Shield, Scale, Users, CheckCircle2, AlertTriangle, Heart } from "lucide-react";
 
 export default function LandingPage() {
-  const features = [
-    {
-      icon: <Send className="w-8 h-8" />,
-      title: "Export & Share",
-      description: "Download your records and share directly from your device to attorneys, mediators, or save to your computer."
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
       {/* Navigation */}
