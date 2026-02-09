@@ -733,9 +733,9 @@ async def get_violation(violation_id: str, current_user: dict = Depends(get_curr
     # Add default values for missing fields
     if "title" not in violation:
         violation["title"] = violation.get("violation_type", "")
-    if "witnesses" not in violation:
+    if "witnesses" not in violation or violation["witnesses"] is None:
         violation["witnesses"] = ""
-    if "evidence_notes" not in violation:
+    if "evidence_notes" not in violation or violation["evidence_notes"] is None:
         violation["evidence_notes"] = ""
     return ViolationResponse(**violation)
 
