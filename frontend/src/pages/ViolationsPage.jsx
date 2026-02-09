@@ -50,7 +50,7 @@ const SEVERITY_LEVELS = [
 ];
 
 export default function ViolationsPage() {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const [violations, setViolations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -69,6 +69,26 @@ export default function ViolationsPage() {
     witnesses: "",
     evidence_notes: ""
   });
+
+  const handlePDFExport = () => {
+    if (filteredViolations.length === 0) {
+      toast.error("No violations to export");
+      return;
+    }
+    try {
+      const fileName = generateCourtReadyPDF({
+        title: "Violation Log Records",
+        records: filteredViolations,
+        type: "violation",
+        userName: user?.full_name,
+        userState: user?.state
+      });
+      toast.success(`PDF exported: ${fileName}`);
+    } catch (error) {
+      toast.error("Failed to generate PDF");
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     fetchViolations();
