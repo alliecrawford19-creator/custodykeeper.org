@@ -55,6 +55,8 @@ export default function CalendarPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
+  const [recurringEditDialogOpen, setRecurringEditDialogOpen] = useState(false);
+  const [pendingEditEvent, setPendingEditEvent] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     start_date: "",
