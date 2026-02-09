@@ -111,6 +111,14 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - [x] **SecuritySection component** - New settings component for 2FA management
 - [x] **ExportDataSection component** - New settings component for data export
 
+### Phase 7 - Performance, i18n & Import Features ✅ (Feb 9, 2026)
+- [x] **Multi-Language Support (i18n)** - English, Spanish, French translations with language selector in Settings
+- [x] **Data Import from CSV** - Import journals, violations, calendar events from CSV files with template downloads
+- [x] **API Pagination** - Journals and violations endpoints support page/page_size params for large data sets
+- [x] **Database Indexes** - Indexes created on startup for better query performance
+- [x] **Mobile Touch Targets** - CSS optimizations for 44px minimum touch targets
+- [x] **Mobile UI Optimizations** - Better spacing, scrolling, and responsive dialogs
+
 ### Testing Results
 - Backend: 100% pass rate
 - Frontend: 100% pass rate
