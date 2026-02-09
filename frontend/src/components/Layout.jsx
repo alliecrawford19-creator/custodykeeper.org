@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/App";
-import { useTheme } from "@/context/ThemeContext";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
