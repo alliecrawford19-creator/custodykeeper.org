@@ -126,6 +126,8 @@ export default function CalendarPage() {
       notes: event.notes || "",
       location: event.location || "",
       recurring: event.recurring || false,
+      recurrence_pattern: event.recurrence_pattern || "",
+      recurrence_end_date: event.recurrence_end_date || "",
       custom_color: event.custom_color || ""
     });
     setViewDialogOpen(false);
@@ -155,6 +157,8 @@ export default function CalendarPage() {
       notes: "",
       location: "",
       recurring: false,
+      recurrence_pattern: "",
+      recurrence_end_date: "",
       custom_color: ""
     });
     setEditingEvent(null);
