@@ -19,8 +19,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2, Edit2, Users, Repeat } from "lucide-react";
+import { Plus, Calendar as CalendarIcon, MapPin, X, Trash2, Edit2, Users, Repeat, FileDown, Printer } from "lucide-react";
 import { format, parseISO, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval, startOfWeek, endOfWeek, addMonths, subMonths, addDays, addWeeks } from "date-fns";
+import { generateCalendarPDF } from "@/utils/calendarPdfExport";
 
 const EVENT_TYPES = [
   { value: "family_court", label: "Family Court", color: "bg-[#FEE2E2] text-[#991B1B]" },
