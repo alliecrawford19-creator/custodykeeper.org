@@ -1101,13 +1101,6 @@ PARENTAL_ALIENATION_RESOURCES = [
         ]
     },
     {
-        "name": "Equal Shared Parenting",
-        "description": "Community advocating for equal time with both parents",
-        "links": [
-            {"platform": "Facebook", "url": "https://www.facebook.com/groups/equalsharedparenting"}
-        ]
-    },
-    {
         "name": "Children's Rights Council",
         "description": "Non-profit focused on ensuring children have meaningful relationships with both parents",
         "links": [
