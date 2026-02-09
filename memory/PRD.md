@@ -56,26 +56,49 @@ Build an all-in-one app for parents to keep records for family court purposes, i
 - `GET /api/export/violations` - Export violations
 - `POST /api/send-email` - Email sharing
 
-## What's Been Implemented (Feb 6, 2026)
+## What's Been Implemented (Feb 9, 2026)
 
 ### Phase 1 - MVP Complete ✅
 - [x] User authentication (register/login/logout)
 - [x] Dashboard with stats, quick actions, upcoming events
 - [x] **Court Date Countdown Widget** - Shows days/hours until next court date
+- [x] **Dashboard Clickable Events** - Click events to view details with edit option
 - [x] Parenting Journal with CRUD, search, export, email
 - [x] Violation Log with type, severity, witnesses, export, email
-- [x] Document upload (PDF, Images, Word) with categories
-- [x] Calendar for parenting time, court dates, visitations
-- [x] State Laws page with all 50 states + DC links
-- [x] Settings page with children management
-- [x] Email sharing via Resend API (configured and working)
+- [x] Document upload (PDF, Images, Word, Videos, Audio) with categories
+- [x] **Calendar with Full Edit Support** - Create, Read, Update, Delete events
+- [x] **Calendar Children Association** - Link children to events with color coding
+- [x] **Calendar Group Events** - Custom colors for multi-child events
+- [x] State Laws/Support & Advocacy page with parental alienation resources
+- [x] Settings page with children management (photo upload, color selection)
+- [x] **Contacts Management** - Full CRUD for case-related contacts
+- [x] **Photo Uploads** - User profile, children, and contacts photos
 - [x] Warm professional design with Merriweather/Lato fonts
 - [x] Mobile responsive design
 
+### Recent Updates (Feb 9, 2026)
+- ✅ Calendar Enhancements:
+  - Added edit functionality for all calendar entries
+  - Removed "Parenting Time" and "Child Exchange" event types
+  - Added new event types: Visitation, Medical Appointment, School Event
+  - Children can be associated with events (uses child's color)
+  - Group events (multiple children) can have custom color
+- ✅ Dashboard Clickable Events:
+  - Events in "Upcoming Events" section are now clickable
+  - Opens detail dialog with event info (title, date, location, notes)
+  - "Edit in Calendar" button navigates to Calendar page
+- ✅ Universal Edit Functionality:
+  - Journals: Edit working
+  - Violations: Edit working
+  - Contacts: Edit working
+  - Children: Edit working
+  - Calendar Events: Edit working (NEW)
+- ✅ Bug Fix: Dialog overlay blocking clicks (fixed bg-white to bg-black/60)
+
 ### Testing Results
-- Backend: 100% pass rate (30/30 API tests)
-- Frontend: 95% pass rate
-- Email: Working (Resend test mode - verify domain for production)
+- Backend: 100% pass rate
+- Frontend: 100% pass rate
+- All CRUD operations verified across Calendar, Violations, Journals, Contacts
 
 ## Prioritized Backlog
 
