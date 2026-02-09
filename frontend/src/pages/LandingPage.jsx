@@ -41,7 +41,20 @@ export default function LandingPage() {
       <section className="pt-32 pb-24 px-4 gradient-hero">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in pb-8">
+            {/* Image First - Top on mobile, left on desktop */}
+            <div className="animate-fade-in order-1 lg:order-1 relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0NjAzMjh8MHwxfHNlYXJjaHwxfHxmYW1pbHklMjBsYXclMjBkb2N1bWVudHMlMjBnYXZlbHxlbnwwfHx8fDE3Mzk1MDAwMDB8MA&ixlib=rb-4.1.0&q=85"
+                  alt="Legal documents and gavel"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#FDFBF7]/80 to-transparent"></div>
+              </div>
+            </div>
+            
+            {/* Text Content */}
+            <div className="animate-fade-in pb-8 order-2 lg:order-2">
               <h1 className="font-['Merriweather'] text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1A202C] leading-tight mb-6">
                 Your Family Court<br />
                 <span className="text-[#2C3E50]">Documentation Partner</span>
@@ -60,16 +73,6 @@ export default function LandingPage() {
                     Sign In
                   </Button>
                 </Link>
-              </div>
-            </div>
-            <div className="animate-fade-in stagger-2 relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1609220136736-443140cffec6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0NjAzMjh8MHwxfHNlYXJjaHwxfHxmYW1pbHklMjBsYXclMjBkb2N1bWVudHN8ZW58MHx8fHwxNzM5NTAwMDAwfDA&ixlib=rb-4.1.0&q=85"
-                  alt="Family law documents and gavel representing legal organization"
-                  className="w-full h-auto object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#FDFBF7]/80 to-transparent"></div>
               </div>
             </div>
           </div>
