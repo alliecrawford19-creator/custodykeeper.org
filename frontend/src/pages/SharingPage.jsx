@@ -346,7 +346,7 @@ export default function SharingPage() {
                         variant="outline"
                         size="sm"
                         onClick={() => copyShareLink(shareToken.share_token)}
-                        className="border-[#E2E8F0]"
+                        className="border-[#E2E8F0] text-[#1A202C]"
                       >
                         <Copy className="w-4 h-4 mr-1" /> Copy
                       </Button>
@@ -354,7 +354,7 @@ export default function SharingPage() {
                         variant="outline"
                         size="sm"
                         asChild
-                        className="border-[#E2E8F0]"
+                        className="border-[#E2E8F0] text-[#1A202C]"
                       >
                         <a href={`/shared/${shareToken.share_token}`} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-4 h-4 mr-1" /> Preview
