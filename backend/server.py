@@ -716,9 +716,9 @@ async def get_violations(
     for v in violations:
         if "title" not in v:
             v["title"] = v.get("violation_type", "")
-        if "witnesses" not in v:
+        if "witnesses" not in v or v["witnesses"] is None:
             v["witnesses"] = ""
-        if "evidence_notes" not in v:
+        if "evidence_notes" not in v or v["evidence_notes"] is None:
             v["evidence_notes"] = ""
     return [ViolationResponse(**violation) for violation in violations]
 
