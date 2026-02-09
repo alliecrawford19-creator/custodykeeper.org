@@ -1560,12 +1560,14 @@ async def import_journals(
                     "journal_id": journal_id,
                     "user_id": current_user["user_id"],
                     "title": row.get('title', '').strip(),
-                    "entry": row.get('entry', row.get('content', '')).strip(),
+                    "content": row.get('entry', row.get('content', '')).strip(),
                     "date": row.get('date', '').strip(),
-                    "mood": row.get('mood', '').strip() or None,
+                    "mood": row.get('mood', 'neutral').strip() or "neutral",
+                    "location": row.get('location', '').strip(),
                     "children_involved": [],
                     "photos": [],
-                    "created_at": now
+                    "created_at": now,
+                    "updated_at": now
                 }
                 
                 await db.journals.insert_one(journal_doc)
