@@ -1422,7 +1422,12 @@ async def get_shared_data(share_token: str):
         raise HTTPException(status_code=410, detail="Share link has expired")
     
     user_id = token["user_id"]
-    data = {"shared_by": token["name"], "expires_at": token["expires_at"]}
+    permission_level = token.get("permission_level", "read_only")
+    data = {
+        "shared_by": token["name"], 
+        "expires_at": token["expires_at"],
+        "permission_level": permission_level
+    }
     
     # Get user's children for reference
     children = await db.children.find(
