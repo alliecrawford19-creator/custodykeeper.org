@@ -238,6 +238,59 @@ export default function JournalPage() {
     }
   };
 
+  // AI Summary Handler
+  const handleAiSummary = async () => {
+    setAiSummaryLoading(true);
+    setAiSummary("");
+    try {
+      const response = await axios.post(`${API}/ai/journal-summary`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setAiSummary(response.data.summary);
+      setAiSummaryOpen(true);
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to generate AI summary");
+    } finally {
+      setAiSummaryLoading(false);
+    }
+  };
+
+  // AI Writing Assistant Handler
+  const handleAiWritingAssist = async () => {
+    if (!aiWritingContext.trim()) {
+      toast.error("Please describe what you want to write about");
+      return;
+    }
+    setAiWritingLoading(true);
+    setAiSuggestion("");
+    try {
+      const response = await axios.post(`${API}/ai/writing-assist`, {
+        context: aiWritingContext,
+        current_text: formData.content
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setAiSuggestion(response.data.suggestion);
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to get AI suggestion");
+    } finally {
+      setAiWritingLoading(false);
+    }
+  };
+
+  // Apply AI suggestion to content
+  const applyAiSuggestion = () => {
+    if (formData.content) {
+      setFormData({ ...formData, content: formData.content + "\n\n" + aiSuggestion });
+    } else {
+      setFormData({ ...formData, content: aiSuggestion });
+    }
+    setAiSuggestion("");
+    setAiWritingContext("");
+    setAiWritingOpen(false);
+    toast.success("AI suggestion applied!");
+  };
+
   const getMoodColor = (mood) => {
     return MOOD_OPTIONS.find(m => m.value === mood)?.color || "mood-neutral";
   };
