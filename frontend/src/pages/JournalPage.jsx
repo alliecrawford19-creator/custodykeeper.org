@@ -646,6 +646,105 @@ export default function JournalPage() {
           </Card>
         )}
       </div>
+
+      {/* AI Summary Dialog */}
+      <Dialog open={aiSummaryOpen} onOpenChange={setAiSummaryOpen}>
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="font-['Merriweather'] flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-purple-600" />
+              AI Journal Summary
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            {aiSummary ? (
+              <div className="prose prose-sm max-w-none">
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 whitespace-pre-wrap text-[#1A202C]">
+                  {aiSummary}
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+              </div>
+            )}
+          </div>
+          <div className="flex justify-end gap-3 mt-4">
+            <Button
+              variant="outline"
+              onClick={() => setAiSummaryOpen(false)}
+              className="border-[#E2E8F0]"
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* AI Writing Assistant Dialog */}
+      <Dialog open={aiWritingOpen} onOpenChange={setAiWritingOpen}>
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="font-['Merriweather'] flex items-center gap-2">
+              <Wand2 className="w-5 h-5 text-purple-600" />
+              AI Writing Assistant
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 space-y-4">
+            <div className="space-y-2">
+              <Label>What do you want to write about?</Label>
+              <Textarea
+                value={aiWritingContext}
+                onChange={(e) => setAiWritingContext(e.target.value)}
+                placeholder="e.g., Today's pickup went smoothly, my child was happy and we went to the park..."
+                className="border-[#E2E8F0] min-h-[80px]"
+              />
+            </div>
+            
+            <Button
+              onClick={handleAiWritingAssist}
+              disabled={aiWritingLoading || !aiWritingContext.trim()}
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+            >
+              {aiWritingLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Get AI Suggestion
+                </>
+              )}
+            </Button>
+
+            {aiSuggestion && (
+              <div className="space-y-3">
+                <Label>AI Suggestion:</Label>
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 whitespace-pre-wrap text-[#1A202C] text-sm">
+                  {aiSuggestion}
+                </div>
+                <div className="flex gap-3">
+                  <Button
+                    onClick={applyAiSuggestion}
+                    className="bg-[#2C3E50] hover:bg-[#34495E] text-white"
+                  >
+                    Apply to Entry
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setAiSuggestion("")}
+                    className="border-[#E2E8F0]"
+                  >
+                    Discard
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 }
