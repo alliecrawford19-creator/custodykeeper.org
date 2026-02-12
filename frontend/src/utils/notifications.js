@@ -1,6 +1,12 @@
 // Browser notification utility for event reminders
+
+// Check if notifications are supported
+export const isNotificationSupported = () => {
+  return 'Notification' in window;
+};
+
 export const requestNotificationPermission = async () => {
-  if (!('Notification' in window)) {
+  if (!isNotificationSupported()) {
     console.log('This browser does not support notifications');
     return false;
   }
@@ -10,15 +16,30 @@ export const requestNotificationPermission = async () => {
   }
 
   if (Notification.permission !== 'denied') {
-    const permission = await Notification.requestPermission();
-    return permission === 'granted';
+    try {
+      const permission = await Notification.requestPermission();
+      return permission === 'granted';
+    } catch (error) {
+      console.log('Error requesting notification permission:', error);
+      return false;
+    }
   }
 
   return false;
 };
 
 export const sendNotification = (title, options = {}) => {
-  if (Notification.permission === 'granted') {
+  // Skip if notifications not supported or not permitted
+  if (!isNotificationSupported()) {
+    return null;
+  }
+  
+  if (Notification.permission !== 'granted') {
+    return null;
+  }
+
+  try {
+    // Try using the standard Notification API (works on desktop)
     const notification = new Notification(title, {
       icon: '/favicon.ico',
       badge: '/favicon.ico',
@@ -31,8 +52,12 @@ export const sendNotification = (title, options = {}) => {
     };
 
     return notification;
+  } catch (error) {
+    // On mobile browsers, the direct Notification constructor may not work
+    // Fall back silently - the toast notifications in the app will still work
+    console.log('Browser notification not available:', error.message);
+    return null;
   }
-  return null;
 };
 
 export const checkUpcomingEvents = (events, hoursAhead = 24) => {
@@ -76,6 +101,7 @@ export const formatReminderMessage = (event) => {
 };
 
 export default {
+  isNotificationSupported,
   requestNotificationPermission,
   sendNotification,
   checkUpcomingEvents,
