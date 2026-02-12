@@ -63,13 +63,18 @@ export default function DashboardPage() {
   }, [stats, notificationsEnabled]);
 
   const handleEnableNotifications = async () => {
-    const granted = await requestNotificationPermission();
-    if (granted) {
-      setNotificationsEnabled(true);
-      localStorage.setItem("notificationsEnabled", "true");
-      toast.success("Notifications enabled! You'll be reminded of upcoming events.");
-    } else {
-      toast.error("Notification permission denied. Please enable in browser settings.");
+    try {
+      const granted = await requestNotificationPermission();
+      if (granted) {
+        setNotificationsEnabled(true);
+        localStorage.setItem("notificationsEnabled", "true");
+        toast.success("Notifications enabled! You'll be reminded of upcoming events.");
+      } else {
+        toast.info("Browser notifications not available. You'll still see in-app reminders.");
+      }
+    } catch (error) {
+      console.log("Notification setup error:", error);
+      toast.info("Browser notifications not supported on this device.");
     }
   };
 
