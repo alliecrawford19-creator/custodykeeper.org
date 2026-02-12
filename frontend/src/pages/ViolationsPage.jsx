@@ -70,6 +70,31 @@ export default function ViolationsPage() {
     evidence_notes: ""
   });
 
+  // AI Analysis State
+  const [aiAnalysisOpen, setAiAnalysisOpen] = useState(false);
+  const [aiAnalysis, setAiAnalysis] = useState("");
+  const [aiAnalysisLoading, setAiAnalysisLoading] = useState(false);
+  const [analysisType, setAnalysisType] = useState("patterns");
+
+  // AI Analysis Handler
+  const handleAiAnalysis = async () => {
+    setAiAnalysisLoading(true);
+    setAiAnalysis("");
+    try {
+      const response = await axios.post(`${API}/ai/violation-analysis`, {
+        analysis_type: analysisType
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setAiAnalysis(response.data.analysis);
+      setAiAnalysisOpen(true);
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to generate AI analysis");
+    } finally {
+      setAiAnalysisLoading(false);
+    }
+  };
+
   const handlePDFExport = () => {
     if (filteredViolations.length === 0) {
       toast.error("No violations to export");
