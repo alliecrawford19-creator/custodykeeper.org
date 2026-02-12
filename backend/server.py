@@ -35,6 +35,9 @@ JWT_SECRET = os.environ.get('JWT_SECRET', 'family-court-app-secret-key-2024')
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_HOURS = 24
 
+# AI Configuration
+EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+
 # Create the main app
 app = FastAPI(title="Family Court Record Keeper")
 
