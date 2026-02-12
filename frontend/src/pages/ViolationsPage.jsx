@@ -553,6 +553,75 @@ export default function ViolationsPage() {
           </Card>
         )}
       </div>
+
+      {/* AI Analysis Dialog */}
+      <Dialog open={aiAnalysisOpen} onOpenChange={setAiAnalysisOpen}>
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="font-['Merriweather'] flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-purple-600" />
+              AI Violation Analysis
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 space-y-4">
+            <div className="flex gap-2">
+              <Button
+                variant={analysisType === "patterns" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setAnalysisType("patterns")}
+                className={analysisType === "patterns" ? "bg-purple-600 hover:bg-purple-700" : "border-[#E2E8F0]"}
+              >
+                Patterns
+              </Button>
+              <Button
+                variant={analysisType === "trends" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setAnalysisType("trends")}
+                className={analysisType === "trends" ? "bg-purple-600 hover:bg-purple-700" : "border-[#E2E8F0]"}
+              >
+                Trends
+              </Button>
+              <Button
+                variant={analysisType === "severity" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setAnalysisType("severity")}
+                className={analysisType === "severity" ? "bg-purple-600 hover:bg-purple-700" : "border-[#E2E8F0]"}
+              >
+                Severity
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleAiAnalysis}
+                disabled={aiAnalysisLoading}
+                className="ml-auto bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+              >
+                {aiAnalysisLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Refresh"}
+              </Button>
+            </div>
+            
+            {aiAnalysis ? (
+              <div className="prose prose-sm max-w-none">
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 whitespace-pre-wrap text-[#1A202C]">
+                  {aiAnalysis}
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+              </div>
+            )}
+          </div>
+          <div className="flex justify-end gap-3 mt-4">
+            <Button
+              variant="outline"
+              onClick={() => setAiAnalysisOpen(false)}
+              className="border-[#E2E8F0]"
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 }
