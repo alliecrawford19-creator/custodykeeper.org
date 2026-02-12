@@ -246,6 +246,21 @@ class EmailRequest(BaseModel):
     content_type: str
     content_ids: List[str] = []
 
+# AI Service Models
+class AISummaryRequest(BaseModel):
+    journal_id: Optional[str] = None  # If None, summarize all journals
+    
+class AIAnalysisRequest(BaseModel):
+    analysis_type: str = "patterns"  # patterns, trends, severity
+    
+class AIWritingAssistRequest(BaseModel):
+    context: str  # What the user is writing about
+    current_text: Optional[str] = ""  # What they've written so far
+
+# Google OAuth Models
+class GoogleAuthSession(BaseModel):
+    session_id: str
+
 # ============== HELPER FUNCTIONS ==============
 
 def hash_password(password: str) -> str:
