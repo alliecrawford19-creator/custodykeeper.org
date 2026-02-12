@@ -160,34 +160,49 @@ const PublicRoute = ({ children }) => {
   return children;
 };
 
+// App Router - handles Google OAuth callback detection
+function AppRouter() {
+  const location = useLocation();
+  
+  // Check URL fragment for session_id (Google OAuth callback)
+  // This must be checked synchronously during render, NOT in useEffect
+  if (location.hash?.includes('session_id=')) {
+    return <AuthCallback />;
+  }
+  
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+      <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+      <Route path="/shared/:shareToken" element={<SharedViewPage />} />
+      
+      {/* Protected Routes */}
+      <Route path="/onboarding" element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
+      <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+      <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
+      <Route path="/journal" element={<ProtectedRoute><JournalPage /></ProtectedRoute>} />
+      <Route path="/violations" element={<ProtectedRoute><ViolationsPage /></ProtectedRoute>} />
+      <Route path="/documents" element={<ProtectedRoute><DocumentsPage /></ProtectedRoute>} />
+      <Route path="/contacts" element={<ProtectedRoute><ContactsPage /></ProtectedRoute>} />
+      <Route path="/state-laws" element={<ProtectedRoute><StateLawsPage /></ProtectedRoute>} />
+      <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+      <Route path="/timeline" element={<ProtectedRoute><TimelinePage /></ProtectedRoute>} />
+      <Route path="/sharing" element={<ProtectedRoute><SharingPage /></ProtectedRoute>} />
+      
+      {/* Catch all */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Toaster position="top-right" richColors />
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
-          <Route path="/shared/:shareToken" element={<SharedViewPage />} />
-          
-          {/* Protected Routes */}
-          <Route path="/onboarding" element={<ProtectedRoute><OnboardingPage /></ProtectedRoute>} />
-          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-          <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
-          <Route path="/journal" element={<ProtectedRoute><JournalPage /></ProtectedRoute>} />
-          <Route path="/violations" element={<ProtectedRoute><ViolationsPage /></ProtectedRoute>} />
-          <Route path="/documents" element={<ProtectedRoute><DocumentsPage /></ProtectedRoute>} />
-          <Route path="/contacts" element={<ProtectedRoute><ContactsPage /></ProtectedRoute>} />
-          <Route path="/state-laws" element={<ProtectedRoute><StateLawsPage /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-          <Route path="/timeline" element={<ProtectedRoute><TimelinePage /></ProtectedRoute>} />
-          <Route path="/sharing" element={<ProtectedRoute><SharingPage /></ProtectedRoute>} />
-          
-          {/* Catch all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <AppRouter />
       </AuthProvider>
     </BrowserRouter>
   );
