@@ -57,6 +57,15 @@ export default function JournalPage() {
     photos: [] // Array of photo URLs
   });
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
+  
+  // AI Features State
+  const [aiSummaryOpen, setAiSummaryOpen] = useState(false);
+  const [aiSummary, setAiSummary] = useState("");
+  const [aiSummaryLoading, setAiSummaryLoading] = useState(false);
+  const [aiWritingOpen, setAiWritingOpen] = useState(false);
+  const [aiWritingContext, setAiWritingContext] = useState("");
+  const [aiSuggestion, setAiSuggestion] = useState("");
+  const [aiWritingLoading, setAiWritingLoading] = useState(false);
 
   const handlePDFExport = () => {
     if (filteredJournals.length === 0) {
