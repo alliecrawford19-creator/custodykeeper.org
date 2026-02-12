@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Plus, BookOpen, Search, Trash2, Edit2, Download, Clock, MapPin, FileText } from "lucide-react";
+import { Plus, BookOpen, Search, Trash2, Edit2, Download, Clock, MapPin, FileText, Sparkles, Loader2, Wand2 } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { PrintableExport } from "@/components/PrintableExport";
 import { generateCourtReadyPDF } from "@/utils/pdfExport";
