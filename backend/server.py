@@ -1899,9 +1899,299 @@ async def create_indexes():
         await db.share_tokens.create_index("share_token", unique=True)
         await db.share_tokens.create_index([("user_id", 1), ("is_active", 1)])
         
+        # Google OAuth session indexes
+        await db.user_sessions.create_index("session_token", unique=True)
+        await db.user_sessions.create_index([("user_id", 1)])
+        
         logger.info("Database indexes created successfully")
     except Exception as e:
         logger.warning(f"Index creation warning (may already exist): {str(e)}")
+
+# ============== AI SERVICES (GPT-5.2) ==============
+
+from emergentintegrations.llm.chat import LlmChat, UserMessage
+
+EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+
+class AISummaryRequest(BaseModel):
+    journal_id: Optional[str] = None  # If None, summarize all journals
+    
+class AIAnalysisRequest(BaseModel):
+    analysis_type: str = "patterns"  # patterns, trends, severity
+    
+class AIWritingAssistRequest(BaseModel):
+    context: str  # What the user is writing about
+    current_text: Optional[str] = ""  # What they've written so far
+
+@api_router.post("/ai/journal-summary")
+async def ai_journal_summary(request: AISummaryRequest, current_user: dict = Depends(get_current_user)):
+    """Generate AI summary of journal entries"""
+    if not EMERGENT_LLM_KEY:
+        raise HTTPException(status_code=500, detail="AI service not configured")
+    
+    try:
+        # Fetch journals
+        if request.journal_id:
+            journal = await db.journals.find_one(
+                {"journal_id": request.journal_id, "user_id": current_user["user_id"]},
+                {"_id": 0}
+            )
+            if not journal:
+                raise HTTPException(status_code=404, detail="Journal not found")
+            journals = [journal]
+        else:
+            cursor = db.journals.find(
+                {"user_id": current_user["user_id"]},
+                {"_id": 0}
+            ).sort("date", -1).limit(20)
+            journals = await cursor.to_list(length=20)
+        
+        if not journals:
+            return {"summary": "No journal entries found to summarize."}
+        
+        # Prepare content for AI
+        journal_text = "\n\n".join([
+            f"Date: {j.get('date', 'Unknown')}\nTitle: {j.get('title', 'Untitled')}\nContent: {j.get('content', '')}\nMood: {j.get('mood', 'Not specified')}"
+            for j in journals
+        ])
+        
+        # Initialize AI chat
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=f"journal-summary-{current_user['user_id']}-{uuid.uuid4().hex[:8]}",
+            system_message="You are a helpful assistant for a family court record-keeping app. Summarize journal entries professionally, highlighting key events, patterns in parenting time, and important details that might be relevant for custody documentation. Be concise but thorough."
+        ).with_model("openai", "gpt-5.2")
+        
+        user_message = UserMessage(
+            text=f"Please summarize the following journal entries:\n\n{journal_text}"
+        )
+        
+        response = await chat.send_message(user_message)
+        
+        return {"summary": response, "entries_analyzed": len(journals)}
+        
+    except Exception as e:
+        logger.error(f"AI Journal Summary error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
+
+@api_router.post("/ai/violation-analysis")
+async def ai_violation_analysis(request: AIAnalysisRequest, current_user: dict = Depends(get_current_user)):
+    """Analyze patterns in violation logs"""
+    if not EMERGENT_LLM_KEY:
+        raise HTTPException(status_code=500, detail="AI service not configured")
+    
+    try:
+        # Fetch violations
+        cursor = db.violations.find(
+            {"user_id": current_user["user_id"]},
+            {"_id": 0}
+        ).sort("date", -1).limit(50)
+        violations = await cursor.to_list(length=50)
+        
+        if not violations:
+            return {"analysis": "No violations logged to analyze.", "violation_count": 0}
+        
+        # Prepare content for AI
+        violation_text = "\n\n".join([
+            f"Date: {v.get('date', 'Unknown')}\nType: {v.get('violation_type', 'Unknown')}\nSeverity: {v.get('severity', 'Unknown')}\nTitle: {v.get('title', 'Untitled')}\nDescription: {v.get('description', '')}"
+            for v in violations
+        ])
+        
+        analysis_prompt = {
+            "patterns": "Analyze these custody violation logs and identify recurring patterns, frequency of incidents, and any concerning trends. Provide insights that could be useful for legal documentation.",
+            "trends": "Examine these violations over time and identify any trends in frequency, severity, or type of violations. Note if violations are increasing or decreasing.",
+            "severity": "Analyze the severity distribution of these violations and highlight the most serious incidents that may need immediate legal attention."
+        }.get(request.analysis_type, "Analyze these custody violation logs and provide insights.")
+        
+        # Initialize AI chat
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=f"violation-analysis-{current_user['user_id']}-{uuid.uuid4().hex[:8]}",
+            system_message="You are a legal documentation assistant for a family court record-keeping app. Analyze violation logs professionally and objectively, focusing on facts and patterns that could be relevant for custody proceedings. Do not provide legal advice, but highlight important observations."
+        ).with_model("openai", "gpt-5.2")
+        
+        user_message = UserMessage(
+            text=f"{analysis_prompt}\n\nViolation Logs:\n\n{violation_text}"
+        )
+        
+        response = await chat.send_message(user_message)
+        
+        return {
+            "analysis": response,
+            "violation_count": len(violations),
+            "analysis_type": request.analysis_type
+        }
+        
+    except Exception as e:
+        logger.error(f"AI Violation Analysis error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
+
+@api_router.post("/ai/writing-assist")
+async def ai_writing_assist(request: AIWritingAssistRequest, current_user: dict = Depends(get_current_user)):
+    """AI writing assistant for journal entries"""
+    if not EMERGENT_LLM_KEY:
+        raise HTTPException(status_code=500, detail="AI service not configured")
+    
+    try:
+        # Initialize AI chat
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=f"writing-assist-{current_user['user_id']}-{uuid.uuid4().hex[:8]}",
+            system_message="You are a writing assistant for a family court journal app. Help users document their parenting time and interactions clearly and professionally. Suggest factual, objective language suitable for legal documentation. Keep suggestions concise and focused on documenting events, times, and observations without emotional language."
+        ).with_model("openai", "gpt-5.2")
+        
+        prompt = f"Help me write a journal entry about: {request.context}"
+        if request.current_text:
+            prompt += f"\n\nI've started writing: {request.current_text}\n\nPlease suggest how to continue or improve this entry."
+        else:
+            prompt += "\n\nProvide a suggested structure or opening for this journal entry."
+        
+        user_message = UserMessage(text=prompt)
+        response = await chat.send_message(user_message)
+        
+        return {"suggestion": response}
+        
+    except Exception as e:
+        logger.error(f"AI Writing Assist error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
+
+# ============== GOOGLE OAUTH (Emergent Auth) ==============
+
+import httpx
+
+class GoogleAuthSession(BaseModel):
+    session_id: str
+
+@api_router.post("/auth/google/session")
+async def process_google_session(session_data: GoogleAuthSession):
+    """Process Google OAuth session_id and create user session"""
+    try:
+        # Call Emergent Auth to get session data
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data",
+                headers={"X-Session-ID": session_data.session_id}
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(status_code=401, detail="Invalid session")
+            
+            auth_data = response.json()
+        
+        email = auth_data.get("email")
+        name = auth_data.get("name", "")
+        picture = auth_data.get("picture", "")
+        session_token = auth_data.get("session_token")
+        
+        if not email or not session_token:
+            raise HTTPException(status_code=400, detail="Invalid auth data")
+        
+        # Check if user exists
+        existing_user = await db.users.find_one({"email": email}, {"_id": 0})
+        
+        if existing_user:
+            user_id = existing_user["user_id"]
+            # Update user photo if not set
+            if not existing_user.get("photo") and picture:
+                await db.users.update_one(
+                    {"user_id": user_id},
+                    {"$set": {"photo": picture}}
+                )
+        else:
+            # Create new user
+            user_id = str(uuid.uuid4())
+            now = datetime.now(timezone.utc).isoformat()
+            
+            user_doc = {
+                "user_id": user_id,
+                "email": email,
+                "full_name": name,
+                "state": "",  # User can set this later
+                "photo": picture,
+                "created_at": now,
+                "auth_provider": "google"
+            }
+            await db.users.insert_one(user_doc)
+        
+        # Store session
+        expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+        await db.user_sessions.update_one(
+            {"session_token": session_token},
+            {"$set": {
+                "user_id": user_id,
+                "session_token": session_token,
+                "expires_at": expires_at.isoformat(),
+                "created_at": datetime.now(timezone.utc).isoformat()
+            }},
+            upsert=True
+        )
+        
+        # Create JWT token for frontend compatibility
+        jwt_token = create_token(user_id, email)
+        
+        # Get full user data
+        user = await db.users.find_one({"user_id": user_id}, {"_id": 0, "password_hash": 0})
+        
+        return {
+            "access_token": jwt_token,
+            "session_token": session_token,
+            "token_type": "bearer",
+            "user": {
+                "user_id": user["user_id"],
+                "email": user["email"],
+                "full_name": user.get("full_name", ""),
+                "state": user.get("state", ""),
+                "photo": user.get("photo", ""),
+                "created_at": user.get("created_at", "")
+            }
+        }
+        
+    except httpx.HTTPError as e:
+        logger.error(f"Google Auth HTTP error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Authentication service error")
+    except Exception as e:
+        logger.error(f"Google Auth error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Authentication error: {str(e)}")
+
+@api_router.get("/auth/google/me")
+async def get_google_user(session_token: str = None, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Get current user from Google OAuth session or JWT"""
+    try:
+        # Try JWT first (from Authorization header)
+        if credentials:
+            try:
+                payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+                user_id = payload.get("user_id")
+                if user_id:
+                    user = await db.users.find_one({"user_id": user_id}, {"_id": 0, "password_hash": 0})
+                    if user:
+                        return user
+            except jwt.InvalidTokenError:
+                pass
+        
+        # Try session token
+        if session_token:
+            session = await db.user_sessions.find_one({"session_token": session_token}, {"_id": 0})
+            if session:
+                # Check expiry
+                expires_at = session.get("expires_at")
+                if isinstance(expires_at, str):
+                    expires_at = datetime.fromisoformat(expires_at.replace("Z", "+00:00"))
+                if expires_at.tzinfo is None:
+                    expires_at = expires_at.replace(tzinfo=timezone.utc)
+                
+                if expires_at > datetime.now(timezone.utc):
+                    user = await db.users.find_one({"user_id": session["user_id"]}, {"_id": 0, "password_hash": 0})
+                    if user:
+                        return user
+        
+        raise HTTPException(status_code=401, detail="Not authenticated")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Get Google user error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Authentication error")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
