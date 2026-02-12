@@ -319,6 +319,20 @@ export default function JournalPage() {
           <div className="flex gap-3 flex-wrap">
             <Button
               variant="outline"
+              onClick={handleAiSummary}
+              disabled={aiSummaryLoading || journals.length === 0}
+              className="border-[#E2E8F0] text-[#2C3E50] bg-gradient-to-r from-purple-50 to-blue-50 hover:from-purple-100 hover:to-blue-100"
+              data-testid="ai-summary-btn"
+            >
+              {aiSummaryLoading ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Sparkles className="w-4 h-4 mr-2 text-purple-600" />
+              )}
+              AI Summary
+            </Button>
+            <Button
+              variant="outline"
               onClick={handleExport}
               className="border-[#E2E8F0] text-[#2C3E50]"
               data-testid="export-journals-btn"
