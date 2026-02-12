@@ -24,6 +24,7 @@ import ContactsPage from "@/pages/ContactsPage";
 import TimelinePage from "@/pages/TimelinePage";
 import SharingPage from "@/pages/SharingPage";
 import SharedViewPage from "@/pages/SharedViewPage";
+import AuthCallback from "@/pages/AuthCallback";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
