@@ -424,7 +424,20 @@ export default function JournalPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Journal Entry</Label>
+                    <div className="flex justify-between items-center">
+                      <Label>Journal Entry</Label>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setAiWritingOpen(true)}
+                        className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                        data-testid="ai-writing-assist-btn"
+                      >
+                        <Wand2 className="w-4 h-4 mr-1" />
+                        AI Writing Help
+                      </Button>
+                    </div>
                     <Textarea
                       value={formData.content}
                       onChange={(e) => setFormData({ ...formData, content: e.target.value })}
