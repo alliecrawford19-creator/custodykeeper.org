@@ -249,6 +249,20 @@ export default function ViolationsPage() {
           <div className="flex gap-3 flex-wrap">
             <Button
               variant="outline"
+              onClick={handleAiAnalysis}
+              disabled={aiAnalysisLoading || violations.length === 0}
+              className="border-[#E2E8F0] text-[#2C3E50] bg-gradient-to-r from-purple-50 to-blue-50 hover:from-purple-100 hover:to-blue-100"
+              data-testid="ai-analysis-btn"
+            >
+              {aiAnalysisLoading ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Sparkles className="w-4 h-4 mr-2 text-purple-600" />
+              )}
+              AI Analysis
+            </Button>
+            <Button
+              variant="outline"
               onClick={handleExport}
               className="border-[#E2E8F0] text-[#2C3E50]"
               data-testid="export-violations-btn"
