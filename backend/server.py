@@ -2155,14 +2155,9 @@ async def create_indexes():
     except Exception as e:
         logger.warning(f"Index creation warning (may already exist): {str(e)}")
 
-# ============== AI SERVICES (GPT-5.2) ==============
-
-from emergentintegrations.llm.chat import LlmChat, UserMessage
-
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
-
-class AISummaryRequest(BaseModel):
-    journal_id: Optional[str] = None  # If None, summarize all journals
+@app.on_event("shutdown")
+async def shutdown_db_client():
+    client.close()
     
 class AIAnalysisRequest(BaseModel):
     analysis_type: str = "patterns"  # patterns, trends, severity
