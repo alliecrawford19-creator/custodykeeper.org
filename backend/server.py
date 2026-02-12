@@ -2158,11 +2158,6 @@ async def create_indexes():
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
-    
-class AIAnalysisRequest(BaseModel):
-    analysis_type: str = "patterns"  # patterns, trends, severity
-    
-class AIWritingAssistRequest(BaseModel):
     context: str  # What the user is writing about
     current_text: Optional[str] = ""  # What they've written so far
 
