@@ -69,7 +69,7 @@ export const generateCalendarPDF = ({
   });
 
   // Create table
-  doc.autoTable({
+  autoTable(doc, {
     head: [daysOfWeek],
     body: weeks,
     startY: 45,
