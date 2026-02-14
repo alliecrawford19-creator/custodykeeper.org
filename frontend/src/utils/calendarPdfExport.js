@@ -122,7 +122,7 @@ export const generateCalendarPDF = ({
       event.notes?.substring(0, 50) || '-'
     ]);
 
-    doc.autoTable({
+    autoTable(doc, {
       head: [['Date', 'Event', 'Type', 'Location', 'Notes']],
       body: eventRows,
       startY: finalY + 5,
