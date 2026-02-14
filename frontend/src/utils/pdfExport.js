@@ -1,5 +1,4 @@
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 import { format, parseISO } from 'date-fns';
 
 // Court-ready PDF export for journals and violations
