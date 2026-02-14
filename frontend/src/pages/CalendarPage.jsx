@@ -747,29 +747,56 @@ export default function CalendarPage() {
                   return (
                     <div
                       key={event.event_id}
-                      className="flex items-center justify-between p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0] cursor-pointer hover:border-[#2C3E50]/30 transition-all"
+                      className="p-4 bg-[#FDFBF7] rounded-xl border border-[#E2E8F0] cursor-pointer hover:border-[#2C3E50]/30 transition-all"
                       onClick={() => handleViewEvent(event)}
                       data-testid={`event-item-${event.event_id}`}
                     >
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-start gap-3">
                         <div 
-                          className="w-3 h-12 rounded-full"
+                          className="w-2 min-h-[48px] rounded-full flex-shrink-0 mt-1"
                           style={{ backgroundColor: customColor || undefined }}
-                          {...(!customColor && { className: `w-3 h-12 rounded-full ${getEventTypeColor(event.event_type).split(" ")[0]}` })}
+                          {...(!customColor && { className: `w-2 min-h-[48px] rounded-full flex-shrink-0 mt-1 ${getEventTypeColor(event.event_type).split(" ")[0]}` })}
                         ></div>
-                        <div>
-                          <p className="font-semibold text-[#1A202C]">{event.title}</p>
-                          <p className="text-sm text-[#718096]">
-                            {format(parseISO(event.start_date), "MMM d, yyyy")}
-                            {event.start_date !== event.end_date && ` - ${format(parseISO(event.end_date), "MMM d, yyyy")}`}
-                          </p>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="min-w-0 flex-1">
+                              <p className="font-semibold text-[#1A202C] truncate">{event.title}</p>
+                              <p className="text-sm text-[#718096]">
+                                {format(parseISO(event.start_date), "MMM d, yyyy")}
+                                {event.start_date !== event.end_date && ` - ${format(parseISO(event.end_date), "MMM d, yyyy")}`}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-1 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+                              <span className={`badge text-xs whitespace-nowrap ${getEventTypeColor(event.event_type)}`}>
+                                {EVENT_TYPES.find(t => t.value === event.event_type)?.label || event.event_type}
+                              </span>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => handleEdit(event)}
+                                className="h-8 w-8 text-[#2C3E50] hover:text-[#34495E] hover:bg-[#E8F6F3]"
+                                data-testid={`edit-event-${event.event_id}`}
+                              >
+                                <Edit2 className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => handleDelete(event.event_id)}
+                                className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50"
+                                data-testid={`delete-event-${event.event_id}`}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </div>
                           {event.location && (
                             <p className="text-sm text-[#718096] flex items-center gap-1 mt-1">
-                              <MapPin className="w-3 h-3" /> {event.location}
+                              <MapPin className="w-3 h-3 flex-shrink-0" /> <span className="truncate">{event.location}</span>
                             </p>
                           )}
                           {eventChildren && eventChildren.length > 0 && (
-                            <div className="flex items-center gap-1 mt-1">
+                            <div className="flex flex-wrap items-center gap-1 mt-2">
                               {eventChildren.map(child => (
                                 <span 
                                   key={child.child_id}
@@ -782,29 +809,6 @@ export default function CalendarPage() {
                             </div>
                           )}
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-                        <span className={`badge ${getEventTypeColor(event.event_type)}`}>
-                          {EVENT_TYPES.find(t => t.value === event.event_type)?.label || event.event_type}
-                        </span>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleEdit(event)}
-                          className="text-[#2C3E50] hover:text-[#34495E] hover:bg-[#E8F6F3]"
-                          data-testid={`edit-event-${event.event_id}`}
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(event.event_id)}
-                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                          data-testid={`delete-event-${event.event_id}`}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
                       </div>
                     </div>
                   );
